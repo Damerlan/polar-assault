@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://bttppxqbhp52t"]
+
+[ext_resource type="PackedScene" uid="uid://h88qr0cg8f4a" path="res://scenes/plataforms/plataforma_comum.tscn" id="1_hkql6"]
+[ext_resource type="PackedScene" uid="uid://boy0ayee14ol8" path="res://scenes/plataforms/plataforma_congelada.tscn" id="2_bvu47"]
+[ext_resource type="PackedScene" uid="uid://bmoq88x60l3x4" path="res://scenes/plataforms/plataforma_espinhos.tscn" id="3_jy0cp"]
+[ext_resource type="PackedScene" uid="uid://b8yvwwunjau5o" path="res://scenes/plataforms/plataforma_movel.tscn" id="4_ka2pd"]
+[ext_resource type="PackedScene" uid="uid://bkfxos7lne2eb" path="res://scenes/plataforms/plataform_breackin.tscn" id="5_2v6k8"]
+
+[node name="Loby_01" type="Node2D"]
+
+[node name="PlataformaComum" parent="." instance=ExtResource("1_hkql6")]
+position = Vector2(116, 469)
+
+[node name="PlataformaCongelada" parent="." instance=ExtResource("2_bvu47")]
+position = Vector2(234, 339)
+
+[node name="PlataformaEspinhos" parent="." instance=ExtResource("3_jy0cp")]
+position = Vector2(333, 233)
+
+[node name="PlataformaMovel" parent="." instance=ExtResource("4_ka2pd")]
+position = Vector2(472, 332)
+
+[node name="PlataformBreackin" parent="." instance=ExtResource("5_2v6k8")]
+position = Vector2(121, 224)

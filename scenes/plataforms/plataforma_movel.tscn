@@ -1,0 +1,52 @@
+[gd_scene load_steps=10 format=3 uid="uid://b8yvwwunjau5o"]
+
+[ext_resource type="Script" uid="uid://j4b2jtepc00c" path="res://scenes/plataforms/plataforma_movel.gd" id="1_3t4lp"]
+[ext_resource type="Texture2D" uid="uid://bc2bqrkcoltih" path="res://Assets/Plataformas/plataforma_movel/plataforma_movel1.png" id="1_p3w5h"]
+[ext_resource type="Texture2D" uid="uid://c5lpx3pfsssp8" path="res://Assets/Plataformas/plataforma_movel/plataforma_movel2.png" id="2_3t4lp"]
+[ext_resource type="Texture2D" uid="uid://c07p2v0ic78d7" path="res://Assets/Plataformas/plataforma_movel/plataforma_movel3.png" id="3_qfxsr"]
+[ext_resource type="Texture2D" uid="uid://c3m68op2bgjqn" path="res://Assets/Plataformas/plataforma_movel/plataforma_movel4.png" id="4_eytd5"]
+[ext_resource type="Texture2D" uid="uid://b1un7epgcmprs" path="res://Assets/Plataformas/plataforma_movel/plataforma_movel5.png" id="5_3aaqb"]
+[ext_resource type="Texture2D" uid="uid://bsaqo3pupv2jf" path="res://Assets/Plataformas/plataforma_movel/plataforma_movel6.png" id="6_sg2ui"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q7q65"]
+size = Vector2(94, 7)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a1od0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_p3w5h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_3t4lp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_qfxsr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_eytd5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_3aaqb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_sg2ui")
+}],
+"loop": true,
+"name": &"moving",
+"speed": 10.0
+}]
+
+[node name="PlataformaMovel" type="StaticBody2D"]
+script = ExtResource("1_3t4lp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3.5)
+shape = SubResource("RectangleShape2D_q7q65")
+one_way_collision = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_a1od0")
+animation = &"moving"
+autoplay = "moving"
+frame_progress = 0.55741304

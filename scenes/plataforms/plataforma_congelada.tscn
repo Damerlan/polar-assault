@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://boy0ayee14ol8"]
+
+[ext_resource type="Script" uid="uid://cviai7kk0rwhp" path="res://scenes/plataforms/plataforma_congelada.gd" id="1_6qrux"]
+[ext_resource type="Texture2D" uid="uid://duabbb5rbxrcr" path="res://Assets/Plataformas/Platform1.png" id="1_yys74"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6qrux"]
+size = Vector2(92, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ukbx"]
+size = Vector2(92, 7)
+
+[node name="PlataformaCongelada" type="StaticBody2D"]
+script = ExtResource("1_6qrux")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_6qrux")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_yys74")
+
+[node name="IceArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="IceArea"]
+position = Vector2(0, -4.5)
+shape = SubResource("RectangleShape2D_4ukbx")

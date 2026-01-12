@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmoq88x60l3x4"]
+
+[ext_resource type="Texture2D" uid="uid://bwiwcse871dnk" path="res://Assets/Plataformas/Platform3.png" id="1_12r4w"]
+[ext_resource type="Script" uid="uid://birm400s0odjo" path="res://scenes/plataforms/plataforma_espinhos.gd" id="1_rrv8c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rrv8c"]
+size = Vector2(92, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_75jnl"]
+size = Vector2(91, 3)
+
+[node name="PlataformaEspinhos" type="StaticBody2D"]
+script = ExtResource("1_rrv8c")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_12r4w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_rrv8c")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.5, 4.5)
+shape = SubResource("RectangleShape2D_75jnl")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

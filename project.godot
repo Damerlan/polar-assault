@@ -36,6 +36,7 @@ Global="*res://globais/global.gd"
 GameManager="*res://globais/game_manager.gd"
 ScoreManager="*res://globais/score_manager.gd"
 SaveManager="*res://globais/save_manager.gd"
+AudioManager="*res://globais/audio_manager.gd"
 
 [display]
 

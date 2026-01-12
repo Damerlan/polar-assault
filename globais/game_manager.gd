@@ -23,7 +23,7 @@ var next_scene = ""
 var last_safe_position
 var last_safe_platform: Node = null
 
-const EMERGENCY_PLATFORM_SCENE := preload("") #Incluir a sena da plataforma
+const EMERGENCY_PLATFORM_SCENE := preload("res://scenes/plataforms/plataforma_comum.tscn") #Incluir a sena da plataforma
 var world: Node
 var emergency_platform: Node = null
 
