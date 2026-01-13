@@ -18,10 +18,11 @@ distance_between = Vector2(120, 80)
 [node name="YSort" type="Node" parent="."]
 
 [node name="PlataformaComum" parent="YSort" instance=ExtResource("3_22nbu")]
-position = Vector2(237, 252)
+position = Vector2(237, 256)
 
 [node name="KillZone" parent="." instance=ExtResource("4_a8g7p")]
 position = Vector2(490, 664)
 
 [node name="Player" parent="." instance=ExtResource("5_2os71")]
 position = Vector2(237, 230)
+scale = Vector2(2, 2)
