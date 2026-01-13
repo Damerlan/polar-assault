@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://djgen2sdmeb7p"]
+
+[ext_resource type="Script" uid="uid://bmdujfj0uohuf" path="res://scenes/objects_system/Cameras/camera_game_play.gd" id="1_6pd32"]
+[ext_resource type="PackedScene" uid="uid://dpgx24xnlx6vu" path="res://scenes/objects_system/UI/hud_player_lifes.tscn" id="1_x6j0w"]
+[ext_resource type="PackedScene" uid="uid://bjiuea5mhm5su" path="res://scenes/objects_system/UI/hud_player_stats.tscn" id="2_6pd32"]
+[ext_resource type="PackedScene" uid="uid://d3pcgrxx62obg" path="res://scenes/objects_system/UI/timer.tscn" id="3_fg72x"]
+
+[node name="CameraGamePlay" type="Camera2D" groups=["cam"]]
+script = ExtResource("1_6pd32")
+
+[node name="HudPlayerLifes" parent="." instance=ExtResource("1_x6j0w")]
+
+[node name="HudPlayerStats" parent="." instance=ExtResource("2_6pd32")]
+
+[node name="Timer" parent="." instance=ExtResource("3_fg72x")]

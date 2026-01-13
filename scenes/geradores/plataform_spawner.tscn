@@ -1,0 +1,12 @@
+[gd_scene load_steps=5 format=3 uid="uid://bi2nlxspkl2kp"]
+
+[ext_resource type="Script" uid="uid://d1bpsfyrfyuj0" path="res://scenes/geradores/plataform_spawner.gd" id="1_6lqld"]
+[ext_resource type="PackedScene" uid="uid://h88qr0cg8f4a" path="res://scenes/plataforms/plataforma_comum.tscn" id="2_35ygs"]
+[ext_resource type="PackedScene" uid="uid://b8yvwwunjau5o" path="res://scenes/plataforms/plataforma_movel.tscn" id="3_4s0l0"]
+[ext_resource type="PackedScene" uid="uid://bkfxos7lne2eb" path="res://scenes/plataforms/plataform_breackin.tscn" id="4_akqgr"]
+
+[node name="PlataformSpawner" type="Node2D"]
+script = ExtResource("1_6lqld")
+platform_scene = ExtResource("2_35ygs")
+moving_platform_scene = ExtResource("3_4s0l0")
+falling_platform_scene = ExtResource("4_akqgr")

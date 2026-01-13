@@ -1,0 +1,27 @@
+[gd_scene load_steps=7 format=3 uid="uid://bo42uf3ea7hap"]
+
+[ext_resource type="Script" uid="uid://enq84vepvkf0" path="res://scenes/rooms/sala_01.gd" id="1_22nbu"]
+[ext_resource type="PackedScene" uid="uid://djgen2sdmeb7p" path="res://scenes/objects_system/Cameras/camera_game_play.tscn" id="1_oq01q"]
+[ext_resource type="PackedScene" uid="uid://bi2nlxspkl2kp" path="res://scenes/geradores/plataform_spawner.tscn" id="2_2os71"]
+[ext_resource type="PackedScene" uid="uid://h88qr0cg8f4a" path="res://scenes/plataforms/plataforma_comum.tscn" id="3_22nbu"]
+[ext_resource type="PackedScene" uid="uid://bdb3kj5cgpwun" path="res://scenes/objects_system/kill_zone.tscn" id="4_a8g7p"]
+[ext_resource type="PackedScene" uid="uid://dok8g2fmkc556" path="res://entities/player.tscn" id="5_2os71"]
+
+[node name="Sala01" type="Node2D"]
+script = ExtResource("1_22nbu")
+
+[node name="CameraGamePlay" parent="." instance=ExtResource("1_oq01q")]
+
+[node name="PlataformSpawner" parent="." instance=ExtResource("2_2os71")]
+distance_between = Vector2(120, 80)
+
+[node name="YSort" type="Node" parent="."]
+
+[node name="PlataformaComum" parent="YSort" instance=ExtResource("3_22nbu")]
+position = Vector2(237, 252)
+
+[node name="KillZone" parent="." instance=ExtResource("4_a8g7p")]
+position = Vector2(490, 664)
+
+[node name="Player" parent="." instance=ExtResource("5_2os71")]
+position = Vector2(237, 230)

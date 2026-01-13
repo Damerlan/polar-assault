@@ -1,7 +1,7 @@
 #Plataforma_comum - Updated 12-01-26
 extends StaticBody2D
 
-@export var visibility = 400
+var visibility = Global.visibility
 var player = null
 
 # -------- COINS --------
@@ -24,7 +24,6 @@ var life_height_offset: int = -Global.life_height_offset
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("Player")
-
 	gem_spawn_chance = ScoreManager.get_gem_chance_by_height(global_position.y)
 
 	spawn_coins()

@@ -1,0 +1,106 @@
+[gd_scene load_steps=16 format=3 uid="uid://c4ur14wbvjud3"]
+
+[ext_resource type="Script" uid="uid://dipn0wcv2hlpb" path="res://scenes/coletaveis/gem_emerald.gd" id="1_uya1u"]
+[ext_resource type="Texture2D" uid="uid://cabhwl0alj4cr" path="res://Assets/Efeitos_Particulas/Bright_Sparkle (16 x 16).png" id="2_tqexg"]
+[ext_resource type="Texture2D" uid="uid://cfvilf6iyisg7" path="res://Assets/Coletaveis/gems.png" id="3_msvx3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5k78r"]
+radius = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wykmy"]
+atlas = ExtResource("2_tqexg")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ioqxi"]
+atlas = ExtResource("2_tqexg")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4f5n1"]
+atlas = ExtResource("2_tqexg")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_klb03"]
+atlas = ExtResource("2_tqexg")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnp1x"]
+atlas = ExtResource("3_msvx3")
+region = Rect2(112, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1syj0"]
+atlas = ExtResource("3_msvx3")
+region = Rect2(128, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_snr32"]
+atlas = ExtResource("3_msvx3")
+region = Rect2(144, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ae140"]
+atlas = ExtResource("3_msvx3")
+region = Rect2(160, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l4t8r"]
+atlas = ExtResource("3_msvx3")
+region = Rect2(176, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rukcg"]
+atlas = ExtResource("3_msvx3")
+region = Rect2(192, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aky0h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wykmy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ioqxi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4f5n1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_klb03")
+}],
+"loop": false,
+"name": &"colect",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pnp1x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1syj0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_snr32")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ae140")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l4t8r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rukcg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="GemEmerald" type="Area2D"]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_uya1u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_5k78r")
+
+[node name="Anim" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -1)
+sprite_frames = SubResource("SpriteFrames_aky0h")
+autoplay = "default"
+
+[node name="GemCollect" type="AudioStreamPlayer" parent="."]

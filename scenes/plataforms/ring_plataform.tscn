@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://cklldoycuolvv"]
+
+[ext_resource type="Script" uid="uid://cf4mqg7vjnysc" path="res://scenes/plataforms/ring_plataform.gd" id="1_bqc3v"]
+[ext_resource type="Texture2D" uid="uid://basumi64sjxnb" path="res://Assets/Plataformas/PlatformBoss1.png" id="1_waxwb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bqc3v"]
+size = Vector2(109, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jf543"]
+size = Vector2(109, 10)
+
+[node name="RingPlataform" type="StaticBody2D"]
+collision_mask = 6
+script = ExtResource("1_bqc3v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -2)
+shape = SubResource("RectangleShape2D_bqc3v")
+
+[node name="IceArea" type="Area2D" parent="."]
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="IceArea"]
+position = Vector2(0.5, -3)
+shape = SubResource("RectangleShape2D_jf543")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_waxwb")
+
+[connection signal="body_entered" from="IceArea" to="." method="_on_ice_area_body_entered"]
+[connection signal="body_exited" from="IceArea" to="." method="_on_ice_area_body_exited"]

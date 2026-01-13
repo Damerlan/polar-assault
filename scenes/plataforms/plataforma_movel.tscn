@@ -38,12 +38,12 @@ animations = [{
 }]
 
 [node name="PlataformaMovel" type="StaticBody2D"]
+collision_mask = 6
 script = ExtResource("1_3t4lp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3.5)
 shape = SubResource("RectangleShape2D_q7q65")
-one_way_collision = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_a1od0")

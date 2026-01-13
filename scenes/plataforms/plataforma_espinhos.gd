@@ -23,8 +23,8 @@ func _process(_delta: float) -> void:
 
 # 🚀 Posição segura DEFINITIVA
 func register_as_safe(): 
-	Global.last_safe_position = global_position
-	Global.last_safe_platform = self
+	GameManager.last_safe_position = global_position
+	GameManager.last_safe_platform = self
 
 
 # Causa dano ao Player

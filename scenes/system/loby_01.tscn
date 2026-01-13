@@ -1,15 +1,39 @@
-[gd_scene load_steps=6 format=3 uid="uid://bttppxqbhp52t"]
+[gd_scene load_steps=17 format=3 uid="uid://bttppxqbhp52t"]
 
 [ext_resource type="PackedScene" uid="uid://h88qr0cg8f4a" path="res://scenes/plataforms/plataforma_comum.tscn" id="1_hkql6"]
 [ext_resource type="PackedScene" uid="uid://boy0ayee14ol8" path="res://scenes/plataforms/plataforma_congelada.tscn" id="2_bvu47"]
 [ext_resource type="PackedScene" uid="uid://bmoq88x60l3x4" path="res://scenes/plataforms/plataforma_espinhos.tscn" id="3_jy0cp"]
 [ext_resource type="PackedScene" uid="uid://b8yvwwunjau5o" path="res://scenes/plataforms/plataforma_movel.tscn" id="4_ka2pd"]
 [ext_resource type="PackedScene" uid="uid://bkfxos7lne2eb" path="res://scenes/plataforms/plataform_breackin.tscn" id="5_2v6k8"]
+[ext_resource type="PackedScene" uid="uid://by8113x2kbl31" path="res://scenes/coletaveis/life.tscn" id="6_2v6k8"]
+[ext_resource type="PackedScene" uid="uid://cmrk76u50yyx1" path="res://scenes/coletaveis/gem_ruby.tscn" id="7_t0537"]
+[ext_resource type="PackedScene" uid="uid://c4ur14wbvjud3" path="res://scenes/coletaveis/gem_emerald.tscn" id="8_ps0oe"]
+[ext_resource type="PackedScene" uid="uid://sy83nfi2ny8s" path="res://scenes/coletaveis/gem_diamond.tscn" id="9_x58n8"]
+[ext_resource type="PackedScene" uid="uid://va3hb270xlnb" path="res://scenes/coletaveis/coin_silver.tscn" id="10_x58n8"]
+[ext_resource type="PackedScene" uid="uid://byxkblgi43sn1" path="res://scenes/coletaveis/coin_gold.tscn" id="11_0wnk3"]
+[ext_resource type="PackedScene" uid="uid://b4wcg5gltkpnk" path="res://scenes/coletaveis/coin_coper.tscn" id="12_1sixe"]
+[ext_resource type="PackedScene" uid="uid://cklldoycuolvv" path="res://scenes/plataforms/ring_plataform.tscn" id="13_0wnk3"]
+[ext_resource type="PackedScene" uid="uid://dok8g2fmkc556" path="res://entities/player.tscn" id="14_1sixe"]
+[ext_resource type="PackedScene" uid="uid://bbkqj04nwsabd" path="res://scenes/coletaveis/coin.tscn" id="15_xr85p"]
+[ext_resource type="PackedScene" uid="uid://bkwrn36rjcayu" path="res://scenes/coletaveis/gem_base.tscn" id="16_nb2eg"]
 
 [node name="Loby_01" type="Node2D"]
+metadata/_edit_horizontal_guides_ = [24.0, 56.0]
 
 [node name="PlataformaComum" parent="." instance=ExtResource("1_hkql6")]
 position = Vector2(116, 469)
+
+[node name="PlataformaComum2" parent="." instance=ExtResource("1_hkql6")]
+position = Vector2(275, 469)
+
+[node name="PlataformaComum3" parent="." instance=ExtResource("1_hkql6")]
+position = Vector2(414, 470)
+
+[node name="PlataformaComum4" parent="." instance=ExtResource("1_hkql6")]
+position = Vector2(548, 470)
+
+[node name="PlataformaComum5" parent="." instance=ExtResource("1_hkql6")]
+position = Vector2(685, 469)
 
 [node name="PlataformaCongelada" parent="." instance=ExtResource("2_bvu47")]
 position = Vector2(234, 339)
@@ -22,3 +46,55 @@ position = Vector2(472, 332)
 
 [node name="PlataformBreackin" parent="." instance=ExtResource("5_2v6k8")]
 position = Vector2(121, 224)
+
+[node name="Life" parent="." instance=ExtResource("6_2v6k8")]
+position = Vector2(760, 381)
+
+[node name="GemRuby" parent="." instance=ExtResource("7_t0537")]
+position = Vector2(758, 336)
+
+[node name="GemEmerald" parent="." instance=ExtResource("8_ps0oe")]
+position = Vector2(757, 294)
+
+[node name="GemDiamond" parent="." instance=ExtResource("9_x58n8")]
+position = Vector2(756, 249)
+
+[node name="CoinSilver" parent="." instance=ExtResource("10_x58n8")]
+position = Vector2(712, 296)
+
+[node name="CoinGold" parent="." instance=ExtResource("11_0wnk3")]
+position = Vector2(713, 250)
+
+[node name="CoinCoper" parent="." instance=ExtResource("12_1sixe")]
+position = Vector2(713, 338)
+
+[node name="RingPlataform" parent="." instance=ExtResource("13_0wnk3")]
+position = Vector2(502, 136)
+scale = Vector2(3, 3)
+
+[node name="Player" parent="." instance=ExtResource("14_1sixe")]
+position = Vector2(109, 442)
+
+[node name="Coin" parent="." instance=ExtResource("15_xr85p")]
+position = Vector2(139, 420)
+
+[node name="Coin2" parent="." instance=ExtResource("15_xr85p")]
+position = Vector2(139, 378)
+
+[node name="Coin3" parent="." instance=ExtResource("15_xr85p")]
+position = Vector2(142, 341)
+
+[node name="GemDiamond2" parent="." instance=ExtResource("9_x58n8")]
+position = Vector2(88, 410)
+
+[node name="GemEmerald2" parent="." instance=ExtResource("8_ps0oe")]
+position = Vector2(90, 369)
+
+[node name="GemRuby2" parent="." instance=ExtResource("7_t0537")]
+position = Vector2(88, 324)
+
+[node name="Life2" parent="." instance=ExtResource("6_2v6k8")]
+position = Vector2(219, 301)
+
+[node name="GemBase" parent="." instance=ExtResource("16_nb2eg")]
+position = Vector2(114, 402)

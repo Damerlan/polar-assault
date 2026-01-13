@@ -12,6 +12,8 @@ var coin_value: int = 1 #moeda
 var gem_value: int = 100 #gemas
 var life_value: int = 50 #vida - Inplementar
 
+# ─────────── Configurações das Plataformas ───────────
+@export var visibility = 400
 
 # ─────────── Configurações dos Spawns ───────────
 # -------- COINS --------
