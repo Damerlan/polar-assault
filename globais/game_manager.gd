@@ -148,8 +148,8 @@ func spawn_emergency_platform(pos: Vector2):
 
 	ysort.add_child(emergency_platform)
 	
-	Global.last_safe_platform = emergency_platform
-	Global.last_safe_position = emergency_platform.global_position
+	GameManager.last_safe_platform = emergency_platform
+	GameManager.last_safe_position = emergency_platform.global_position
 
 
 func find_nearest_platform_above(pos: Vector2) -> Node2D:

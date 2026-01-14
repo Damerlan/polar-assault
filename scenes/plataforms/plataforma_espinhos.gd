@@ -1,7 +1,7 @@
 #Plataforma_com_Espinhos - Updated 12-01-26
 extends StaticBody2D
 
-@export var visibility := 400
+var visibility = Global.visibility
 
 var base_y := 0.0
 var player = null

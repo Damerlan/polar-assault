@@ -10,7 +10,7 @@ var activated := false
 var falling := false
 var original_position: Vector2
 var player = null
-@export var visibility = 300
+var visibility = Global.visibility
 
 func _ready():
 	original_position = position
