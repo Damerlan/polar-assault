@@ -5,7 +5,7 @@ extends Node
 
 #----CONFIG PLAYER
 var lives: int = 3  #quantidade inicial de vidas
-var vives_limit: int = 5 #limite maximo de vidas #inplementar
+var lives_limit: int = 5 #limite maximo de vidas #inplementar
 
 #----LOOTs
 var coin_value: int = 1 #moeda

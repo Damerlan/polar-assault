@@ -25,7 +25,8 @@ func add_coin(value: int):
 
 
 func add_life(): #add +1 vida
-	Global.lives += 1
+	if Global.lives < Global.lives_limit:
+		Global.lives += 1
 	itens += Global.life_value #adiciona a pontuação de vida ao score
 	emit_signal("lives_changed")
 
