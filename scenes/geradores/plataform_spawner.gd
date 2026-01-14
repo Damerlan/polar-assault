@@ -1,8 +1,39 @@
+#PlataformSpawner - Updated 14-01-26
 extends Node2D
 
-@export var platform_scene: PackedScene
-@export var moving_platform_scene: PackedScene
-@export var falling_platform_scene: PackedScene
+@export var platform_variants: Array[Dictionary] = [
+	{
+		"id": "normal",
+		"scene": preload("res://scenes/plataforms/plataforma_comum.tscn"),
+		"chance": 1.0,
+		"unstable": false
+	},
+	{
+		"id": "moving",
+		"scene": preload("res://scenes/plataforms/plataforma_movel.tscn"),
+		"chance": 0.0,
+		"unstable": true
+	},
+	{
+		"id": "falling",
+		"scene": preload("res://scenes/plataforms/plataform_breackin.tscn"),
+		"chance": 0.0,
+		"unstable": true
+	},
+	{
+		"id": "ice",
+		"scene": preload("res://scenes/plataforms/plataforma_congelada.tscn"), #escorregadia
+		"chance": 0.3,
+		"unstable": false
+	},
+	{
+		"id": "spikes",
+		"scene": preload("res://scenes/plataforms/plataforma_espinhos.tscn"), #espinhos
+		"chance": 0.1,
+		"unstable": true
+	}
+	
+]
 
 @export var distance_between := Vector2(190, 380) # 👈 mais espaçado
 @export var screen_margin := 45
@@ -47,8 +78,76 @@ func _spawn_initial_platforms():
 		_spawn_platform()
 
 
-# ---------- CONTROLE DE SPAWN ----------
+func _update_platform_chances():
+	if player == null:
+		return
 
+	var h: float = abs(player.global_position.y)
+
+	for p: Dictionary in platform_variants:
+		match p["id"]:
+			"moving":
+				p["chance"] = lerp(
+					base_moving_chance,
+					max_moving_chance,
+					clamp(h / height_for_max_chance, 0.0, 1.0)
+				)
+
+			"falling":
+				p["chance"] = lerp(
+					base_falling_chance,
+					max_falling_chance,
+					clamp(h / height_for_max_falling, 0.0, 1.0)
+				)
+
+
+func _pick_platform() -> Dictionary:
+	var total := 0.0
+	for p in platform_variants:
+		total += p["chance"]
+
+	if total <= 0.0:
+		return platform_variants[0]
+
+	var roll := randf() * total
+	var acc := 0.0
+
+	for p in platform_variants:
+		acc += p["chance"]
+		if roll <= acc:
+			return p
+
+	return platform_variants[0]
+
+
+func _spawn_platform():
+	var cam := get_viewport().get_camera_2d()
+	if cam == null:
+		return
+
+	_update_platform_chances()
+
+	var half_w = get_viewport_rect().size.x * 0.5
+	var y_offset = randf_range(distance_between.x, min(distance_between.y, max_jump_height))
+	last_platform_y -= y_offset
+
+	var min_x = cam.global_position.x - half_w + screen_margin
+	var max_x = cam.global_position.x + half_w - screen_margin
+
+	var data: Dictionary
+	if last_platform_was_unstable:
+		data = platform_variants[0]
+	else:
+		data = _pick_platform()
+
+	var platform = data["scene"].instantiate()
+	platform.global_position = Vector2(randf_range(min_x, max_x), last_platform_y)
+	get_parent().get_node("YSort").add_child(platform)
+
+	last_platform_was_unstable = data["unstable"]
+
+
+# ---------- CONTROLE DE SPAWN ----------
 func _spawn_platform_if_needed():
 	var cam := get_viewport().get_camera_2d()
 	if cam == null:
@@ -75,53 +174,7 @@ func _count_platforms_on_screen() -> int:
 
 # ---------- CHANCES ----------
 
-func _get_moving_platform_chance() -> float:
-	if player == null:
-		return base_moving_chance
 
-	var t = clamp(abs(player.global_position.y) / height_for_max_chance, 0.0, 1.0)
-	return lerp(base_moving_chance, max_moving_chance, t)
-
-
-func _get_falling_platform_chance() -> float:
-	if player == null:
-		return base_falling_chance
-
-	var t = clamp(abs(player.global_position.y) / height_for_max_falling, 0.0, 1.0)
-	return lerp(base_falling_chance, max_falling_chance, t)
 
 
 # ---------- SPAWN REAL ----------
-
-func _spawn_platform():
-	var cam := get_viewport().get_camera_2d()
-	if cam == null:
-		return
-
-	var half_w = get_viewport_rect().size.x * 0.5
-	var y_offset = randf_range(distance_between.x, min(distance_between.y, max_jump_height))
-	last_platform_y -= y_offset
-
-	var min_x = cam.global_position.x - half_w + screen_margin
-	var max_x = cam.global_position.x + half_w - screen_margin
-
-	var roll = randf()
-	var p
-	var unstable := false
-
-	if not last_platform_was_unstable:
-		if roll < _get_falling_platform_chance() and falling_platform_scene:
-			p = falling_platform_scene.instantiate()
-			unstable = true
-		elif roll < _get_falling_platform_chance() + _get_moving_platform_chance() and moving_platform_scene:
-			p = moving_platform_scene.instantiate()
-			unstable = true
-		else:
-			p = platform_scene.instantiate()
-	else:
-		p = platform_scene.instantiate()
-
-	p.global_position = Vector2(randf_range(min_x, max_x), last_platform_y)
-	get_parent().get_node("YSort").add_child(p)
-
-	last_platform_was_unstable = unstable

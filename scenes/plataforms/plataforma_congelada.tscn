@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://boy0ayee14ol8"]
+[gd_scene load_steps=6 format=3 uid="uid://boy0ayee14ol8"]
 
 [ext_resource type="Script" uid="uid://cviai7kk0rwhp" path="res://scenes/plataforms/plataforma_congelada.gd" id="1_6qrux"]
 [ext_resource type="Texture2D" uid="uid://duabbb5rbxrcr" path="res://Assets/Plataformas/Platform1.png" id="1_yys74"]
+[ext_resource type="PackedScene" uid="uid://ckr65yqkm67og" path="res://ScriptsResourcesSystem/loot_spawner.tscn" id="3_4ukbx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6qrux"]
 size = Vector2(92, 13)
@@ -26,3 +27,10 @@ shape = SubResource("RectangleShape2D_4ukbx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_yys74")
+
+[node name="LootSpawner" parent="." instance=ExtResource("3_4ukbx")]
+
+[node name="Coins" type="Node2D" parent="."]
+
+[node name="Specials" type="Node2D" parent="."]
+position = Vector2(0, -22)

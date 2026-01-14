@@ -10,10 +10,18 @@ extends StaticBody2D
 
 var original_position: Vector2
 var shaking := false
+var player = null
+var visibility = Global.visibility
 
 func _ready():
 	original_position = position
 
+func _physics_process(_delta):
+	if player == null:
+		return
+	
+	if position.y > player.position.y + visibility:
+		queue_free()
 
 func shake():
 	print("💥 PLATAFORMA SACUDINDO")

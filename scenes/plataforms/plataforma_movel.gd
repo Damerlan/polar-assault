@@ -1,7 +1,7 @@
 #Plataforma Movel - Updated 12-01-26
 extends StaticBody2D
 
-@export var visibility := 400
+var visibility = Global.visibility
 
 @export var amplitude := 32.0
 @export var speed := 1.5

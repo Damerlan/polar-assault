@@ -19,6 +19,26 @@ signal collect_coin(value)
 signal lives_changed
 signal morreu
 
+
+# ===============================
+# CONFIGURAÇÕES DE PROGRESSÃO
+# ===============================
+const BASE_GEM_CHANCE := 0.05     # 5%
+const MAX_GEM_CHANCE := 0.25      # 25%
+const HEIGHT_FOR_MAX := 6000.0    # altura onde atinge o máximo
+
+# ===============================
+# RETORNA CHANCE BASEADA NA ALTURA
+# ===============================
+func get_special_chance_by_height(height_y: float) -> float:
+	var h: float = abs(height_y)
+
+	return lerp(
+		Global.BASE_SPECIAL_CHANCE,
+		Global.MAX_SPECIAL_CHANCE,
+		clamp(h / Global.HEIGHT_FOR_MAX_SPECIAL, 0.0, 1.0)
+	)
+
 func add_coin(value: int):
 	itens += value
 	emit_signal("collect_coin")
@@ -47,10 +67,10 @@ func get_score() -> int:
 	
 	return int(pontos_subida + pontos_coleta + bonus_ef - penalidade)
 
-func get_gem_chance_by_height(height): #REVIZAR
-	if height < 800:
-		return 0.02
-	elif height < 2000:
-		return 0.05
-	else:
-		return 0.08
+#func get_gem_chance_by_height(height): #REVIZAR
+#	if height < 800:
+#		return 0.02
+#	elif height < 2000:
+#		return 0.05
+#	else:
+#		return 0.08
