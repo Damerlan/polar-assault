@@ -147,11 +147,7 @@ func _physics_process(delta: float) -> void:	#processo de fisica
 		#else:
 			# Aqui evitamos registrar plataformas onde o player
 			# pousou na quina ou numa lateral
-<<<<<<< HEAD
-			return
-=======
->>>>>>> d52c26e78c702e846c77f456818ae0f6c6c0115d
-			#print("Ignorado: pousou na quina / lateral.")
+		#print("Ignorado: pousou na quina / lateral.")
 	# Saiu do chão? NÃO pode continuar no gelo
 	
 	#detecta se o player esta no jelo
