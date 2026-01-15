@@ -1,7 +1,7 @@
 extends Control
 
-@export var next_scene := "res://scenes/sala_01.tscn"
-@export var min_loading_time := 1.0 # tempo mínimo visível (em segundos)
+@export var next_scene := "res://scenes/rooms/sala_01.tscn"
+@export var min_loading_time := 1.5 # tempo mínimo visível (em segundos)
 
 @onready var progress_bar = $ProgressBar
 @onready var min_timer: Timer = $min_time
@@ -27,9 +27,6 @@ func _process(_delta):
 
 		try_finish()
 
-func _on_MinTimer_timeout():
-	try_finish()
-
 func try_finish():
 	if loading_finished and min_timer.time_left <= 0:
 		var packed = load(next_scene)
@@ -37,13 +34,25 @@ func try_finish():
 
 func get_heavy_resources() -> Array:
 	return [
-		#"res://scenes/sala_01.tscn",
-		#"res://entities/player_peko.tscn",
-		#"res://audio/music/ClementPanchout_ Life_is_full_of_Joy.mp3",
-		#"res://plataforms/plataforma.tscn",
-		#"res://plataforms/plataform_breaking.tscn",
-		#"res://plataforms/plataform_up_down.tscn",
-		"res://plataforms/safe_plataform.tscn"
+		"res://scenes/rooms/sala_01.tscn",
+		"res://scenes/plataforms/plataforma_comum.tscn", 
+		"res://scenes/plataforms/plataforma_congelada.tscn", 
+		"res://scenes/plataforms/plataforma_espinhos.tscn", 
+		"res://scenes/plataforms/plataforma_movel.tscn", 
+		"res://scenes/plataforms/plataform_breackin.tscn", 
+		"res://scenes/plataforms/ring_plataform.tscn",
+		"res://scenes/coletaveis/coin.tscn", 
+		"res://scenes/coletaveis/coin_coper.tscn", 
+		"res://scenes/coletaveis/coin_gold.tscn", 
+		"res://scenes/coletaveis/coin_silver.tscn", 
+		"res://scenes/coletaveis/gem_base.tscn", 
+		"res://scenes/coletaveis/gem_diamond.tscn", 
+		"res://scenes/coletaveis/gem_emerald.tscn", 
+		"res://scenes/coletaveis/gem_ruby.tscn", 
+		"res://scenes/coletaveis/life.tscn",
+		"res://scenes/objects_system/Cameras/camera_game_play.tscn",
+		"res://entities/player.tscn"
+		
 	]
 
 

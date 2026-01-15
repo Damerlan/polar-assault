@@ -1,100 +1,115 @@
-[gd_scene load_steps=17 format=3 uid="uid://bttppxqbhp52t"]
+[gd_scene load_steps=7 format=3 uid="uid://bttppxqbhp52t"]
 
-[ext_resource type="PackedScene" uid="uid://h88qr0cg8f4a" path="res://scenes/plataforms/plataforma_comum.tscn" id="1_hkql6"]
-[ext_resource type="PackedScene" uid="uid://boy0ayee14ol8" path="res://scenes/plataforms/plataforma_congelada.tscn" id="2_bvu47"]
-[ext_resource type="PackedScene" uid="uid://bmoq88x60l3x4" path="res://scenes/plataforms/plataforma_espinhos.tscn" id="3_jy0cp"]
-[ext_resource type="PackedScene" uid="uid://b8yvwwunjau5o" path="res://scenes/plataforms/plataforma_movel.tscn" id="4_ka2pd"]
-[ext_resource type="PackedScene" uid="uid://bkfxos7lne2eb" path="res://scenes/plataforms/plataform_breackin.tscn" id="5_2v6k8"]
-[ext_resource type="PackedScene" uid="uid://by8113x2kbl31" path="res://scenes/coletaveis/life.tscn" id="6_2v6k8"]
-[ext_resource type="PackedScene" uid="uid://cmrk76u50yyx1" path="res://scenes/coletaveis/gem_ruby.tscn" id="7_t0537"]
-[ext_resource type="PackedScene" uid="uid://c4ur14wbvjud3" path="res://scenes/coletaveis/gem_emerald.tscn" id="8_ps0oe"]
-[ext_resource type="PackedScene" uid="uid://sy83nfi2ny8s" path="res://scenes/coletaveis/gem_diamond.tscn" id="9_x58n8"]
-[ext_resource type="PackedScene" uid="uid://va3hb270xlnb" path="res://scenes/coletaveis/coin_silver.tscn" id="10_x58n8"]
-[ext_resource type="PackedScene" uid="uid://byxkblgi43sn1" path="res://scenes/coletaveis/coin_gold.tscn" id="11_0wnk3"]
-[ext_resource type="PackedScene" uid="uid://b4wcg5gltkpnk" path="res://scenes/coletaveis/coin_coper.tscn" id="12_1sixe"]
-[ext_resource type="PackedScene" uid="uid://cklldoycuolvv" path="res://scenes/plataforms/ring_plataform.tscn" id="13_0wnk3"]
-[ext_resource type="PackedScene" uid="uid://dok8g2fmkc556" path="res://entities/player.tscn" id="14_1sixe"]
-[ext_resource type="PackedScene" uid="uid://bbkqj04nwsabd" path="res://scenes/coletaveis/coin.tscn" id="15_xr85p"]
-[ext_resource type="PackedScene" uid="uid://bkwrn36rjcayu" path="res://scenes/coletaveis/gem_base.tscn" id="16_nb2eg"]
+[ext_resource type="Script" uid="uid://77gmrgomuh75" path="res://scenes/system/loby_01.gd" id="1_0oq8d"]
+[ext_resource type="Texture2D" uid="uid://dptkcfsmncwjk" path="res://Assets/UI/titles/log.png" id="1_vsqn7"]
+[ext_resource type="Texture2D" uid="uid://ch8u4cg8kn7gb" path="res://Assets/UI/Buttons/g58.png" id="2_h7fkl"]
+[ext_resource type="Texture2D" uid="uid://cm2vfjc2cckek" path="res://Assets/UI/Buttons/g59.png" id="3_0oq8d"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hkql6"]
+texture = ExtResource("2_h7fkl")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bvu47"]
+texture = ExtResource("3_0oq8d")
 
 [node name="Loby_01" type="Node2D"]
+script = ExtResource("1_0oq8d")
 metadata/_edit_horizontal_guides_ = [24.0, 56.0]
 
-[node name="PlataformaComum" parent="." instance=ExtResource("1_hkql6")]
-position = Vector2(60, 296)
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "LOBY"
 
-[node name="PlataformaComum2" parent="." instance=ExtResource("1_hkql6")]
-position = Vector2(652, 313)
+[node name="MainMenu" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="PlataformaComum3" parent="." instance=ExtResource("1_hkql6")]
-position = Vector2(287, 205)
+[node name="Panel" type="Panel" parent="MainMenu"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 12.0
+offset_top = 51.0
+offset_right = 179.0
+offset_bottom = 263.0
+grow_vertical = 2
 
-[node name="PlataformaComum4" parent="." instance=ExtResource("1_hkql6")]
-position = Vector2(520, 286)
+[node name="BoxContainer" type="BoxContainer" parent="MainMenu/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -44.0
+offset_top = -81.5
+offset_right = 44.0
+offset_bottom = 81.5
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="PlataformaComum5" parent="." instance=ExtResource("1_hkql6")]
-position = Vector2(657, 285)
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/Panel/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="PlataformaCongelada" parent="." instance=ExtResource("2_bvu47")]
-position = Vector2(178, 166)
+[node name="Sprite2D" type="Sprite2D" parent="MainMenu/Panel/BoxContainer/VBoxContainer"]
+position = Vector2(56.500015, -19.5)
+scale = Vector2(0.16319437, 0.16319445)
+texture = ExtResource("1_vsqn7")
 
-[node name="PlataformaEspinhos" parent="." instance=ExtResource("3_jy0cp")]
-position = Vector2(280, 114)
+[node name="Gabmbiarra" type="Label" parent="MainMenu/Panel/BoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "                          "
 
-[node name="PlataformaMovel" parent="." instance=ExtResource("4_ka2pd")]
-position = Vector2(419, 213)
+[node name="BtnStart" type="Button" parent="MainMenu/Panel/BoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_hkql6")
+theme_override_styles/hover = SubResource("StyleBoxTexture_bvu47")
+text = "Iniciar"
 
-[node name="PlataformBreackin" parent="." instance=ExtResource("5_2v6k8")]
-position = Vector2(68, 105)
+[node name="Gabmbiarra2" type="Label" parent="MainMenu/Panel/BoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 1
+text = "                          "
 
-[node name="Life" parent="." instance=ExtResource("6_2v6k8")]
-position = Vector2(544, 231)
+[node name="BtnRanking" type="Button" parent="MainMenu/Panel/BoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_hkql6")
+theme_override_styles/hover = SubResource("StyleBoxTexture_bvu47")
+text = "Ranking"
 
-[node name="GemRuby" parent="." instance=ExtResource("7_t0537")]
-position = Vector2(542, 186)
+[node name="Gabmbiarra3" type="Label" parent="MainMenu/Panel/BoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 1
+text = "                          "
 
-[node name="GemEmerald" parent="." instance=ExtResource("8_ps0oe")]
-position = Vector2(541, 144)
+[node name="BtnFull" type="Button" parent="MainMenu/Panel/BoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_hkql6")
+theme_override_styles/hover = SubResource("StyleBoxTexture_bvu47")
+text = "Tela Cheia"
 
-[node name="GemDiamond" parent="." instance=ExtResource("9_x58n8")]
-position = Vector2(540, 99)
+[node name="Gabmbiarra4" type="Label" parent="MainMenu/Panel/BoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 1
+text = "                          "
 
-[node name="CoinSilver" parent="." instance=ExtResource("10_x58n8")]
-position = Vector2(496, 146)
+[node name="BtnSair" type="Button" parent="MainMenu/Panel/BoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_hkql6")
+theme_override_styles/hover = SubResource("StyleBoxTexture_bvu47")
+text = "Sair"
 
-[node name="CoinGold" parent="." instance=ExtResource("11_0wnk3")]
-position = Vector2(497, 100)
+[node name="ui_efect" type="AudioStreamPlayer" parent="."]
 
-[node name="CoinCoper" parent="." instance=ExtResource("12_1sixe")]
-position = Vector2(497, 188)
+[node name="bg_music" type="AudioStreamPlayer" parent="."]
 
-[node name="RingPlataform" parent="." instance=ExtResource("13_0wnk3")]
-position = Vector2(298, 298)
-scale = Vector2(3, 3)
-
-[node name="Player" parent="." instance=ExtResource("14_1sixe")]
-position = Vector2(53, 269)
-
-[node name="Coin" parent="." instance=ExtResource("15_xr85p")]
-position = Vector2(83, 247)
-
-[node name="Coin2" parent="." instance=ExtResource("15_xr85p")]
-position = Vector2(83, 205)
-
-[node name="Coin3" parent="." instance=ExtResource("15_xr85p")]
-position = Vector2(86, 168)
-
-[node name="GemDiamond2" parent="." instance=ExtResource("9_x58n8")]
-position = Vector2(32, 237)
-
-[node name="GemEmerald2" parent="." instance=ExtResource("8_ps0oe")]
-position = Vector2(34, 196)
-
-[node name="GemRuby2" parent="." instance=ExtResource("7_t0537")]
-position = Vector2(32, 151)
-
-[node name="Life2" parent="." instance=ExtResource("6_2v6k8")]
-position = Vector2(163, 128)
-
-[node name="GemBase" parent="." instance=ExtResource("16_nb2eg")]
-position = Vector2(58, 229)
+[connection signal="pressed" from="MainMenu/Panel/BoxContainer/VBoxContainer/BtnStart" to="." method="_on_btn_start_pressed"]
+[connection signal="pressed" from="MainMenu/Panel/BoxContainer/VBoxContainer/BtnRanking" to="." method="_on_btn_ranking_pressed"]
+[connection signal="pressed" from="MainMenu/Panel/BoxContainer/VBoxContainer/BtnFull" to="." method="_on_btn_full_pressed"]
+[connection signal="pressed" from="MainMenu/Panel/BoxContainer/VBoxContainer/BtnSair" to="." method="_on_btn_sair_pressed"]

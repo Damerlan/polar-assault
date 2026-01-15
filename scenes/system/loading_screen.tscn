@@ -43,3 +43,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="min_time" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="min_time" to="." method="_on_min_time_timeout"]
