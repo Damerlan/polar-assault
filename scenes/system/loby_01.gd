@@ -27,8 +27,7 @@ func _on_btn_start_pressed() -> void:
 
 func _on_btn_ranking_pressed() -> void:
 	ui_efx()
-	var next_scene = "ranking"
-	get_tree().change_scene_to_file("res://scenes/" + next_scene +".tscn")
+	get_tree().change_scene_to_file("res://scenes/UI/ranking.tscn")
 
 
 func _on_btn_full_pressed() -> void:

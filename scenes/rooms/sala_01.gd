@@ -12,7 +12,6 @@ func _ready() -> void:
 		gm.state = GameManager.GameState.PLAYING
 
 func _on_player_morreu():
-	
 	GameManager.finalizar_partida()
 	#para o tempo
 	get_tree().paused = true
@@ -21,4 +20,4 @@ func _on_player_morreu():
 	await get_tree().create_timer(0.8).timeout
 	
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://huds/game_over.tscn")
+	get_tree().change_scene_to_file("res://scenes/UI/game_over.tscn")

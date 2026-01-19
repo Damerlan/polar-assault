@@ -1,0 +1,237 @@
+[gd_scene load_steps=14 format=3 uid="uid://dl2wef5ynxkfa"]
+
+[ext_resource type="Texture2D" uid="uid://dpr4twxd2ft6f" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Victory_Dance (16 x 16).png" id="1_njkqv"]
+[ext_resource type="Script" uid="uid://kbohtlv8jnlx" path="res://scenes/UI/game_over_control.gd" id="1_vop4n"]
+[ext_resource type="Texture2D" uid="uid://ch8u4cg8kn7gb" path="res://Assets/UI/Buttons/g58.png" id="2_a2ham"]
+[ext_resource type="Texture2D" uid="uid://winr36hofvf3" path="res://Assets/UI/titles/gameover.png" id="2_yv7mv"]
+[ext_resource type="Texture2D" uid="uid://cm2vfjc2cckek" path="res://Assets/UI/Buttons/g59.png" id="3_yv7mv"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r5ffl"]
+texture = ExtResource("2_a2ham")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lrum0"]
+texture = ExtResource("3_yv7mv")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vop4n"]
+atlas = ExtResource("1_njkqv")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l48yu"]
+atlas = ExtResource("1_njkqv")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a2ham"]
+atlas = ExtResource("1_njkqv")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yv7mv"]
+atlas = ExtResource("1_njkqv")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r5ffl"]
+atlas = ExtResource("1_njkqv")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lrum0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vop4n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l48yu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a2ham")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yv7mv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r5ffl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="GameOver" type="CanvasLayer"]
+
+[node name="GameOverControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vop4n")
+
+[node name="Panel" type="Panel" parent="GameOverControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -179.0
+offset_top = -130.0
+offset_right = 179.0
+offset_bottom = 130.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="GameOverControl/Panel"]
+position = Vector2(178, 5)
+scale = Vector2(0.1347656, 0.13476561)
+texture = ExtResource("2_yv7mv")
+
+[node name="LabelTitle" type="Label" parent="GameOverControl/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="GameOverControl/Panel"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 28.0
+offset_top = -46.0
+offset_right = 132.0
+offset_bottom = 132.0
+grow_vertical = 2
+
+[node name="LabelNovoRecord" type="Label" parent="GameOverControl/Panel/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Novo Record!"
+horizontal_alignment = 1
+
+[node name="LineEditNome" type="LineEdit" parent="GameOverControl/Panel/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+placeholder_text = "Seu nome aqui!"
+
+[node name="ButtonSalvar" type="Button" parent="GameOverControl/Panel/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxTexture_r5ffl")
+theme_override_styles/hover = SubResource("StyleBoxTexture_lrum0")
+text = "Salvar"
+
+[node name="ButtonNovoGame" type="Button" parent="GameOverControl/Panel/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxTexture_r5ffl")
+theme_override_styles/hover = SubResource("StyleBoxTexture_lrum0")
+text = "Novo game"
+
+[node name="ButtonSair" type="Button" parent="GameOverControl/Panel/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxTexture_r5ffl")
+theme_override_styles/hover = SubResource("StyleBoxTexture_lrum0")
+text = "Sair"
+
+[node name="VSeparator" type="VSeparator" parent="GameOverControl/Panel/VBoxContainer2"]
+layout_mode = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GameOverControl/Panel/VBoxContainer2"]
+position = Vector2(44, -27)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_lrum0")
+autoplay = "default"
+frame_progress = 0.690182
+
+[node name="HSeparator3" type="HSeparator" parent="GameOverControl/Panel/VBoxContainer2"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverControl/Panel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -207.0
+offset_top = -86.0
+offset_right = -14.0
+offset_bottom = 143.5
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="LabelFinalScore" type="Label" parent="GameOverControl/Panel/VBoxContainer"]
+layout_mode = 2
+text = "0000"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="GameOverControl/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxStats" type="VBoxContainer" parent="GameOverControl/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="LabelAltura" type="Label" parent="GameOverControl/Panel/VBoxContainer/VBoxStats"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "+0"
+horizontal_alignment = 2
+
+[node name="LabelItens" type="Label" parent="GameOverControl/Panel/VBoxContainer/VBoxStats"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "100"
+horizontal_alignment = 2
+
+[node name="LabelTempo" type="Label" parent="GameOverControl/Panel/VBoxContainer/VBoxStats"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "60s"
+horizontal_alignment = 2
+
+[node name="HSeparator2" type="HSeparator" parent="GameOverControl/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxCalculo" type="VBoxContainer" parent="GameOverControl/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="LabelCalcAltura" type="Label" parent="GameOverControl/Panel/VBoxContainer/VBoxCalculo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "00"
+horizontal_alignment = 2
+
+[node name="LabelCalcColeta" type="Label" parent="GameOverControl/Panel/VBoxContainer/VBoxCalculo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "00"
+horizontal_alignment = 2
+
+[node name="LabelCalcEficiencia" type="Label" parent="GameOverControl/Panel/VBoxContainer/VBoxCalculo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "00"
+horizontal_alignment = 2
+
+[node name="LabelCalcTempo" type="Label" parent="GameOverControl/Panel/VBoxContainer/VBoxCalculo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "00"
+horizontal_alignment = 2
+
+[node name="LabelFeedback" type="Label" parent="GameOverControl/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Boa tentativa"
+horizontal_alignment = 1
+
+[node name="GameOverSound" type="AudioStreamPlayer" parent="."]
+
+[connection signal="pressed" from="GameOverControl/Panel/VBoxContainer2/ButtonSalvar" to="GameOverControl" method="_on_button_salvar_pressed"]
+[connection signal="pressed" from="GameOverControl/Panel/VBoxContainer2/ButtonNovoGame" to="GameOverControl" method="_on_button_novo_game_pressed"]
+[connection signal="pressed" from="GameOverControl/Panel/VBoxContainer2/ButtonSair" to="GameOverControl" method="_on_button_sair_pressed"]

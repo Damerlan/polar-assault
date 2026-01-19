@@ -41,7 +41,7 @@ signal pause_requested
 signal show_teclado
 # ─────────── System ───────────
 func _ready():
-	#Global.connect("morreu", _on_player_morreu)
+	ScoreManager.connect("morreu", _on_player_morreu)
 	add_to_group("GameManager")
 	world = get_tree().current_scene
 	print("GameManager ativo, estado:", state)
@@ -80,6 +80,7 @@ func update_coleta(item):
 #----CONTROLE 
 func _on_player_morreu():
 	finalizar_partida()
+	print("finalizando partida!")
 
 
 func iniciar_partida():
@@ -90,6 +91,10 @@ func iniciar_partida():
 func finalizar_partida():
 	contando = false
 	emit_signal("partida_finalizada", tempo_partida)
+	print("emitindo sinal partida finalizada!")
+	#get_tree().change_scene_to_file("res://scenes/UI/game_over.tscn")
+	
+	
 
 
 func formatar_tempo(segundos: float) -> String:
@@ -106,16 +111,16 @@ func start_game():
 			_restart_from_game_over()
 
 func _start_from_lobby():
-	Global.reset_run()
+	reset_run()
 	state = GameState.PLAYING
-	get_tree().change_scene_to_file("res://scenes/" + next_scene + ".tscn")
+	get_tree().change_scene_to_file("res://scenes/system/loading_screen.tscn")
 	await get_tree().process_frame
 	world = get_tree().current_scene
 
 func _restart_from_game_over():
-	Global.reset_run()
+	reset_run()
 	state = GameState.PLAYING
-	get_tree().change_scene_to_file("res://scenes/" + next_scene + ".tscn")
+	get_tree().change_scene_to_file("res://scenes/system/loading_screen.tscn")
 	await get_tree().process_frame
 	world = get_tree().current_scene
 	

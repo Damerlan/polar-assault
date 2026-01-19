@@ -18,7 +18,8 @@ metadata/_edit_horizontal_guides_ = [24.0, 56.0]
 [node name="Label" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
-text = "LOBY"
+theme_override_font_sizes/font_size = 3
+text = "  Alfa v1.0.0"
 
 [node name="MainMenu" type="Control" parent="."]
 layout_mode = 3

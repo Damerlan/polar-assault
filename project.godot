@@ -24,6 +24,7 @@ Controles:
 Projeto em estágio ALFA.
 Bugs e sugestões são bem-vindos.
 "
+run/main_scene="uid://bttppxqbhp52t"
 config/features=PackedStringArray("4.5", "Mobile")
 boot_splash/image="uid://dnuwhugyenevi"
 config/icon="uid://dwxreg7w3tq2b"
@@ -48,6 +49,7 @@ window/stretch/mode="canvas_items"
 [global_group]
 
 Player=""
+GameManager=""
 
 [input]
 

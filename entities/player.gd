@@ -463,7 +463,7 @@ func _die():
 
 func game_over():
 	print("GAME OVER")
-	get_tree().change_scene_to_file("res://huds/game_over.tscn")
+	get_tree().change_scene_to_file("res://scenes/UI/game_over.tscn")
 #
 
 

@@ -58,6 +58,7 @@ func remove_life():
 	if Global.lives <= 0:
 		Global.lives = 0
 		emit_signal("morreu")
+		print("morreu!")
 
 
 func get_score() -> int:
