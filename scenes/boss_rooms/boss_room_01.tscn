@@ -1,0 +1,103 @@
+[gd_scene load_steps=13 format=3 uid="uid://ccc8wjd611h7d"]
+
+[ext_resource type="Script" uid="uid://co6he8q12y2hn" path="res://scenes/boss_rooms/boss_room_01.gd" id="1_mbfml"]
+[ext_resource type="Texture2D" uid="uid://dibntkhayirs5" path="res://Assets/paralax/CavernaCamadas/Caverna-Gelo-05.png" id="1_yc650"]
+[ext_resource type="Texture2D" uid="uid://gq8vfpsv75jb" path="res://Assets/paralax/CavernaCamadas/Caverna-Gelo-03.png" id="2_1dc5e"]
+[ext_resource type="Texture2D" uid="uid://dq4jn7kqhxoqn" path="res://Assets/paralax/CavernaCamadas/Caverna-Gelo-02.png" id="3_mbfml"]
+[ext_resource type="Texture2D" uid="uid://b8tu5hxxp7rli" path="res://Assets/paralax/CavernaCamadas/Caverna-Gelo-01.png" id="4_i76sh"]
+[ext_resource type="Texture2D" uid="uid://c3pjxeug8yy6t" path="res://Assets/paralax/CavernaCamadas/Caverna-Gelo-06.png" id="5_ry6tf"]
+[ext_resource type="PackedScene" uid="uid://dok8g2fmkc556" path="res://entities/player.tscn" id="6_1dc5e"]
+[ext_resource type="PackedScene" uid="uid://cklldoycuolvv" path="res://scenes/plataforms/ring_plataform.tscn" id="7_8fgla"]
+[ext_resource type="PackedScene" uid="uid://b16mil806ej3r" path="res://entities/pirate_pino.tscn" id="8_8fgla"]
+[ext_resource type="PackedScene" uid="uid://h88qr0cg8f4a" path="res://scenes/plataforms/plataforma_comum.tscn" id="8_inoyt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gktqk"]
+size = Vector2(35, 496)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8fgla"]
+size = Vector2(660, 20)
+
+[node name="BossRoom01" type="Node2D"]
+script = ExtResource("1_mbfml")
+intro_camera_position = Vector2(240, 134)
+pan_offset = Vector2(100, 0)
+intro_zoom = Vector2(0.85, 0.85)
+
+[node name="Background" type="Node2D" parent="."]
+position = Vector2(257, 160)
+
+[node name="P1" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.1, 0.1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/P1"]
+texture = ExtResource("1_yc650")
+
+[node name="P2" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.2, 0.2)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/P2"]
+texture = ExtResource("2_1dc5e")
+
+[node name="P3" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.3, 0.3)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/P3"]
+texture = ExtResource("3_mbfml")
+
+[node name="P4" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.4, 0.4)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/P4"]
+texture = ExtResource("4_i76sh")
+
+[node name="P5" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.5, 0.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/P5"]
+texture = ExtResource("5_ry6tf")
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="RingPlataform" parent="Platforms" instance=ExtResource("7_8fgla")]
+position = Vector2(274, 294)
+scale = Vector2(2, 2)
+
+[node name="PlataformaComum" parent="Platforms" instance=ExtResource("8_inoyt")]
+position = Vector2(62, 301)
+
+[node name="Parede" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Parede"]
+position = Vector2(-53, 160)
+shape = SubResource("RectangleShape2D_gktqk")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Parede"]
+position = Vector2(622, 160)
+shape = SubResource("RectangleShape2D_gktqk")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Parede"]
+position = Vector2(295, -77)
+rotation = -1.5707964
+shape = SubResource("RectangleShape2D_gktqk")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(240, 240)
+limit_left = -150
+limit_right = 660
+limit_bottom = 320
+drag_top_margin = 0.15
+
+[node name="Player" parent="." instance=ExtResource("6_1dc5e")]
+position = Vector2(69, 285)
+
+[node name="PiratePino" parent="." instance=ExtResource("8_8fgla")]
+position = Vector2(362, 279)
+
+[node name="DropArea" type="Area2D" parent="."]
+position = Vector2(278, 400)
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DropArea"]
+shape = SubResource("RectangleShape2D_8fgla")
+
+[connection signal="body_entered" from="DropArea" to="." method="_on_drop_area_body_entered"]

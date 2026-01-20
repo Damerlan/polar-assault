@@ -11,11 +11,12 @@ offset_bottom = 40.0
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 193.0
+offset_bottom = 28.0
 
 [node name="Label" type="Label" parent="Panel/MarginContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 10
 text = "Mensagem de teste..."
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

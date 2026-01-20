@@ -16,7 +16,7 @@ enum PlayerState{
 @onready var fx_jump: AudioStreamPlayer = $Souds/fx_jump
 @onready var fx_damage: AudioStreamPlayer = $Souds/fx_damage
 @onready var fx_teleport: AudioStreamPlayer = $Souds/fx_teleport
-@onready var dialog_ballom: Marker2D = $DialogBallom
+@onready var dialog_ballom: Marker2D = $DigalogBallom
 
 #---------------------------------------------
 # Nodes

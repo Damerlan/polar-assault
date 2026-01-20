@@ -50,6 +50,7 @@ window/stretch/mode="canvas_items"
 
 Player=""
 GameManager=""
+Boss=""
 
 [input]
 
