@@ -32,4 +32,10 @@ texture = ExtResource("1_12r4w")
 [node name="Specials" type="Node2D" parent="."]
 position = Vector2(0, -22)
 
+[node name="Audio" type="Node" parent="."]
+
+[node name="ASPWood" type="AudioStreamPlayer2D" parent="Audio"]
+
+[node name="ASPInpact" type="AudioStreamPlayer2D" parent="Audio"]
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

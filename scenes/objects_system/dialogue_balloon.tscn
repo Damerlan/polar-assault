@@ -19,4 +19,6 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Mensagem de teste..."
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Audio" type="Node" parent="."]
+
+[node name="ASPKeyEfect" type="AudioStreamPlayer" parent="Audio"]

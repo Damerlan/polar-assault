@@ -45,4 +45,8 @@ grow_vertical = 2
 [node name="min_time" type="Timer" parent="."]
 one_shot = true
 
+[node name="Audio" type="Node" parent="."]
+
+[node name="ASPAmbience" type="AudioStreamPlayer" parent="Audio"]
+
 [connection signal="timeout" from="min_time" to="." method="_on_min_time_timeout"]

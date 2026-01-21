@@ -201,3 +201,11 @@ position = Vector2(-36, -61)
 [node name="fx_damage" type="AudioStreamPlayer" parent="Souds"]
 
 [node name="fx_teleport" type="AudioStreamPlayer" parent="Souds"]
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="ASPJump" type="AudioStreamPlayer2D" parent="Audio"]
+
+[node name="ASPDamage" type="AudioStreamPlayer2D" parent="Audio"]
+
+[node name="ASPTeleport" type="AudioStreamPlayer2D" parent="Audio"]

@@ -168,5 +168,9 @@ sprite_frames = SubResource("SpriteFrames_p0c8u")
 animation = &"colect"
 autoplay = "default"
 
+[node name="Audio" type="Node" parent="."]
+
+[node name="ASPColectEfect" type="AudioStreamPlayer" parent="Audio"]
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="animation_finished" from="Anim" to="." method="_on_anim_animation_finished"]

@@ -5,7 +5,7 @@ extends Node2D
 # ===============================
 @onready var label := $Panel/MarginContainer/Label
 @onready var panel := $Panel
-@onready var type_sound: AudioStreamPlayer = $TypeSound
+@onready var type_sound: AudioStreamPlayer = $Audio/ASPKeyEfect
 
 # ===============================
 # CONFIGURAÇÕES
@@ -99,13 +99,13 @@ func set_text(text: String):
 
 func _start_typing():
 	while char_index < full_text.length():
-		var char := full_text[char_index]
-		label.text += char
+		var current_char := full_text[char_index]
+		label.text += current_char
 		char_index += 1
 		update_size()
 
 		# 🔊 Som apenas em letras visíveis
-		if char != " " and char != "\n":
+		if current_char != " " and current_char != "\n":
 			_play_type_sound()
 			_pulse_outline()   # ✨ ANIMA OUTLINE
 

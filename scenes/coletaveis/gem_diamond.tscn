@@ -104,4 +104,6 @@ sprite_frames = SubResource("SpriteFrames_24tbw")
 animation = &"colect"
 autoplay = "default"
 
-[node name="GemCollect" type="AudioStreamPlayer" parent="."]
+[node name="Audio" type="Node" parent="."]
+
+[node name="ASPColectEfect" type="AudioStreamPlayer" parent="Audio"]

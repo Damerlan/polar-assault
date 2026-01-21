@@ -480,5 +480,19 @@ position = Vector2(-50, -123)
 
 [node name="HitEfect" type="AudioStreamPlayer" parent="."]
 
+[node name="Audio" type="Node" parent="."]
+
+[node name="ASPHitEfect" type="AudioStreamPlayer2D" parent="Audio"]
+area_mask = 4
+
+[node name="ASPAtackEfect" type="AudioStreamPlayer2D" parent="Audio"]
+area_mask = 4
+
+[node name="ASPDropEfect" type="AudioStreamPlayer2D" parent="Audio"]
+area_mask = 4
+
+[node name="ASPDeath" type="AudioStreamPlayer2D" parent="Audio"]
+area_mask = 4
+
 [connection signal="body_entered" from="Heady" to="." method="_on_heady_body_entered"]
 [connection signal="body_entered" from="BodyHitArea" to="." method="_on_body_hit_area_body_entered"]

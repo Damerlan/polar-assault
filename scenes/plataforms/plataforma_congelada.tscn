@@ -34,3 +34,7 @@ texture = ExtResource("1_yys74")
 
 [node name="Specials" type="Node2D" parent="."]
 position = Vector2(0, -22)
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="ASPIceEfect" type="AudioStreamPlayer" parent="Audio"]

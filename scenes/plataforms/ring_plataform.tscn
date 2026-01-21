@@ -27,5 +27,11 @@ shape = SubResource("RectangleShape2D_jf543")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_waxwb")
 
+[node name="Audio" type="Node" parent="."]
+
+[node name="ASPIceEfect" type="AudioStreamPlayer2D" parent="Audio"]
+
+[node name="ASPImpactEfect" type="AudioStreamPlayer2D" parent="Audio"]
+
 [connection signal="body_entered" from="IceArea" to="." method="_on_ice_area_body_entered"]
 [connection signal="body_exited" from="IceArea" to="." method="_on_ice_area_body_exited"]

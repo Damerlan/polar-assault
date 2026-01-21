@@ -110,4 +110,6 @@ sprite_frames = SubResource("SpriteFrames_1p504")
 autoplay = "default"
 frame_progress = 0.10031769
 
-[node name="KeyCollect" type="AudioStreamPlayer" parent="."]
+[node name="Audio" type="Node" parent="."]
+
+[node name="ASPColectEfect" type="AudioStreamPlayer" parent="Audio"]

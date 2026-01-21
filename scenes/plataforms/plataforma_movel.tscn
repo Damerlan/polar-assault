@@ -50,3 +50,7 @@ sprite_frames = SubResource("SpriteFrames_a1od0")
 animation = &"moving"
 autoplay = "moving"
 frame_progress = 0.55741304
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="ASPFly" type="AudioStreamPlayer2D" parent="Audio"]

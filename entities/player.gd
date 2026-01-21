@@ -24,7 +24,7 @@ enum PlayerState{
 @onready var anim: AnimatedSprite2D = $Skin
 @onready var jump_ui: Node2D = $JumpPouwerUi
 @onready var jump_fill: ColorRect = $JumpPouwerUi/Fill
-@onready var dust_particles: GPUParticles2D = $DustParticles
+#@onready var dust_particles: GPUParticles2D = $DustParticles
 
 @export var jump_ui_height := 12.0
 @export var jump_ui_fade_speed := 20.0
@@ -96,9 +96,9 @@ func _ready() -> void:
 	jump_ui.position = Vector2(9, -7)
 	#show_dialogue("Teste funcionando")
 	#show_dialogue("Teste de fala")
-	if OS.has_feature("web") or OS.has_feature("mobile"):
-		if dust_particles:
-			dust_particles.queue_free()
+#	if OS.has_feature("web") or OS.has_feature("mobile"):
+#		if dust_particles:
+#			dust_particles.queue_free()
    
 
 func _physics_process(delta: float) -> void:	#processo de fisica
@@ -113,12 +113,12 @@ func _physics_process(delta: float) -> void:	#processo de fisica
 	if not is_on_floor():	#se o player nao está no chão
 		velocity += get_gravity() * delta	#aplica o efeito de gravidade
 	
-	var is_moving = abs(velocity.x) > 10
-	var on_ground = is_on_floor()
+	var _is_moving = abs(velocity.x) > 10
+	#var on_ground = is_on_floor()
 	
 	#dust_particles.emitting = is_moving and on_ground
-	if dust_particles:
-		dust_particles.emitting = is_moving and on_ground
+#	if dust_particles:
+#		dust_particles.emitting = is_moving and on_ground
 	#if is_on_floor(): #se estiver na plataforma
 	#	Global.last_safe_position = global_position
 	

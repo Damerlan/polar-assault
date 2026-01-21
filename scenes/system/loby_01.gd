@@ -7,9 +7,8 @@ enum GameState {
 	GAME_OVER
 	}
 
-@onready var ui_efect: AudioStreamPlayer = $ui_efect
-@onready var btn_sair: Button = $Control/BoxContainer/VBoxContainer/BtnSair
-
+@onready var ui_efect: AudioStreamPlayer = $Audio/ui_efect
+@onready var btn_sair: Button = $MainMenu/Panel/BoxContainer/VBoxContainer/BtnSair
 func _ready() -> void:
 	var gm = get_tree().get_first_node_in_group("GameManager")
 	if gm:

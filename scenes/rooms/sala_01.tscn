@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bo42uf3ea7hap"]
+[gd_scene load_steps=9 format=3 uid="uid://bo42uf3ea7hap"]
 
 [ext_resource type="Script" uid="uid://enq84vepvkf0" path="res://scenes/rooms/sala_01.gd" id="1_22nbu"]
 [ext_resource type="PackedScene" uid="uid://djgen2sdmeb7p" path="res://scenes/objects_system/Cameras/camera_game_play.tscn" id="1_oq01q"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bdb3kj5cgpwun" path="res://scenes/objects_system/kill_zone.tscn" id="4_a8g7p"]
 [ext_resource type="PackedScene" uid="uid://dok8g2fmkc556" path="res://entities/player.tscn" id="5_2os71"]
 [ext_resource type="PackedScene" uid="uid://chjh36le28bb1" path="res://scenes/UI/pause_menu.tscn" id="7_a8g7p"]
+[ext_resource type="PackedScene" uid="uid://b6cx7clkyl4fp" path="res://scenes/UI/mobile/hud_mobile_control.tscn" id="8_xee0p"]
 
 [node name="Sala01" type="Node2D"]
 script = ExtResource("1_22nbu")
@@ -35,3 +36,13 @@ offset_top = 11.0
 offset_bottom = 11.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+
+[node name="HudMobileControl" parent="." instance=ExtResource("8_xee0p")]
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="ASPAmbience" type="AudioStreamPlayer" parent="Audio"]
+
+[node name="ASPGameOver" type="AudioStreamPlayer" parent="Audio"]
+
+[node name="ASPUiEfect" type="AudioStreamPlayer" parent="Audio"]

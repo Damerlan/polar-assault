@@ -18,7 +18,11 @@ var player_level: int = 1
 
 const XP_PER_LEVEL := 100
 
+# ======================================================
+# SISTEMA DE SELOS (PROGRESSÃO GLOBAL)
+# ======================================================
 
+var unlocked_seals: Dictionary = {}
 
 # ─────────── Configurações das Plataformas ───────────
 const visibility = 400
@@ -39,6 +43,8 @@ const visibility = 400
 
 # Global.gd
 var coming_from_boss := false
+
+var boss_seals_gained: Array[String] = []
 # ======================================================
 # VISIBILIDADE / LIMPEZA
 # ======================================================
@@ -134,12 +140,31 @@ func pick_variant(variants: Array[Dictionary]) -> Dictionary:
 
 func add_xp(value: int):
 	player_xp += value
-	player_level = max(1, player_xp / XP_PER_LEVEL + 1)
+	player_level = max(1, int(player_xp / float(XP_PER_LEVEL)) + 1)
 	
+
+func unlock_seal(seal_id: String) -> void:
+	if seal_id.is_empty():
+		return
+
+	if unlocked_seals.has(seal_id):
+		return # já desbloqueado
+
+	unlocked_seals[seal_id] = true
+	print("🔓 Selo desbloqueado:", seal_id)
+
+
+func has_seal(seal_id: String) -> bool:
+	return unlocked_seals.has(seal_id)
 
 
 # ─────────── SINAIS ───────────
-
+# Global.gd
+const SEAL_ICONS := {
+	"pirata_derrotado": preload("res://Assets/seals/seal_pirata.png"),
+	"capitao_derrotado": preload("res://Assets/seals/seal_capitao.png"),
+	"kraken_derrotado": preload("res://Assets/seals/seal_kraken.png")
+}
 
 
 # ─────────── 00 ───────────

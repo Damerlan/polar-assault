@@ -84,8 +84,10 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_ey0uf")
 theme_override_styles/hover = SubResource("StyleBoxTexture_ndkgq")
 text = "Retornar"
 
-[node name="ui_efect" type="AudioStreamPlayer" parent="."]
+[node name="Audio" type="Node" parent="."]
 
-[node name="bg_music" type="AudioStreamPlayer" parent="."]
+[node name="ASPUiEfect" type="AudioStreamPlayer" parent="Audio"]
+
+[node name="ASPAmbience" type="AudioStreamPlayer" parent="Audio"]
 
 [connection signal="pressed" from="Ranking/Panel/BoxContainer/VBoxContainer/BtnReturn" to="." method="_on_btn_return_pressed"]

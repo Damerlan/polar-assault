@@ -2,7 +2,7 @@ extends Area2D
 class_name GemBase
 
 @onready var anim: AnimatedSprite2D = $Anim
-@onready var gem_collect: AudioStreamPlayer = $GemCollect
+@onready var gem_collect: AudioStreamPlayer = $Audio/ASPColectEfect
 @onready var collision: CollisionShape2D = $CollisionShape2D
 
 @export var value: int = 1

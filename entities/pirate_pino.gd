@@ -222,7 +222,7 @@ func _update_stun(delta):
 		state = State.CHASE
 
 #quando o player pula na cabeça do boss
-func on_player_jump_on_head(player: CharacterBody2D):
+func on_player_jump_on_head(player_hit: CharacterBody2D):
 	if state == State.DEAD:
 		return
 	if state == State.STUN:
@@ -241,7 +241,7 @@ func on_player_jump_on_head(player: CharacterBody2D):
 	stun_timer = stun_time
 	
 	#direção contraria ao player
-	var dir = sign(global_position.x - player.global_position.x)
+	var dir = sign(global_position.x - player_hit.global_position.x)
 	if dir == 0:
 		dir = -1 if randf() < 0.5 else 1
 	
@@ -252,11 +252,11 @@ func on_player_jump_on_head(player: CharacterBody2D):
 	heavy_landing = true   # 💥 ISSO É ESSENCIAL
 	
 	# 💥 knockback no player
-	if player.has_method("apply_knockback"):
-		player.apply_knockback(-dir)
+	if player_hit.has_method("apply_knockback"):
+		player_hit.apply_knockback(-dir)
 	else:
-		player.velocity.x = -dir * 180
-		player.velocity.y = -420
+		player_hit.velocity.x = -dir * 180
+		player_hit.velocity.y = -420
 	
 	# ☠️ MORTE DO BOSS
 	if life <= 0:
@@ -286,7 +286,7 @@ func die():
 	state = State.DEAD
 	velocity = Vector2.ZERO
 
-	anim.play("death")
+	anim.play("DeadGround")
 
 	# impacto final
 	heavy_landing = true
@@ -294,7 +294,7 @@ func die():
 
 	print("☠️ Boss morreu de verdade")
 	emit_signal("boss_defeated")
-	GameManager.complete_special_room()
+	GameManager.handle_boss_victory()
 
 
 	await anim.animation_finished
@@ -319,17 +319,17 @@ func _on_body_hit_area_body_entered(body: Node2D) -> void:
 	_apply_body_knockback(body)
 	
 
-func _apply_body_knockback(player: CharacterBody2D):
+func _apply_body_knockback(player_knockback: CharacterBody2D):
 	can_body_hit = false
 
 	# direção PARA LONGE do boss
-	var dir: int = sign(player.global_position.x - global_position.x)
+	var dir: int = sign(player_knockback.global_position.x - global_position.x)
 	if dir == 0:
 		dir = -1 if randf() < 0.5 else 1
 
 	# 💥 knockback no player
-	player.velocity.x = dir * 520
-	player.velocity.y = -180
+	player_knockback.velocity.x = dir * 520
+	player_knockback.velocity.y = -180
 
 	# animação de impacto
 	# if anim:

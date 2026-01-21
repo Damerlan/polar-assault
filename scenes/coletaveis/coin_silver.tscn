@@ -150,3 +150,7 @@ shape = SubResource("CircleShape2D_457u2")
 [node name="Anim" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_lvdoy")
 autoplay = "default"
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="ASPColectEfect" type="AudioStreamPlayer" parent="Audio"]

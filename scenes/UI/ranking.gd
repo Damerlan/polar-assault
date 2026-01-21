@@ -13,7 +13,7 @@ extends Node2D
 #	}
 	
 @onready var vbox_ranking: VBoxContainer = $Ranking/Panel/BoxContainer/VBoxContainer/VBoxRanking
-@onready var ui_efect: AudioStreamPlayer = $ui_efect
+@onready var ui_efect: AudioStreamPlayer = $Audio/ASPUiEfect
 
 
 func _ready() -> void:

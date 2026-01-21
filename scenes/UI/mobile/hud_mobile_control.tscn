@@ -1,0 +1,157 @@
+[gd_scene load_steps=15 format=3 uid="uid://b6cx7clkyl4fp"]
+
+[ext_resource type="Script" uid="uid://dxiio6oqmvch7" path="res://scenes/UI/mobile/hud_mobile_control.gd" id="1_5pwqa"]
+[ext_resource type="Texture2D" uid="uid://dki2fcj7wgy5c" path="res://Assets/Assets_Externos/mobile-controls-1.0/Sprites/Style H/Default/button_circle.png" id="1_f42kp"]
+[ext_resource type="Texture2D" uid="uid://ruq148486v6m" path="res://Assets/Assets_Externos/mobile-controls-1.0/Sprites/Style G/Default/button_circle.png" id="2_7ow7s"]
+[ext_resource type="Texture2D" uid="uid://dmhhdm7ctb7xr" path="res://Assets/Assets_Externos/mobile-controls-1.0/Sprites/Icons/Default/icon_cog.png" id="3_dfdei"]
+[ext_resource type="Texture2D" uid="uid://ckpf4by0biypl" path="res://Assets/Assets_Externos/mobile-controls-1.0/Sprites/Style H/Default/direction_left.png" id="4_a1f6p"]
+[ext_resource type="Texture2D" uid="uid://bim7t28h3w8gx" path="res://Assets/Assets_Externos/mobile-controls-1.0/Sprites/Style G/Default/direction_left.png" id="5_mm7nm"]
+[ext_resource type="Texture2D" uid="uid://dqwovw0gu1crd" path="res://Assets/Assets_Externos/mobile-controls-1.0/Sprites/Style H/Default/direction_right.png" id="6_b5cdt"]
+[ext_resource type="Texture2D" uid="uid://d3imbd7n28lkc" path="res://Assets/Assets_Externos/mobile-controls-1.0/Sprites/Style G/Default/direction_right.png" id="7_5pwqa"]
+[ext_resource type="Texture2D" uid="uid://cv77y3tbtsrgn" path="res://Assets/Assets_Externos/mobile-controls-1.0/Sprites/Icons/Default/icon_button_r.png" id="8_b5cdt"]
+[ext_resource type="Texture2D" uid="uid://dcwpd7kdfvw0h" path="res://Assets/Assets_Externos/mobile-controls-1.0/Sprites/Style H/Default/button_hexagon.png" id="8_thnfy"]
+[ext_resource type="Texture2D" uid="uid://ck5d1gul0jjae" path="res://Assets/Assets_Externos/mobile-controls-1.0/Sprites/Icons/Default/icon_button_l.png" id="9_5pwqa"]
+[ext_resource type="Texture2D" uid="uid://cmi8wttcq0nwg" path="res://Assets/Assets_Externos/mobile-controls-1.0/Sprites/Style G/Default/button_hexagon.png" id="9_g8eff"]
+[ext_resource type="Texture2D" uid="uid://dvq6csqij22or" path="res://Assets/Assets_Externos/mobile-controls-1.0/Sprites/Icons/Default/icon_jump.png" id="12_thnfy"]
+[ext_resource type="Texture2D" uid="uid://cm7n38j6a21ud" path="res://Assets/Assets_Externos/mobile-controls-1.0/Sprites/Icons/Default/icon_fire.png" id="13_g8eff"]
+
+[node name="HudMobileControl" type="CanvasLayer"]
+script = ExtResource("1_5pwqa")
+metadata/_edit_vertical_guides_ = [18.0, 550.0]
+metadata/_edit_horizontal_guides_ = [292.0, 20.0]
+
+[node name="TouchRoot" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopControl" type="Control" parent="TouchRoot"]
+layout_mode = 1
+anchors_preset = 0
+offset_right = 83.0
+offset_bottom = 79.0
+
+[node name="IconCog" type="Sprite2D" parent="TouchRoot/TopControl"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.62352943)
+position = Vector2(40, 74)
+scale = Vector2(0.41666663, 0.41666663)
+texture = ExtResource("3_dfdei")
+
+[node name="TSBMenu" type="TouchScreenButton" parent="TouchRoot/TopControl"]
+position = Vector2(22, 57)
+scale = Vector2(0.546875, 0.546875)
+texture_normal = ExtResource("1_f42kp")
+texture_pressed = ExtResource("2_7ow7s")
+action = "menu"
+visibility_mode = 1
+
+[node name="LeftControl" type="Control" parent="TouchRoot"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -115.0
+offset_right = 157.0
+grow_vertical = 0
+
+[node name="IconButtonR" type="Sprite2D" parent="TouchRoot/LeftControl"]
+visible = false
+modulate = Color(1, 1, 1, 0.18039216)
+position = Vector2(112, 59)
+scale = Vector2(0.54166675, 0.54166675)
+texture = ExtResource("8_b5cdt")
+
+[node name="IconButtonL" type="Sprite2D" parent="TouchRoot/LeftControl"]
+visible = false
+modulate = Color(1, 1, 1, 0.18039216)
+position = Vector2(56, 60)
+scale = Vector2(0.5416667, 0.5416667)
+texture = ExtResource("9_5pwqa")
+
+[node name="TSBLeft" type="TouchScreenButton" parent="TouchRoot/LeftControl"]
+position = Vector2(19, 33)
+scale = Vector2(0.84375, 0.84375)
+texture_normal = ExtResource("4_a1f6p")
+texture_pressed = ExtResource("5_mm7nm")
+action = "move_left"
+visibility_mode = 1
+
+[node name="TSBRight" type="TouchScreenButton" parent="TouchRoot/LeftControl"]
+position = Vector2(91, 32.000004)
+scale = Vector2(0.87500024, 0.87500024)
+texture_normal = ExtResource("6_b5cdt")
+texture_pressed = ExtResource("7_5pwqa")
+action = "move_right"
+visibility_mode = 1
+
+[node name="RightControl" type="Control" parent="TouchRoot"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -153.0
+offset_top = -115.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="IconJump" type="Sprite2D" parent="TouchRoot/RightControl"]
+visible = false
+modulate = Color(1, 1, 1, 0.38431373)
+position = Vector2(99, 47)
+scale = Vector2(0.45833334, 0.45833334)
+texture = ExtResource("12_thnfy")
+
+[node name="IconJump2" type="Sprite2D" parent="TouchRoot/RightControl"]
+visible = false
+modulate = Color(1, 1, 1, 0.38431373)
+position = Vector2(121, -10)
+scale = Vector2(0.29166666, 0.29166666)
+texture = ExtResource("12_thnfy")
+
+[node name="IconFire" type="Sprite2D" parent="TouchRoot/RightControl"]
+visible = false
+modulate = Color(1, 1, 1, 0.38431373)
+position = Vector2(53, 76)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("13_g8eff")
+
+[node name="TSBJump" type="TouchScreenButton" parent="TouchRoot/RightControl"]
+position = Vector2(67, 15)
+texture_normal = ExtResource("1_f42kp")
+texture_pressed = ExtResource("2_7ow7s")
+action = "jump"
+visibility_mode = 1
+
+[node name="TSBSoftJump" type="TouchScreenButton" parent="TouchRoot/RightControl"]
+position = Vector2(104, -26)
+scale = Vector2(0.53125, 0.53125)
+texture_normal = ExtResource("1_f42kp")
+texture_pressed = ExtResource("2_7ow7s")
+action = "jump_soft"
+visibility_mode = 1
+
+[node name="TSBPower" type="TouchScreenButton" parent="TouchRoot/RightControl"]
+position = Vector2(40, 61.999992)
+scale = Vector2(0.44827586, 0.4482758)
+texture_normal = ExtResource("8_thnfy")
+texture_pressed = ExtResource("9_g8eff")
+action = "power_up"
+visibility_mode = 1
+
+[connection signal="pressed" from="TouchRoot/TopControl/TSBMenu" to="." method="_on_tsb_menu_pressed"]
+[connection signal="pressed" from="TouchRoot/LeftControl/TSBLeft" to="." method="_on_tsb_left_pressed"]
+[connection signal="released" from="TouchRoot/LeftControl/TSBLeft" to="." method="_on_tsb_left_released"]
+[connection signal="pressed" from="TouchRoot/LeftControl/TSBRight" to="." method="_on_tsb_right_pressed"]
+[connection signal="released" from="TouchRoot/LeftControl/TSBRight" to="." method="_on_tsb_right_released"]
+[connection signal="pressed" from="TouchRoot/RightControl/TSBJump" to="." method="_on_tsb_jump_pressed"]
+[connection signal="released" from="TouchRoot/RightControl/TSBJump" to="." method="_on_tsb_jump_released"]
+[connection signal="pressed" from="TouchRoot/RightControl/TSBSoftJump" to="." method="_on_tsb_soft_jump_pressed"]
+[connection signal="released" from="TouchRoot/RightControl/TSBSoftJump" to="." method="_on_tsb_soft_jump_released"]
+[connection signal="pressed" from="TouchRoot/RightControl/TSBPower" to="." method="_on_tsb_power_pressed"]
+[connection signal="released" from="TouchRoot/RightControl/TSBPower" to="." method="_on_tsb_power_released"]

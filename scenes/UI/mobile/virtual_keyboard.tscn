@@ -1,0 +1,290 @@
+[gd_scene load_steps=3 format=3 uid="uid://f2oc8apd42h8"]
+
+[ext_resource type="Script" uid="uid://cxjfbr1qp0u4l" path="res://scenes/UI/mobile/virtual_keyboard.gd" id="1_mp5xu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mp5xu"]
+corner_radius_top_left = 5
+corner_radius_bottom_left = 5
+
+[node name="VirtualKeyboard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mp5xu")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -297.0
+offset_top = -133.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_mp5xu")
+
+[node name="GridContainer" type="GridContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -141.75
+offset_top = -61.0
+offset_right = 141.75
+offset_bottom = 58.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 10
+
+[node name="1" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = " 1 "
+
+[node name="2" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = " 2 "
+
+[node name="3" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = " 3 "
+
+[node name="4" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = " 4 "
+
+[node name="5" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = " 5 "
+
+[node name="6" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = " 6 "
+
+[node name="7" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = " 7 "
+
+[node name="8" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = " 8 "
+
+[node name="9" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = " 9 "
+
+[node name="0" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = " 0 "
+
+[node name="q" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "q"
+
+[node name="w" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "w"
+
+[node name="e" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "e"
+
+[node name="r" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "r"
+
+[node name="t" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "t"
+
+[node name="y" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "y"
+
+[node name="u" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "u"
+
+[node name="i" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "i"
+
+[node name="o" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "o"
+
+[node name="p" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "p"
+
+[node name="a" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "a"
+
+[node name="s" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "s"
+
+[node name="d" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "d"
+
+[node name="f" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "f"
+
+[node name="g" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "g"
+
+[node name="h" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "h"
+
+[node name="j" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "j"
+
+[node name="k" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "k"
+
+[node name="l" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "l"
+
+[node name="ent" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "ent"
+
+[node name="z" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "z
+"
+
+[node name="x" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "x
+"
+
+[node name="c" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "c
+"
+
+[node name="v" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "v"
+
+[node name="b" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "b
+"
+
+[node name="n" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "n"
+
+[node name="m" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "m"
+
+[node name="-" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "-"
+
+[node name="del" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "del"
+
+[node name="ok" type="Button" parent="Panel/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Ok
+"
+
+[connection signal="pressed" from="Panel/GridContainer/1" to="." method="_on_1_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/2" to="." method="_on_2_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/3" to="." method="_on_3_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/4" to="." method="_on_4_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/5" to="." method="_on_5_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/6" to="." method="_on_6_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/7" to="." method="_on_7_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/8" to="." method="_on_8_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/9" to="." method="_on_9_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/0" to="." method="_on_0_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/q" to="." method="_on_q_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/w" to="." method="_on_w_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/e" to="." method="_on_e_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/r" to="." method="_on_r_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/t" to="." method="_on_t_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/y" to="." method="_on_y_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/u" to="." method="_on_u_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/i" to="." method="_on_i_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/o" to="." method="_on_o_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/p" to="." method="_on_p_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/a" to="." method="_on_a_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/s" to="." method="_on_s_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/d" to="." method="_on_d_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/f" to="." method="_on_f_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/g" to="." method="_on_g_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/h" to="." method="_on_h_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/j" to="." method="_on_j_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/k" to="." method="_on_k_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/l" to="." method="_on_l_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/ent" to="." method="_on_ok_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/z" to="." method="_on_z_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/x" to="." method="_on_x_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/c" to="." method="_on_c_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/v" to="." method="_on_v_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/b" to="." method="_on_b_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/n" to="." method="_on_n_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/m" to="." method="_on_m_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/-" to="." method="_on_bar_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/del" to="." method="_on_del_pressed"]
+[connection signal="pressed" from="Panel/GridContainer/ok" to="." method="_on_ok_pressed"]

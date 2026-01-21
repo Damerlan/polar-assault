@@ -106,9 +106,11 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_hkql6")
 theme_override_styles/hover = SubResource("StyleBoxTexture_bvu47")
 text = "Sair"
 
-[node name="ui_efect" type="AudioStreamPlayer" parent="."]
+[node name="Audio" type="Node" parent="."]
 
-[node name="bg_music" type="AudioStreamPlayer" parent="."]
+[node name="ui_efect" type="AudioStreamPlayer" parent="Audio"]
+
+[node name="bg_music" type="AudioStreamPlayer" parent="Audio"]
 
 [connection signal="pressed" from="MainMenu/Panel/BoxContainer/VBoxContainer/BtnStart" to="." method="_on_btn_start_pressed"]
 [connection signal="pressed" from="MainMenu/Panel/BoxContainer/VBoxContainer/BtnRanking" to="." method="_on_btn_ranking_pressed"]

@@ -41,6 +41,8 @@ func _ready():
 	#ScoreManager.connect("morreu", _on_player_morreu)
 	# Procura o player na cena
 	#player = get_tree().get_first_node_in_group("player")
+	if GameManager.screen_fade:
+		GameManager.screen_fade.fade_out(0.6)
 
 	if player:
 		# Conecta o sinal de morte do player
@@ -184,11 +186,12 @@ func _unhandled_input(event):
 
 func on_boss_defeated():
 	player.restore_default_jump()
-	abrir_portas()
+	player.can_control = false
+
+	# avisa o GameManager
+	GameManager.handle_boss_victory()
 
 
-func abrir_portas() -> void:
-	pass
 
 
 func _on_drop_area_body_entered(body: Node2D) -> void:

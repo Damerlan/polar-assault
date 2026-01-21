@@ -151,5 +151,9 @@ shape = SubResource("CircleShape2D_jlh4e")
 sprite_frames = SubResource("SpriteFrames_nte1c")
 autoplay = "default"
 
+[node name="Audio" type="Node" parent="."]
+
+[node name="ASPColectEfect" type="AudioStreamPlayer" parent="Audio"]
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="animation_finished" from="Anim" to="." method="_on_anim_animation_finished"]

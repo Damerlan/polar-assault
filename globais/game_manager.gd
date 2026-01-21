@@ -1,16 +1,14 @@
-#GameManager - Updated 12-01-26
+# GameManager - Updated 12-01-26
 extends Node
 
 # ─────────── VARIÁVEIS ───────────
 
-#----controles da partida
+# ---- CONTROLE DA PARTIDA ----
 var tempo_partida: float = 0.0
 var contando: bool = false
 
-
-
-#----GAME STATE MACHINE
-enum GameState{
+# ---- GAME STATE MACHINE ----
+enum GameState {
 	LOBBY,
 	PLAYING,
 	RANKING,
@@ -18,136 +16,108 @@ enum GameState{
 }
 
 var state: GameState = GameState.LOBBY
-var next_scene = ""
 
-#----SISTEMA DE PLATAFORMAS DE EMERGENCIA
-var last_safe_position
+# ---- SISTEMA DE PLATAFORMAS SEGURAS ----
+var last_safe_position: Vector2 = Vector2.ZERO
 var last_safe_platform: Node = null
 
-const EMERGENCY_PLATFORM_SCENE := preload("res://scenes/plataforms/plataforma_comum.tscn") #Incluir a sena da plataforma
-var world: Node
+const EMERGENCY_PLATFORM_SCENE := preload("res://scenes/plataforms/plataforma_comum.tscn")
 var emergency_platform: Node = null
 
-#----Onready
-@onready var pause_menu: Control = $PauseLayer/PauseMenu
+# ---- WORLD / SCENE ----
+var world: Node
 
-# ---- SISTEMA DE SALAS ESPECIAIS ----
+# ---- FADE ----
+const SCREEN_FADE := preload("res://scenes/system/screen_fade.tscn")
+var screen_fade: CanvasLayer
+
+# ---- SALAS ESPECIAIS / BOSS ----
 var current_room_data := {}
 var return_position := Vector2.ZERO
 
-const PLAYER_SPAWN_MARGIN := 10.0 # margem de segurança
-
 # ─────────── SINAIS ───────────
-#sinais da partida
 signal tempo_atualizado(tempo: float)
 signal partida_finalizada(tempo_final: float)
 signal autura_changed(value)
 
-#sinais do sistema
 signal pause_requested
 signal show_teclado
-# ─────────── System ───────────
+
+# ─────────── SYSTEM ───────────
 func _ready():
 	ScoreManager.connect("morreu", _on_player_morreu)
 	add_to_group("GameManager")
+
+	screen_fade = SCREEN_FADE.instantiate()
+	get_tree().root.call_deferred("add_child", screen_fade)
+	
+	if screen_fade:
+		screen_fade.fade_in(0.8)
+		await screen_fade.fade_finished
+
+
 	world = get_tree().current_scene
 	print("GameManager ativo, estado:", state)
 
-
 func _process(delta):
-	#contador/relogio
 	if contando:
 		tempo_partida += delta
 		emit_signal("tempo_atualizado", tempo_partida)
-	
-	#Troca entre tela cheia e modo janela
+
 	if Input.is_action_just_pressed("TogleFullscreen"):
 		toggle_fullscreen()
 
-# ─────────── METODOS ───────────
-#----CONTROLE DE SCORE
-
-
+# ─────────── RUN / SCORE ───────────
 func reset_run():
 	Global.lives = 3
 	ScoreManager.altura = 0
 	ScoreManager.tempo = 0.0
 	ScoreManager.itens = 0
 	last_safe_position = Vector2.ZERO
+	last_safe_platform = null
+	Global.boss_seals_gained.clear()
 
 func update_autura(player_y):
 	ScoreManager.altura = max(ScoreManager.altura, -player_y)
 	emit_signal("autura_changed", ScoreManager.altura)
-	return
 
 func update_coleta(item):
-	ScoreManager.itens = ScoreManager.itens + item
-	return
+	ScoreManager.itens += item
 
-#----CONTROLE 
+# ─────────── GAME OVER ───────────
 func _on_player_morreu():
 	finalizar_partida()
 	state = GameState.GAME_OVER
-	print("finalizando partida!")
 	game_over()
 
 func game_over():
-	print("GAME OVER")
-	get_tree().change_scene_to_file("res://scenes/UI/game_over.tscn")
-#
+	get_tree().call_deferred(
+		"change_scene_to_file",
+		"res://scenes/UI/game_over.tscn"
+	)
 
 func iniciar_partida():
 	tempo_partida = 0.0
 	contando = true
 
-
 func finalizar_partida():
 	contando = false
 	emit_signal("partida_finalizada", tempo_partida)
-	print("emitindo sinal partida finalizada!")
-	#get_tree().change_scene_to_file("res://scenes/UI/game_over.tscn")
-	
-	
 
-
-func formatar_tempo(segundos: float) -> String:
-	var total := int(segundos)
-	var min := total / 60
-	var sec := total % 60
-	return "%02d:%02d" % [min, sec]
-
+# ─────────── START GAME ───────────
 func start_game():
 	match state:
-		GameState.LOBBY:
-			_start_from_lobby()
-		GameState.GAME_OVER:
-			_restart_from_game_over()
+		GameState.LOBBY, GameState.GAME_OVER:
+			_start_game_flow()
 
-func _start_from_lobby():
+func _start_game_flow():
 	reset_run()
 	state = GameState.PLAYING
 	get_tree().change_scene_to_file("res://scenes/system/loading_screen.tscn")
 	await get_tree().process_frame
 	world = get_tree().current_scene
 
-func _restart_from_game_over():
-	reset_run()
-	state = GameState.PLAYING
-	get_tree().change_scene_to_file("res://scenes/system/loading_screen.tscn")
-	await get_tree().process_frame
-	world = get_tree().current_scene
-	
-#----Verificação da Safe na Sala-1
-#func is_safe_valid() -> bool:
-#	if Global.last_safe_platform == null:
-#		return false
-	
-#	if not is_instance_valid(Global.last_safe_platform):
-#		return false
-	
-#	return true
-
-
+# ─────────── SAFE PLATFORM ───────────
 func spawn_emergency_platform(pos: Vector2):
 	if emergency_platform and is_instance_valid(emergency_platform):
 		return
@@ -161,13 +131,146 @@ func spawn_emergency_platform(pos: Vector2):
 
 	var ysort := scene.get_node_or_null("YSort")
 	if ysort == null:
-		push_warning("YSort não encontrado na cena atual")
 		return
 
 	ysort.add_child(emergency_platform)
+
+	last_safe_platform = emergency_platform
+	last_safe_position = emergency_platform.global_position
+
+# ─────────── SISTEMA DE BOSS ───────────
+func request_boss_entry(room_data: Dictionary) -> void:
+	current_room_data = room_data
+	return_position = last_safe_position
+	contando = false
+
+	var player := get_tree().get_first_node_in_group("Player")
+	if player and "can_control" in player:
+		player.can_control = false
+
+	await _play_boss_transition()
+
+func _play_boss_transition():
+	await get_tree().process_frame
+
+	if screen_fade:
+		screen_fade.fade_in(0.8)
+
+	await get_tree().create_timer(0.9).timeout
+	get_tree().change_scene_to_file(current_room_data["scene"])
+
+# ─────────── VITÓRIA DO BOSS ───────────
+
+func handle_boss_victory():
+	print("🏆 Boss derrotado")
+	contando = false
+
+	var player := get_tree().get_first_node_in_group("Player")
+	if player:
+		player.can_control = false
+
+	await _teleport_player_to_safe_platform(player)
+	await _play_victory_sequence(player)
+	await _return_from_special_room()
+
+
+func _return_from_special_room() -> void:
+	print("🚪 Iniciando retorno para sala principal")
+
+	# tempo de vitória
+	await get_tree().create_timer(2.0).timeout
+
+	# FADE OUT (escurece)
+	if screen_fade:
+		screen_fade.fade_in(0.8)
+		await get_tree().create_timer(0.9).timeout
+
+	# troca de cena (AGORA o fade já terminou)
+	get_tree().change_scene_to_file(
+		"res://scenes/rooms/sala_01.tscn"
+	)
+
+	# garante que a nova cena carregou
+	await get_tree().process_frame
+	await get_tree().process_frame
+
+	# FADE IN (volta a imagem)
+	if screen_fade:
+		screen_fade.fade_out(0.8)
+
+	contando = true
+
+
+
+func _teleport_player_to_safe_platform(player):
+	if player == null:
+		return
+
+	if last_safe_platform == null or not is_instance_valid(last_safe_platform):
+		spawn_emergency_platform(return_position)
+		await get_tree().process_frame
+
+	player.global_position = last_safe_platform.global_position + Vector2(0, -64)
+	await get_tree().process_frame
+
+func _play_victory_sequence(player):
+	if player and player.has_method("play_victory"):
+		player.play_victory()
+
+	await get_tree().create_timer(2.0).timeout
+
+func _apply_boss_rewards():
+	var reward: int = current_room_data.get("reward", 0)
+	var seal: String = current_room_data.get("seal", "")
+
+	ScoreManager.itens += reward
+	Global.add_xp(roundi(reward / 2.0))
+
+	if seal != "":
+		Global.unlock_seal(seal)
+	if not Global.boss_seals_gained.has(seal):
+		Global.boss_seals_gained.append(seal)
+
+	await get_tree().create_timer(2.0).timeout
+
+func _return_from_boss_room():
+	if screen_fade:
+		screen_fade.fade_in(0.8)
+
+	await get_tree().create_timer(1.0).timeout
+
+	get_tree().call_deferred(
+		"change_scene_to_file",
+		"res://scenes/rooms/sala_01.tscn"
+	)
 	
-	GameManager.last_safe_platform = emergency_platform
-	GameManager.last_safe_position = emergency_platform.global_position
+	await get_tree().process_frame
+
+	if screen_fade:
+		screen_fade.fade_out(0.8)
+
+	contando = true
+
+# ─────────── SISTEMA / UTIL ───────────
+func request_pause():
+	emit_signal("pause_requested")
+
+func teclado_show():
+	emit_signal("show_teclado")
+
+func toggle_fullscreen():
+	if DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_FULLSCREEN:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+
+
+func formatar_tempo(segundos: float) -> String:
+	var total := int(segundos)
+	var min := total / 60
+	var sec := total % 60
+	return "%02d:%02d" % [min, sec]
+
 
 
 func find_nearest_platform_above(pos: Vector2) -> Node2D:
@@ -186,11 +289,11 @@ func find_nearest_platform_above(pos: Vector2) -> Node2D:
 		if not child is Node2D:
 			continue
 
-		# só plataformas
+		# apenas plataformas seguras
 		if not child.has_method("register_as_safe"):
 			continue
 
-		# precisa estar ACIMA
+		# precisa estar acima do ponto
 		if child.global_position.y >= pos.y:
 			continue
 
@@ -201,166 +304,25 @@ func find_nearest_platform_above(pos: Vector2) -> Node2D:
 
 	return closest
 
-# ─────────── Funçoes de sistema e controle ───────────
-func request_pause():#função para ativar o menu no mobile
-	emit_signal("pause_requested")
 
-func teclado_show() -> void:
-	emit_signal("show_teclado")
-	
-func toggle_fullscreen():
-	if DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_FULLSCREEN:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+func fail_special_room() -> void:
+	print("❌ Falha na sala especial")
 
-
-# ─────────── Sistema de Salas especiais ───────────
-func enter_special_room():
-	return_position = last_safe_position
-
-	# pausa o tempo da run
 	contando = false
-
-	var level := Global.player_level
-	current_room_data = BossRoomManager.pick_room_by_level(level)
-
-	get_tree().change_scene_to_file(current_room_data.scene)
-
-
-#--- sistema de completa a sala
-func complete_special_room():
-	var reward: int = current_room_data["reward"]
-
-	ScoreManager.itens += reward
-	Global.add_xp(reward / 2)
-
-	if current_room_data.type == "boss":
-		ScoreManager.total_boss_death += 1
-
-	_return_to_main_room()
-	
-func fail_special_room():
-	finalizar_partida()
 	state = GameState.GAME_OVER
-	game_over()
-	
-func _return_to_main_room():
-	get_tree().change_scene_to_file("res://scenes/system/loading_screen.tscn")
-	await get_tree().process_frame
-	await get_tree().process_frame
 
-	world = get_tree().current_scene
-	contando = true
-
-	await get_tree().process_frame
-	#restore_player_safe_position()
-	
-# ─────────── Sistema de Salas Especiais (COMPATÍVEL) ───────────
-func start_special_room(room_data: Dictionary) -> void:
-	# Salva os dados completos da sala
-	current_room_data = room_data
-
-	# Salva posição de retorno
-	return_position = last_safe_position
-
-	# Pausa o tempo da run
-	contando = false
-
-	# Segurança
-	if not room_data.has("scene"):
-		push_warning("Sala especial sem cena definida")
-		return
+	# Fade IN (fecha a tela)
+	if screen_fade:
+		screen_fade.fade_in(0.8)
+		await screen_fade.fade_finished
 
 	# Troca de cena
-	get_tree().change_scene_to_file(room_data["scene"])
+	get_tree().change_scene_to_file(
+		"res://scenes/UI/game_over.tscn"
+	)
 
+	await get_tree().process_frame
 
-#func restore_player_safe_position():
-#	var player := get_tree().get_first_node_in_group("Player")
-#	if not player:
-#		push_warning("Player não encontrado no retorno")
-#		return
-
-	# trava controle temporariamente
-#	_lock_player(player)
-
-	# espera cena estabilizar
-#	await get_tree().process_frame
-#	await get_tree().process_frame
-
-	# 🔒 SEMPRE cria uma plataforma segura no retorno
-#	spawn_emergency_platform(return_position)
-#	await get_tree().process_frame
-
-#	if emergency_platform and is_instance_valid(emergency_platform):
-#		player.global_position = emergency_platform.global_position + Vector2(0, -64)
-#	else:
-		# fallback absoluto
-#		player.global_position = return_position + Vector2(0, -64)
-
-#	_unlock_player(player)
-
-#func _lock_player(player: Node) -> void:
-#	if player == null:
-#		return
-
-#	if player.has_method("lock_control"):
-#		player.lock_control()
-#	elif "can_control" in player:
-#		player.can_control = false
-
-
-#func _unlock_player(player: Node) -> void:
-#	if player == null:
-#		return
-
-#	if player.has_method("unlock_control"):
-#		player.unlock_control()
-#	elif "can_control" in player:
-#		player.can_control = true
-
-
-#func get_spawn_above_platform(platform: Node2D) -> Vector2:
-#	var shape_node := platform.get_node_or_null("CollisionShape2D")
-#	if shape_node == null:
-#		return platform.global_position + Vector2(0, -80)
-
-#	var shape: Shape2D = shape_node.shape
-#	var height := 0.0
-
-#	if shape is RectangleShape2D:
-#		height = shape.size.y
-#	elif shape is CapsuleShape2D:
-#		height = shape.height
-#	else:
-#		height = 64
-
-#	var top_y := platform.global_position.y - (height * 0.5)
-
-#	return Vector2(
-#		platform.global_position.x,
-#		top_y - PLAYER_SPAWN_MARGIN
-#	)
-
-
-
-#func spawn_player_on_platform(player: Node2D, platform: Node2D) -> void:
-	#_lock_player(player)
-
-#	await get_tree().physics_frame
-
-#	var spawn_pos := get_spawn_above_platform(platform)
-#	player.set_deferred("global_position", spawn_pos)
-
-#	await get_tree().physics_frame
-#	await get_tree().physics_frame
-
-	#_unlock_player(player)
-
-func exit_boss_room(victory: bool, reward: int = 0):
-	if victory:
-		ScoreManager.add_score(reward)
-		Global.coming_from_boss = true
-
-	get_tree().change_scene_to_file("res://scenes/main_room.tscn")
+	# Fade OUT (abre a tela no game over)
+	if screen_fade:
+		screen_fade.fade_out(0.8)

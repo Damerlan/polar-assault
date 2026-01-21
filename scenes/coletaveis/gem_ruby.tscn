@@ -103,4 +103,6 @@ position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_5rqfs")
 autoplay = "default"
 
-[node name="GemCollect" type="AudioStreamPlayer" parent="."]
+[node name="Audio" type="Node" parent="."]
+
+[node name="ASPColectEfect" type="AudioStreamPlayer" parent="Audio"]
