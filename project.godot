@@ -39,6 +39,7 @@ ScoreManager="*res://globais/score_manager.gd"
 SaveManager="*res://globais/save_manager.gd"
 AudioManager="*res://globais/audio_manager.gd"
 Loader="*res://globais/loader.gd"
+BossRoomManager="*res://globais/boss_room_manager.gd"
 
 [display]
 

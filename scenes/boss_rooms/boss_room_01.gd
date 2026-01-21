@@ -38,6 +38,17 @@ var camera_target_position: Vector2
 
 
 func _ready():
+	#ScoreManager.connect("morreu", _on_player_morreu)
+	# Procura o player na cena
+	#player = get_tree().get_first_node_in_group("player")
+
+	if player:
+		# Conecta o sinal de morte do player
+		player.connect("morreu", Callable(self, "_on_player_morreu"))
+	else:
+		push_warning("Player não encontrado na Boss Room")
+		
+		
 	camera_target_position = intro_camera_position
 	setup_camera_intro()
 	play_intro_pan()
@@ -187,6 +198,15 @@ func _on_drop_area_body_entered(body: Node2D) -> void:
 		if body.has_method("take_hit"):
 			body.take_hit()
 			print("Player tomo um dano")
+	elif  body.is_in_group("Boss"):
+		if body.has_method("die"):
+			body.die()
+			print("O safado do boss morreu!")
 	
 	print("Alguem caiu aqui")
 #player := get_tree().get_first_node_in_group("Player")
+
+
+func _on_player_morreu():
+	print("☠ Player morreu na sala especial")
+	GameManager.fail_special_room()

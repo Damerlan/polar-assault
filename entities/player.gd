@@ -459,7 +459,6 @@ func take_hit():
 func _die():
 	go_to_death_state()
 	emit_signal("morreu")
-	game_over()
 
 func game_over():
 	print("GAME OVER")
@@ -515,3 +514,13 @@ func restore_default_jump() -> void:
 	jump_force = base_jump_force
 	soft_jump_multiplier = base_soft_jump_multiplier
 	base_momentum_jump_multiplier = 0.4
+
+# ===============================
+# CONTROLE DE TRAVA GLOBAL
+# ===============================
+func lock_control() -> void:
+	can_control = false
+	velocity = Vector2.ZERO
+
+func unlock_control() -> void:
+	can_control = true

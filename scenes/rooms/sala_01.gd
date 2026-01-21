@@ -10,7 +10,12 @@ func _ready() -> void:
 	var gm = get_tree().get_first_node_in_group("GameManager")
 	if gm:
 		gm.state = GameManager.GameState.PLAYING
+	
+	#sistema da boss roms
 
+
+
+	
 func _on_player_morreu():
 	GameManager.finalizar_partida()
 	#para o tempo

@@ -12,6 +12,14 @@ var coin_value: int = 1 #moeda
 var gem_value: int = 100 #gemas
 var life_value: int = 50 #vida - Inplementar
 
+# ---- PROGRESSÃO DO PLAYER ----
+var player_xp: int = 0
+var player_level: int = 1
+
+const XP_PER_LEVEL := 100
+
+
+
 # ─────────── Configurações das Plataformas ───────────
 const visibility = 400
 
@@ -29,6 +37,8 @@ const visibility = 400
 @export var life_spawn_chance: float = 0.07 # 8%
 @export var life_height_offset: int = -32
 
+# Global.gd
+var coming_from_boss := false
 # ======================================================
 # VISIBILIDADE / LIMPEZA
 # ======================================================
@@ -120,7 +130,12 @@ func pick_variant(variants: Array[Dictionary]) -> Dictionary:
 
 
 
-#----SISTEMA
+#----SISTEMA de XP
+
+func add_xp(value: int):
+	player_xp += value
+	player_level = max(1, player_xp / XP_PER_LEVEL + 1)
+	
 
 
 # ─────────── SINAIS ───────────

@@ -6,7 +6,8 @@ extends Node
 #----controles da partida
 var tempo_partida: float = 0.0
 var contando: bool = false
-var emergency_offset := Vector2(0, 64) 
+
+
 
 #----GAME STATE MACHINE
 enum GameState{
@@ -29,6 +30,12 @@ var emergency_platform: Node = null
 
 #----Onready
 @onready var pause_menu: Control = $PauseLayer/PauseMenu
+
+# ---- SISTEMA DE SALAS ESPECIAIS ----
+var current_room_data := {}
+var return_position := Vector2.ZERO
+
+const PLAYER_SPAWN_MARGIN := 10.0 # margem de segurança
 
 # ─────────── SINAIS ───────────
 #sinais da partida
@@ -80,8 +87,14 @@ func update_coleta(item):
 #----CONTROLE 
 func _on_player_morreu():
 	finalizar_partida()
+	state = GameState.GAME_OVER
 	print("finalizando partida!")
+	game_over()
 
+func game_over():
+	print("GAME OVER")
+	get_tree().change_scene_to_file("res://scenes/UI/game_over.tscn")
+#
 
 func iniciar_partida():
 	tempo_partida = 0.0
@@ -125,14 +138,14 @@ func _restart_from_game_over():
 	world = get_tree().current_scene
 	
 #----Verificação da Safe na Sala-1
-func is_safe_valid() -> bool:
-	if Global.last_safe_platform == null:
-		return false
+#func is_safe_valid() -> bool:
+#	if Global.last_safe_platform == null:
+#		return false
 	
-	if not is_instance_valid(Global.last_safe_platform):
-		return false
+#	if not is_instance_valid(Global.last_safe_platform):
+#		return false
 	
-	return true
+#	return true
 
 
 func spawn_emergency_platform(pos: Vector2):
@@ -200,3 +213,154 @@ func toggle_fullscreen():
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+
+
+# ─────────── Sistema de Salas especiais ───────────
+func enter_special_room():
+	return_position = last_safe_position
+
+	# pausa o tempo da run
+	contando = false
+
+	var level := Global.player_level
+	current_room_data = BossRoomManager.pick_room_by_level(level)
+
+	get_tree().change_scene_to_file(current_room_data.scene)
+
+
+#--- sistema de completa a sala
+func complete_special_room():
+	var reward: int = current_room_data["reward"]
+
+	ScoreManager.itens += reward
+	Global.add_xp(reward / 2)
+
+	if current_room_data.type == "boss":
+		ScoreManager.total_boss_death += 1
+
+	_return_to_main_room()
+	
+func fail_special_room():
+	finalizar_partida()
+	state = GameState.GAME_OVER
+	game_over()
+	
+func _return_to_main_room():
+	get_tree().change_scene_to_file("res://scenes/system/loading_screen.tscn")
+	await get_tree().process_frame
+	await get_tree().process_frame
+
+	world = get_tree().current_scene
+	contando = true
+
+	await get_tree().process_frame
+	#restore_player_safe_position()
+	
+# ─────────── Sistema de Salas Especiais (COMPATÍVEL) ───────────
+func start_special_room(room_data: Dictionary) -> void:
+	# Salva os dados completos da sala
+	current_room_data = room_data
+
+	# Salva posição de retorno
+	return_position = last_safe_position
+
+	# Pausa o tempo da run
+	contando = false
+
+	# Segurança
+	if not room_data.has("scene"):
+		push_warning("Sala especial sem cena definida")
+		return
+
+	# Troca de cena
+	get_tree().change_scene_to_file(room_data["scene"])
+
+
+#func restore_player_safe_position():
+#	var player := get_tree().get_first_node_in_group("Player")
+#	if not player:
+#		push_warning("Player não encontrado no retorno")
+#		return
+
+	# trava controle temporariamente
+#	_lock_player(player)
+
+	# espera cena estabilizar
+#	await get_tree().process_frame
+#	await get_tree().process_frame
+
+	# 🔒 SEMPRE cria uma plataforma segura no retorno
+#	spawn_emergency_platform(return_position)
+#	await get_tree().process_frame
+
+#	if emergency_platform and is_instance_valid(emergency_platform):
+#		player.global_position = emergency_platform.global_position + Vector2(0, -64)
+#	else:
+		# fallback absoluto
+#		player.global_position = return_position + Vector2(0, -64)
+
+#	_unlock_player(player)
+
+#func _lock_player(player: Node) -> void:
+#	if player == null:
+#		return
+
+#	if player.has_method("lock_control"):
+#		player.lock_control()
+#	elif "can_control" in player:
+#		player.can_control = false
+
+
+#func _unlock_player(player: Node) -> void:
+#	if player == null:
+#		return
+
+#	if player.has_method("unlock_control"):
+#		player.unlock_control()
+#	elif "can_control" in player:
+#		player.can_control = true
+
+
+#func get_spawn_above_platform(platform: Node2D) -> Vector2:
+#	var shape_node := platform.get_node_or_null("CollisionShape2D")
+#	if shape_node == null:
+#		return platform.global_position + Vector2(0, -80)
+
+#	var shape: Shape2D = shape_node.shape
+#	var height := 0.0
+
+#	if shape is RectangleShape2D:
+#		height = shape.size.y
+#	elif shape is CapsuleShape2D:
+#		height = shape.height
+#	else:
+#		height = 64
+
+#	var top_y := platform.global_position.y - (height * 0.5)
+
+#	return Vector2(
+#		platform.global_position.x,
+#		top_y - PLAYER_SPAWN_MARGIN
+#	)
+
+
+
+#func spawn_player_on_platform(player: Node2D, platform: Node2D) -> void:
+	#_lock_player(player)
+
+#	await get_tree().physics_frame
+
+#	var spawn_pos := get_spawn_above_platform(platform)
+#	player.set_deferred("global_position", spawn_pos)
+
+#	await get_tree().physics_frame
+#	await get_tree().physics_frame
+
+	#_unlock_player(player)
+
+func exit_boss_room(victory: bool, reward: int = 0):
+	if victory:
+		ScoreManager.add_score(reward)
+		Global.coming_from_boss = true
+
+	get_tree().change_scene_to_file("res://scenes/main_room.tscn")

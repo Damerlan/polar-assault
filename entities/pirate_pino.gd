@@ -294,6 +294,7 @@ func die():
 
 	print("☠️ Boss morreu de verdade")
 	emit_signal("boss_defeated")
+	GameManager.complete_special_room()
 
 
 	await anim.animation_finished
