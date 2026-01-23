@@ -1,8 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://by8113x2kbl31"]
+[gd_scene load_steps=26 format=3 uid="uid://by8113x2kbl31"]
 
 [ext_resource type="Script" uid="uid://dwvouchfc2uh0" path="res://scenes/coletaveis/life.gd" id="1_cbq5o"]
 [ext_resource type="Texture2D" uid="uid://bu8pd2g22dcsr" path="res://Assets/Coletaveis/heart-Sheet.png" id="1_ehy0e"]
 [ext_resource type="Texture2D" uid="uid://otc2o3t86lyf" path="res://Assets/Efeitos_Particulas/Cloud_Poof (16 x 16).png" id="2_4wg4c"]
+[ext_resource type="AudioStream" uid="uid://c0g1erqqswjen" path="res://Assets/Audio/music/sfx/Coins 9 - Sound effects Pack 2.wav" id="4_u6cpx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cbq5o"]
 radius = 8.062258
@@ -171,6 +172,7 @@ autoplay = "default"
 [node name="Audio" type="Node" parent="."]
 
 [node name="ASPColectEfect" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("4_u6cpx")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="animation_finished" from="Anim" to="." method="_on_anim_animation_finished"]

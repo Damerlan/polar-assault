@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dok8g2fmkc556"]
+[gd_scene load_steps=33 format=3 uid="uid://dok8g2fmkc556"]
 
 [ext_resource type="Script" uid="uid://tduvhue5m3a3" path="res://entities/player.gd" id="1_6nm46"]
 [ext_resource type="Texture2D" uid="uid://ny366n4xxy0e" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Falling (16 x 16).png" id="1_qsoyl"]
@@ -8,6 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://cn8fh767eis5u" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Jump (16 x 16).png" id="2_qly61"]
 [ext_resource type="Texture2D" uid="uid://buqbi8a81mxes" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Belly_Sliding (16 x 16).png" id="3_qsoyl"]
 [ext_resource type="Texture2D" uid="uid://c4h7bdl4sldwk" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Waddling (16 x 16).png" id="4_6nm46"]
+[ext_resource type="AudioStream" uid="uid://dyeo1w8anr0to" path="res://Assets/Audio/music/sfx/Jump 5 - Sound effects Pack 2.wav" id="9_ef06p"]
+[ext_resource type="AudioStream" uid="uid://dk4cyqgr10m2s" path="res://Assets/Audio/music/sfx/Hit 8 - Sound effects Pack 2.wav" id="10_dchgp"]
+[ext_resource type="AudioStream" uid="uid://gmxl1wjwd4e7" path="res://Assets/Audio/music/sfx/Teleport 2 - Sound effects Pack 2.wav" id="11_kdgjc"]
+[ext_resource type="AudioStream" uid="uid://ci2myssa1cerv" path="res://Assets/Audio/music/sfx/Jump 9 - Sound effects Pack 2.wav" id="12_q0i8f"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i623q"]
 radius = 6.0
@@ -197,10 +201,16 @@ position = Vector2(-36, -61)
 [node name="Souds" type="Node" parent="."]
 
 [node name="fx_jump" type="AudioStreamPlayer" parent="Souds"]
+stream = ExtResource("9_ef06p")
 
 [node name="fx_damage" type="AudioStreamPlayer" parent="Souds"]
+stream = ExtResource("10_dchgp")
 
 [node name="fx_teleport" type="AudioStreamPlayer" parent="Souds"]
+stream = ExtResource("11_kdgjc")
+
+[node name="ASPShortJump" type="AudioStreamPlayer" parent="Souds"]
+stream = ExtResource("12_q0i8f")
 
 [node name="Audio" type="Node" parent="."]
 

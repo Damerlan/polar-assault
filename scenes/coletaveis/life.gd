@@ -4,7 +4,8 @@ extends Area2D
 @onready var anim: AnimatedSprite2D = $Anim
 #@onready var collect_sound: AudioStreamPlayer2D = $collect_sound
 @onready var collision: CollisionShape2D = $CollisionShape2D
-@onready var collect_sound: AudioStreamPlayer2D = $cllect_sound
+@onready var asp_colect_efect: AudioStreamPlayer = $Audio/ASPColectEfect
+
 
 var collected := false
 
@@ -24,8 +25,8 @@ func _on_body_entered(body: Node2D) -> void:
 
 	# 🔒 Desliga colisão
 	collision.set_deferred("disabled", true)
-
-	collect_sound.play()
+	
+	asp_colect_efect.play()
 	anim.play("colect")
 
 func _on_anim_animation_finished() -> void:

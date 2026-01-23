@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bttppxqbhp52t"]
+[gd_scene load_steps=8 format=3 uid="uid://bttppxqbhp52t"]
 
 [ext_resource type="Script" uid="uid://77gmrgomuh75" path="res://scenes/system/loby_01.gd" id="1_0oq8d"]
 [ext_resource type="Texture2D" uid="uid://dptkcfsmncwjk" path="res://Assets/UI/titles/log.png" id="1_vsqn7"]
 [ext_resource type="Texture2D" uid="uid://ch8u4cg8kn7gb" path="res://Assets/UI/Buttons/g58.png" id="2_h7fkl"]
 [ext_resource type="Texture2D" uid="uid://cm2vfjc2cckek" path="res://Assets/UI/Buttons/g59.png" id="3_0oq8d"]
+[ext_resource type="AudioStream" uid="uid://2gc0stca4qah" path="res://Assets/Audio/music/Clement Panchout _ Fluttering in the Sun _ (The GodMOTHer).wav" id="5_hkql6"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hkql6"]
 texture = ExtResource("2_h7fkl")
@@ -111,6 +112,9 @@ text = "Sair"
 [node name="ui_efect" type="AudioStreamPlayer" parent="Audio"]
 
 [node name="bg_music" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("5_hkql6")
+volume_db = -10.0
+autoplay = true
 
 [connection signal="pressed" from="MainMenu/Panel/BoxContainer/VBoxContainer/BtnStart" to="." method="_on_btn_start_pressed"]
 [connection signal="pressed" from="MainMenu/Panel/BoxContainer/VBoxContainer/BtnRanking" to="." method="_on_btn_ranking_pressed"]

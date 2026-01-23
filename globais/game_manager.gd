@@ -326,3 +326,10 @@ func fail_special_room() -> void:
 	# Fade OUT (abre a tela no game over)
 	if screen_fade:
 		screen_fade.fade_out(0.8)
+
+func _restart_from_game_over():
+	reset_run()
+	state = GameState.PLAYING
+	get_tree().change_scene_to_file("res://scenes/system/loading_screen.tscn")
+	await get_tree().process_frame
+	world = get_tree().current_scene

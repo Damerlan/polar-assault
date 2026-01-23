@@ -1,8 +1,9 @@
-[gd_scene load_steps=23 format=3 uid="uid://b4wcg5gltkpnk"]
+[gd_scene load_steps=24 format=3 uid="uid://b4wcg5gltkpnk"]
 
 [ext_resource type="Script" uid="uid://by3xrv23q1031" path="res://scenes/coletaveis/coin_coper.gd" id="1_u5ki1"]
 [ext_resource type="Texture2D" uid="uid://cosfgbpu2p8tc" path="res://Assets/Efeitos_Particulas/Yellow_Sparkle (16 x 16).png" id="2_ot5dw"]
 [ext_resource type="Texture2D" uid="uid://bp43k1xo2pqo0" path="res://Assets/Coletaveis/coins.png" id="3_e4cqt"]
+[ext_resource type="AudioStream" uid="uid://c0g1erqqswjen" path="res://Assets/Audio/music/sfx/Coins 9 - Sound effects Pack 2.wav" id="4_ot5dw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ssm8t"]
 radius = 7.0
@@ -154,3 +155,4 @@ autoplay = "default"
 [node name="Audio" type="Node" parent="."]
 
 [node name="ASPColectEfect" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("4_ot5dw")

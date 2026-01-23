@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://jcxfvq8kicor"
+path="res://.godot/imported/ClementPanchout_ Life_is_full_of_Joy.mp3-847322214dad62185682aa6ee1790a3e.mp3str"
+
+[deps]
+
+source_file="res://Assets/Audio/music/ClementPanchout_ Life_is_full_of_Joy.mp3"
+dest_files=["res://.godot/imported/ClementPanchout_ Life_is_full_of_Joy.mp3-847322214dad62185682aa6ee1790a3e.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://cmrk76u50yyx1"]
+[gd_scene load_steps=17 format=3 uid="uid://cmrk76u50yyx1"]
 
 [ext_resource type="Texture2D" uid="uid://cabhwl0alj4cr" path="res://Assets/Efeitos_Particulas/Bright_Sparkle (16 x 16).png" id="1_3urt4"]
 [ext_resource type="Script" uid="uid://c1fb4a8oyj72g" path="res://scenes/coletaveis/gem_ruby.gd" id="1_nurf8"]
 [ext_resource type="Texture2D" uid="uid://cfvilf6iyisg7" path="res://Assets/Coletaveis/gems.png" id="2_nurf8"]
+[ext_resource type="AudioStream" uid="uid://bcox70ckqwcgh" path="res://Assets/Audio/music/sfx/coin8.wav" id="4_q87xj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q87xj"]
 radius = 8.0
@@ -106,3 +107,4 @@ autoplay = "default"
 [node name="Audio" type="Node" parent="."]
 
 [node name="ASPColectEfect" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("4_q87xj")

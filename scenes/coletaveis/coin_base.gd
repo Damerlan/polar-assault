@@ -3,6 +3,7 @@ class_name CoinBase
 
 @onready var anim: AnimatedSprite2D = $Anim
 @onready var collision: CollisionShape2D = $CollisionShape2D
+@onready var asp_colect_efect: AudioStreamPlayer = $Audio/ASPColectEfect
 
 @export var value: int = 1
 var collected := false
@@ -31,4 +32,5 @@ func _on_collect(v: int) -> void:
 	queue_free()
 
 func collect_efx():
+	asp_colect_efect.play()
 	pass
