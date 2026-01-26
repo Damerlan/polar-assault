@@ -97,6 +97,9 @@ func game_over():
 	)
 
 func iniciar_partida():
+	if Global.coming_from_boss:
+		return
+	
 	tempo_partida = 0.0
 	contando = true
 
@@ -144,6 +147,9 @@ func request_boss_entry(room_data: Dictionary) -> void:
 	return_position = last_safe_position
 	contando = false
 
+	Global.saved_run_time = tempo_partida
+	Global.coming_from_boss = true
+
 	var player := get_tree().get_first_node_in_group("Player")
 	if player and "can_control" in player:
 		player.can_control = false
@@ -175,26 +181,20 @@ func handle_boss_victory():
 
 
 func _return_from_special_room() -> void:
-	print("🚪 Iniciando retorno para sala principal")
 
-	# tempo de vitória
+	Global.coming_from_boss = true
+
 	await get_tree().create_timer(2.0).timeout
 
-	# FADE OUT (escurece)
 	if screen_fade:
 		screen_fade.fade_in(0.8)
 		await get_tree().create_timer(0.9).timeout
 
-	# troca de cena (AGORA o fade já terminou)
-	get_tree().change_scene_to_file(
-		"res://scenes/rooms/sala_01.tscn"
-	)
+	get_tree().change_scene_to_file("res://scenes/rooms/sala_01.tscn")
 
-	# garante que a nova cena carregou
 	await get_tree().process_frame
 	await get_tree().process_frame
 
-	# FADE IN (volta a imagem)
 	if screen_fade:
 		screen_fade.fade_out(0.8)
 
@@ -333,3 +333,8 @@ func _restart_from_game_over():
 	get_tree().change_scene_to_file("res://scenes/system/loading_screen.tscn")
 	await get_tree().process_frame
 	world = get_tree().current_scene
+
+func _on_key_collected(boss_id):
+	request_boss_entry(
+		BossRoomManager.pick_room_by_level(Global.player_level)
+	)

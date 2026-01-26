@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://bttppxqbhp52t"]
+[gd_scene load_steps=10 format=3 uid="uid://bttppxqbhp52t"]
 
 [ext_resource type="Script" uid="uid://77gmrgomuh75" path="res://scenes/system/loby_01.gd" id="1_0oq8d"]
 [ext_resource type="Texture2D" uid="uid://dptkcfsmncwjk" path="res://Assets/UI/titles/log.png" id="1_vsqn7"]
+[ext_resource type="PackedScene" uid="uid://dagjpaawdw1ke" path="res://scenes/system/ground_loby.tscn" id="2_bvu47"]
 [ext_resource type="Texture2D" uid="uid://ch8u4cg8kn7gb" path="res://Assets/UI/Buttons/g58.png" id="2_h7fkl"]
 [ext_resource type="Texture2D" uid="uid://cm2vfjc2cckek" path="res://Assets/UI/Buttons/g59.png" id="3_0oq8d"]
 [ext_resource type="AudioStream" uid="uid://2gc0stca4qah" path="res://Assets/Audio/music/Clement Panchout _ Fluttering in the Sun _ (The GodMOTHer).wav" id="5_hkql6"]
+[ext_resource type="AudioStream" uid="uid://bvopfer4cy67e" path="res://Assets/Audio/music/sfx/menu_select.ogg" id="6_jy0cp"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hkql6"]
 texture = ExtResource("2_h7fkl")
@@ -15,6 +17,9 @@ texture = ExtResource("3_0oq8d")
 [node name="Loby_01" type="Node2D"]
 script = ExtResource("1_0oq8d")
 metadata/_edit_horizontal_guides_ = [24.0, 56.0]
+
+[node name="GroundLoby" parent="." instance=ExtResource("2_bvu47")]
+position = Vector2(0, 240)
 
 [node name="Label" type="Label" parent="."]
 offset_right = 40.0
@@ -110,6 +115,7 @@ text = "Sair"
 [node name="Audio" type="Node" parent="."]
 
 [node name="ui_efect" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("6_jy0cp")
 
 [node name="bg_music" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("5_hkql6")

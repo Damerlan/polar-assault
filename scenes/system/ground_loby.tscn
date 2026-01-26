@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://dagjpaawdw1ke"]
+
+[ext_resource type="Texture2D" uid="uid://ddtioldascw8c" path="res://Assets/paralax/A01-Loby/03.png" id="1_7uxm0"]
+[ext_resource type="Texture2D" uid="uid://cbn1h5esjac3o" path="res://Assets/paralax/bgNeveGPT.png" id="2_i1w73"]
+
+[node name="GroundLoby" type="Node2D"]
+
+[node name="01" type="Parallax2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="01"]
+position = Vector2(290, -59.999992)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_7uxm0")
+
+[node name="02" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.5, 0.5)
+repeat_size = Vector2(760, 500)
+autoscroll = Vector2(-4, 5)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="02"]
+self_modulate = Color(1, 1, 1, 0.6392157)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_i1w73")
+
+[node name="03" type="Parallax2D" parent="."]
+scroll_offset = Vector2(-6, 197)
+repeat_size = Vector2(760, 500)
+autoscroll = Vector2(-7, 10)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="03"]
+self_modulate = Color(1, 1, 1, 0.5921569)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_i1w73")

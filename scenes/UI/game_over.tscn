@@ -1,11 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://dl2wef5ynxkfa"]
+[gd_scene load_steps=17 format=3 uid="uid://dl2wef5ynxkfa"]
 
+[ext_resource type="PackedScene" uid="uid://dagjpaawdw1ke" path="res://scenes/system/ground_loby.tscn" id="1_lrum0"]
 [ext_resource type="Texture2D" uid="uid://dpr4twxd2ft6f" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Victory_Dance (16 x 16).png" id="1_njkqv"]
 [ext_resource type="Script" uid="uid://kbohtlv8jnlx" path="res://scenes/UI/game_over_control.gd" id="1_vop4n"]
 [ext_resource type="Texture2D" uid="uid://ch8u4cg8kn7gb" path="res://Assets/UI/Buttons/g58.png" id="2_a2ham"]
 [ext_resource type="Texture2D" uid="uid://winr36hofvf3" path="res://Assets/UI/titles/gameover.png" id="2_yv7mv"]
 [ext_resource type="Texture2D" uid="uid://cm2vfjc2cckek" path="res://Assets/UI/Buttons/g59.png" id="3_yv7mv"]
 [ext_resource type="PackedScene" uid="uid://f2oc8apd42h8" path="res://scenes/UI/mobile/virtual_keyboard.tscn" id="6_r5ffl"]
+[ext_resource type="AudioStream" uid="uid://bvopfer4cy67e" path="res://Assets/Audio/music/sfx/menu_select.ogg" id="7_uw231"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vop4n"]
 atlas = ExtResource("1_njkqv")
@@ -57,6 +59,9 @@ texture = ExtResource("2_a2ham")
 texture = ExtResource("3_yv7mv")
 
 [node name="GameOver" type="CanvasLayer"]
+
+[node name="GroundLoby" parent="." instance=ExtResource("1_lrum0")]
+position = Vector2(0, 240)
 
 [node name="GameOverControl" type="Control" parent="."]
 layout_mode = 3
@@ -245,6 +250,7 @@ theme_override_constants/separation = 12
 [node name="ASPPointEfect" type="AudioStreamPlayer" parent="Audio"]
 
 [node name="ASPUiEfect" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("7_uw231")
 
 [node name="VirtualKeyboard" parent="." instance=ExtResource("6_r5ffl")]
 visible = false

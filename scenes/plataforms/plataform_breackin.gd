@@ -5,6 +5,7 @@ extends CharacterBody2D
 @export var fall_delay := 0.2
 @export var gravity := 1200.0
 @export var tremor_strength := 2.0
+@onready var asp_crash: AudioStreamPlayer = $ASPCrash
 
 var activated := false
 var falling := false
@@ -34,6 +35,7 @@ func _on_area_2d_body_entered(body):
 	
 	if body.is_in_group("Player"):
 		activated = true
+		asp_crash.play()
 		start_tremor()
 
 func start_tremor():
@@ -43,7 +45,7 @@ func start_tremor():
 		position.x = original_position.x + randf_range(-tremor_strength, tremor_strength)
 		await get_tree().create_timer(0.03).timeout
 		elapsed += 0.03
-	
+	asp_crash.play()
 	position = original_position
 	await get_tree().create_timer(fall_delay).timeout
 	start_fall()

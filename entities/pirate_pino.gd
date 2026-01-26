@@ -33,6 +33,8 @@ var decision_timer := 0.0
 @onready var dialog_ballom: Marker2D = $Markers/DialogBallom
 
 @onready var hit_efect: AudioStreamPlayer = $HitEfect
+@onready var asp_drop_efect: AudioStreamPlayer2D = $Audio/ASPDropEfect
+@onready var asp_hit_efect: AudioStreamPlayer2D = $Audio/ASPHitEfect
 
 var state := State.INTRO
 var stun_timer: float = 0.0
@@ -128,7 +130,8 @@ func _physics_process(delta: float) -> void:
 			if collision:
 				var platform = collision.get_collider()
 				if platform and platform.has_method("shake"):
-					print("💥 CHAMANDO SHAKE")
+					#print("💥 CHAMANDO SHAKE")
+					asp_drop_efect.play()
 					platform.shake()
 
 func _apply_gravity(delta):
@@ -233,7 +236,7 @@ func on_player_jump_on_head(player_hit: CharacterBody2D):
 	_show_damage(head_hit_damage)
 	hit_efect.play()
 	print("💀 Boss life:", life)
-		
+	asp_hit_efect.play()
 	anim.play("Hit")
 	
 	#entrando em stun

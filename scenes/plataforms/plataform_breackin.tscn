@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bkfxos7lne2eb"]
+[gd_scene load_steps=6 format=3 uid="uid://bkfxos7lne2eb"]
 
 [ext_resource type="Script" uid="uid://rei8mvt6aqiv" path="res://scenes/plataforms/plataform_breackin.gd" id="1_3aswq"]
 [ext_resource type="Texture2D" uid="uid://duy5shqy2elee" path="res://Assets/Plataformas/Platform_cracked.png" id="1_c0gl0"]
+[ext_resource type="AudioStream" uid="uid://cnxga1oxdl8qa" path="res://Assets/Audio/music/sfx/Explosion 8 - Sound effects Pack 2.wav" id="3_y4w6u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3aswq"]
 size = Vector2(90, 13)
@@ -28,5 +29,8 @@ shape = SubResource("RectangleShape2D_y4w6u")
 texture = ExtResource("1_c0gl0")
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="ASPCrash" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_y4w6u")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

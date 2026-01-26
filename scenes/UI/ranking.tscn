@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://2xyg6tlw3nhx"]
+[gd_scene load_steps=9 format=3 uid="uid://2xyg6tlw3nhx"]
 
 [ext_resource type="Script" uid="uid://lihfk50qncv6" path="res://scenes/UI/ranking.gd" id="1_htgm4"]
 [ext_resource type="Texture2D" uid="uid://dsrm3jl8lnnoa" path="res://Assets/UI/titles/ranking.png" id="1_t0dx1"]
 [ext_resource type="Texture2D" uid="uid://ch8u4cg8kn7gb" path="res://Assets/UI/Buttons/g58.png" id="2_htgm4"]
+[ext_resource type="PackedScene" uid="uid://dagjpaawdw1ke" path="res://scenes/system/ground_loby.tscn" id="2_j08wu"]
 [ext_resource type="Texture2D" uid="uid://cm2vfjc2cckek" path="res://Assets/UI/Buttons/g59.png" id="3_j08wu"]
+[ext_resource type="AudioStream" uid="uid://bvopfer4cy67e" path="res://Assets/Audio/music/sfx/menu_select.ogg" id="6_ey0uf"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ey0uf"]
 texture = ExtResource("2_htgm4")
@@ -13,6 +15,9 @@ texture = ExtResource("3_j08wu")
 
 [node name="Ranking" type="Node2D"]
 script = ExtResource("1_htgm4")
+
+[node name="GroundLoby" parent="." instance=ExtResource("2_j08wu")]
+position = Vector2(0, 240)
 
 [node name="Ranking" type="Control" parent="."]
 layout_mode = 3
@@ -87,6 +92,7 @@ text = "Retornar"
 [node name="Audio" type="Node" parent="."]
 
 [node name="ASPUiEfect" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("6_ey0uf")
 
 [node name="ASPAmbience" type="AudioStreamPlayer" parent="Audio"]
 

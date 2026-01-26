@@ -524,3 +524,9 @@ func lock_control() -> void:
 
 func unlock_control() -> void:
 	can_control = true
+
+func get_max_jump_height() -> float:
+	var max_extra = max_momentum * base_momentum_jump_multiplier
+	var max_velocity = abs(jump_force - max_extra)
+	var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+	return (max_velocity * max_velocity) / (2.0 * gravity)

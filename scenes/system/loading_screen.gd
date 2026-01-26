@@ -49,6 +49,7 @@ func get_heavy_resources() -> Array:
 		"res://scenes/coletaveis/gem_diamond.tscn", 
 		"res://scenes/coletaveis/gem_emerald.tscn", 
 		"res://scenes/coletaveis/gem_ruby.tscn", 
+		"res://scenes/coletaveis/key_boss_room_base.tscn",
 		"res://scenes/coletaveis/life.tscn",
 		"res://scenes/objects_system/Cameras/camera_game_play.tscn",
 		"res://entities/player.tscn"

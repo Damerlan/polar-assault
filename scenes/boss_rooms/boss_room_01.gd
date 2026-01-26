@@ -7,6 +7,10 @@ extends Node2D
 	{"speaker": "boss", "text": "Hahaha! Venha pegar, projeto de marujo!"}
 ]
 
+@export var auto_advance_time := 1.5
+var current_balloon: Node2D
+var auto_timer: SceneTreeTimer
+
 @onready var player := get_tree().get_first_node_in_group("Player")
 @onready var boss := get_tree().get_first_node_in_group("Boss")
 @onready var camera: Camera2D = $Camera2D
@@ -140,22 +144,31 @@ func show_next_dialogue():
 		return
 
 	var line = dialogue_sequence[dialogue_index]
-	var balloon
 
 	if line.speaker == "boss":
-		balloon = boss.show_dialogue(line.text)
+		current_balloon = boss.show_dialogue(line.text)
 	else:
-		balloon = player.show_dialogue(line.text)
+		current_balloon = player.show_dialogue(line.text)
 
-	can_advance = false
 	in_dialogue = true
+	can_advance = false
 
-	balloon.finished_typing.connect(_on_typing_finished, CONNECT_ONE_SHOT)
+	current_balloon.finished_typing.connect(_on_typing_finished, CONNECT_ONE_SHOT)
+
 	dialogue_index += 1
+
 
 
 func _on_typing_finished():
 	can_advance = true
+	
+	auto_timer = get_tree().create_timer(auto_advance_time)
+	await auto_timer.timeout
+	
+	if can_advance:
+		player.clear_dialogue()
+		boss.clear_dialogue()
+		show_next_dialogue()
 
 
 func end_intro():
@@ -173,13 +186,25 @@ func end_intro():
 # ─────────── INPUT ───────────
 
 func _unhandled_input(event):
-	if not in_dialogue or not can_advance:
+	if not in_dialogue:
 		return
 
 	if event.is_action_pressed("ui_accept"):
-		player.clear_dialogue()
-		boss.clear_dialogue()
-		show_next_dialogue()
+
+		# Se ainda está digitando → termina instantaneamente
+		if current_balloon and current_balloon.has_method("skip_typing"):
+			current_balloon.skip_typing()
+			return
+
+		# Se já terminou → avança imediatamente
+		if can_advance:
+			if auto_timer:
+				auto_timer = null
+
+			player.clear_dialogue()
+			boss.clear_dialogue()
+			show_next_dialogue()
+
 
 
 # ─────────── FIM DA LUTA ───────────

@@ -6,7 +6,13 @@ extends Node2D
 
 
 func _ready() -> void:
-	GameManager.iniciar_partida()
+	if Global.coming_from_boss:
+		GameManager.tempo_partida = Global.saved_run_time
+		GameManager.contando = true
+		Global.coming_from_boss = false
+	else:
+		GameManager.iniciar_partida()
+		
 	var gm = get_tree().get_first_node_in_group("GameManager")
 	if gm:
 		gm.state = GameManager.GameState.PLAYING

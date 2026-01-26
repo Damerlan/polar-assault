@@ -99,20 +99,23 @@ func set_text(text: String):
 
 func _start_typing():
 	while char_index < full_text.length():
+		if not typing:
+			return
+
 		var current_char := full_text[char_index]
 		label.text += current_char
 		char_index += 1
 		update_size()
 
-		# 🔊 Som apenas em letras visíveis
 		if current_char != " " and current_char != "\n":
 			_play_type_sound()
-			_pulse_outline()   # ✨ ANIMA OUTLINE
+			_pulse_outline()
 
 		await get_tree().create_timer(typing_speed).timeout
 
 	typing = false
 	emit_signal("finished_typing")
+
 
 # ===============================
 # SOM DE DIGITAÇÃO

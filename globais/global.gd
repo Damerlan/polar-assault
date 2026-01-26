@@ -2,6 +2,8 @@
 extends Node
 
 # ─────────── VARIAVEIS LOCAIS ───────────
+var saved_run_time: float = 0.0
+
 
 #----CONFIG PLAYER
 var lives: int = 3  #quantidade inicial de vidas
@@ -11,6 +13,8 @@ var lives_limit: int = 5 #limite maximo de vidas #inplementar
 var coin_value: int = 1 #moeda
 var gem_value: int = 100 #gemas
 var life_value: int = 50 #vida - Inplementar
+
+# -------- KEY / BOSS --------
 
 # ---- PROGRESSÃO DO PLAYER ----
 var player_xp: int = 0
@@ -29,16 +33,16 @@ const visibility = 400
 
 # ─────────── Configurações dos Spawns ───────────
 # -------- COINS --------
-@export var max_coins: int = 5
+#@export var max_coins: int = 5
 @export var coin_spawn_chance: float = 0.5
 @export var coin_spacing: int = 16
 
 # -------- GEM --------
-@export var gem_spawn_chance: float = 0.08  # 8%
+@export var gem_spawn_chance: float = 0.88  # 8%
 @export var special_height_offset: int = -32
 
 # -------- LIFE --------
-@export var life_spawn_chance: float = 0.07 # 8%
+@export var life_spawn_chance: float = 0.77 # 8%
 @export var life_height_offset: int = -32
 
 # Global.gd
@@ -53,7 +57,7 @@ var boss_seals_gained: Array[String] = []
 # ======================================================
 # MOEDAS
 # ======================================================
-const MAX_COINS: int = 5
+const MAX_COINS: int = 4
 const COIN_SPAWN_CHANCE: float = 0.75
 const COIN_SPACING: int = 24
 
@@ -103,13 +107,19 @@ const SPECIAL_VARIANTS: Array[Dictionary] = [
 		"id": "gem_diamond",
 		"type": "gem",
 		"scene": preload("res://scenes/coletaveis/gem_diamond.tscn"),
-		"chance": 0.1
+		"chance": 0.10
 	},
 	{
 		"id": "life",
 		"type": "life",
 		"scene": preload("res://scenes/coletaveis/life.tscn"),
-		"chance": 0.05
+		"chance": 0.5
+	},
+	{
+		"id": "bosskey",
+		"type": "key",
+		"scene": preload("res://scenes/coletaveis/key_boss_room_base.tscn"),
+		"chance": 1.05
 	}
 ]
 

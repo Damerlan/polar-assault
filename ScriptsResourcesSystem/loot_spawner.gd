@@ -19,12 +19,15 @@ class_name LootSpawner
 # ===============================
 @onready var coins_container: Node2D = get_parent().get_node_or_null("Coins")
 @onready var specials_container: Node2D = get_parent().get_node_or_null("Specials")
+@onready var keys_container: Node2D = get_parent().get_node_or_null("Keys")
+#@onready var keys_container: Node2D = $Keys
 
 func _ready():
 	# Segurança absoluta
 	if coins_container:
 		_spawn_coins()
 
+		
 	if specials_container:
 		var chance := ScoreManager.get_special_chance_by_height(
 			get_parent().global_position.y
@@ -43,7 +46,7 @@ func _spawn_coins():
 		var coin: Node2D = data["scene"].instantiate()
 
 		coin.position = Vector2(
-			(i - max_coins / 2.0) * coin_spacing,
+			(i - (max_coins - 1) / 2.0) * coin_spacing,
 			-16
 		)
 
@@ -52,7 +55,7 @@ func _spawn_coins():
 # ===============================
 # ESPECIAL (JOIA / VIDA / POWER)
 # ===============================
-func _spawn_special(spawn_chance: float):
+func _spawn_specialOLD(spawn_chance: float):
 	if randf() > spawn_chance:
 		return
 
@@ -61,3 +64,24 @@ func _spawn_special(spawn_chance: float):
 
 	special.position = Vector2(0, special_height_offset)
 	specials_container.add_child(special)
+	
+func _spawn_special(spawn_chance: float):
+	if randf() > spawn_chance:
+		return
+	var data := Global.pick_variant(special_variants)	
+	var special: Node2D = data["scene"].instantiate()
+
+	# Se for key, conecta sinal automaticamente
+	if special.has_signal("key_collected"):
+		#special.key_collected.connect(_on_key_collected)
+		special.key_collected.connect(_on_key_collected)
+
+	special.position = Vector2(0, special_height_offset)
+	specials_container.add_child(special)
+# ===============================
+# KEY (BOSS ENTRY)
+# ===============================
+func _on_key_collected(boss_id: String) -> void:
+	GameManager.request_boss_entry(
+		BossRoomManager.pick_room_by_level(Global.player_level)
+	)

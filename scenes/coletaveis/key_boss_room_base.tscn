@@ -108,8 +108,8 @@ shape = SubResource("CircleShape2D_ydx6k")
 [node name="Anim" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_1p504")
+animation = &"colect"
 autoplay = "default"
-frame_progress = 0.10031769
 
 [node name="Audio" type="Node" parent="."]
 

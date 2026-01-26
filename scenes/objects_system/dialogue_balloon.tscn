@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c1vn0akhyen1q"]
+[gd_scene load_steps=3 format=3 uid="uid://c1vn0akhyen1q"]
 
 [ext_resource type="Script" uid="uid://jciel4086w62" path="res://scenes/objects_system/dialogue_balloon.gd" id="1_ob0bx"]
+[ext_resource type="AudioStream" uid="uid://ta5n6ms4h2m4" path="res://Assets/Audio/Efeitos/beep-22.wav" id="2_5l1vr"]
 
 [node name="DialogueBalloon" type="Node2D"]
 script = ExtResource("1_ob0bx")
@@ -22,3 +23,4 @@ text = "Mensagem de teste..."
 [node name="Audio" type="Node" parent="."]
 
 [node name="ASPKeyEfect" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("2_5l1vr")
