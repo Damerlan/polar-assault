@@ -1,5 +1,5 @@
 extends CoinBase
 
 func _ready():
-	value = 5
+	value = 50
 	super._ready()

@@ -6,13 +6,15 @@ var saved_run_time: float = 0.0
 
 
 #----CONFIG PLAYER
-var lives: int = 3  #quantidade inicial de vidas
-var lives_limit: int = 5 #limite maximo de vidas #inplementar
+var lives: int = 20  #quantidade inicial de vidas
+var lives_limit: int = 100 #limite maximo de vidas #inplementar
+
+
 
 #----LOOTs
 var coin_value: int = 1 #moeda
 var gem_value: int = 100 #gemas
-var life_value: int = 50 #vida - Inplementar
+#var life_value: int = 50 #vida - Inplementar
 
 # -------- KEY / BOSS --------
 
@@ -20,7 +22,8 @@ var life_value: int = 50 #vida - Inplementar
 var player_xp: int = 0
 var player_level: int = 1
 
-const XP_PER_LEVEL := 100
+#const XP_PER_LEVEL := 100
+signal xp_changed
 
 # ======================================================
 # SISTEMA DE SELOS (PROGRESSÃO GLOBAL)
@@ -47,6 +50,8 @@ const visibility = 400
 
 # Global.gd
 var coming_from_boss := false
+
+signal level_up
 
 var boss_seals_gained: Array[String] = []
 # ======================================================
@@ -148,10 +153,42 @@ func pick_variant(variants: Array[Dictionary]) -> Dictionary:
 
 #----SISTEMA de XP
 
+func add_xpOld(value: int):
+	player_xp += value
+	print("XP atual:", player_xp)
+	
+	while player_xp >= get_xp_to_next_level(player_level):
+		player_xp -= get_xp_to_next_level(player_level)
+		player_level += 1
+		print("SUBIU PARA LEVEL", player_level)
+		_on_level_up()
+
 func add_xp(value: int):
 	player_xp += value
-	player_level = max(1, int(player_xp / float(XP_PER_LEVEL)) + 1)
+	emit_signal("xp_changed")
+	print("XP atual:", player_xp)
 	
+	while player_xp >= get_xp_to_next_level(player_level):
+		player_xp -= get_xp_to_next_level(player_level)
+		player_level += 1
+		print("SUBIU PARA LEVEL", player_level)
+		_on_level_up()
+	
+
+func _on_level_up():
+	print("LEVEL UP:", player_level)
+	emit_signal("level_up")
+	
+func get_level_multiplier() -> float:
+	return 1.0 + (player_level - 1) * 0.08
+	
+	
+# XP necessária para subir de nível
+func get_xp_to_next_level(level: int) -> int:
+	return int(100 * pow(level, 1.4))
+
+
+
 
 func unlock_seal(seal_id: String) -> void:
 	if seal_id.is_empty():

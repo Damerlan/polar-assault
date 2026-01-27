@@ -35,6 +35,7 @@ func _on_anim_animation_finished() -> void:
 
 func _on_collect(v):
 	ScoreManager.add_coin(v)
+	Global.add_xp(value)
 	queue_free()
 
 func collect_efx():

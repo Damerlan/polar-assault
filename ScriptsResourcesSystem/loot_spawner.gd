@@ -81,7 +81,7 @@ func _spawn_special(spawn_chance: float):
 # ===============================
 # KEY (BOSS ENTRY)
 # ===============================
-func _on_key_collected(boss_id: String) -> void:
+func _on_key_collected(_boss_id: String) -> void:
 	GameManager.request_boss_entry(
 		BossRoomManager.pick_room_by_level(Global.player_level)
 	)

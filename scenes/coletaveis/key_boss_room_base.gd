@@ -5,6 +5,8 @@ extends Area2D
 @onready var key_collect: AudioStreamPlayer = get_node_or_null("Audio/ASPColectEfect")
 @onready var collision: CollisionShape2D = get_node_or_null("CollisionShape2D")
 
+var value : = 200
+
 signal key_collected(boss_id: String)
 
 
@@ -31,5 +33,5 @@ func _on_body_entered(body: Node) -> void:
 
 	if anim:
 		anim.play("colect")
-
+	Global.add_xp(value) #da o xp
 	emit_signal("key_collected", boss_id)

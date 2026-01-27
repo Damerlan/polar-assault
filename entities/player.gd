@@ -12,25 +12,28 @@ enum PlayerState{
 	fall,
 	death
 }
-
+#---------------------------------------------
+# Nodes
+#---------------------------------------------
 @onready var fx_jump: AudioStreamPlayer = $Souds/fx_jump
 @onready var fx_damage: AudioStreamPlayer = $Souds/fx_damage
 @onready var fx_teleport: AudioStreamPlayer = $Souds/fx_teleport
 @onready var dialog_ballom: Marker2D = $DigalogBallom
 
-#---------------------------------------------
-# Nodes
-#---------------------------------------------
 @onready var anim: AnimatedSprite2D = $Skin
 @onready var jump_ui: Node2D = $JumpPouwerUi
 @onready var jump_fill: ColorRect = $JumpPouwerUi/Fill
 #@onready var dust_particles: GPUParticles2D = $DustParticles
 
+# ===============================
+# STATS BASE (ESCALÁVEIS POR LEVEL)
+# ===============================
+@export var base_max_health := 100
+@export var base_damage := 10
+@export var base_max_speed := 250.0
+@export var base_jump_force_stat := -600.0
 @export var jump_ui_height := 12.0
 @export var jump_ui_fade_speed := 20.0
-#---------------------------------------------
-# Variáveis exportáveis
-#---------------------------------------------
 @export var momentum_move_multiplier := 0.15 # antes era 0.3
 
 @export var max_speed = 250
@@ -39,44 +42,15 @@ enum PlayerState{
 @export var deceleration := 1200.0
 @export var jump_force := -600.0
 
-@export var soft_jump_multiplier := 0.55
-
-# --- Modificadores de sala ---
-var base_jump_force: float
-var base_soft_jump_multiplier: float
-var base_momentum_jump_multiplier := 0.4
-
 @export var min_accel_factor := 0.5 #movimento 
 
+@export var soft_jump_multiplier := 0.55
+
+@export var air_control_multiplier := 0.6
 #sistema de baloes de dialogo
 @export var dialogue_balloon_scene: PackedScene
-var current_balloon: Node2D
-#---------------------------------------------
-# Sinais
-#---------------------------------------------
-signal morreu
-
-#---------------------------------------------
-# Internas
-#---------------------------------------------
-var can_control := true #trava de controle para boss fight
-
-# ---------------------------------------------
-# Plataforma escorregadia (ICE)
-# ---------------------------------------------
-var on_ice: bool = false
-
 @export var ice_accel_multiplier: float = 0.6   # menos resposta ao input
 @export var ice_decel_multiplier: float = 0.05    # demora pra parar
-
-# Gelo
-#ice_accel_multiplier = 0.6   # responde melhor ao input
-#ice_decel_multiplier = 0.05 # demora MUITO pra parar
-var status: PlayerState	#variável de status
-@export var input_dir := 0.0
-
-var JUMP_VELOCITY = -600.0
-var SPEED = 80.0
 
 #adicionando a mecanica do momentum
 @export var run_momentum := 0.0     # aumenta enquanto corre
@@ -84,21 +58,47 @@ var SPEED = 80.0
 @export var momentum_gain := 450.0
 @export var momentum_decay := 60.0
 
+#---------------------------------------------
+# Internas
+#---------------------------------------------
+var can_control := true #trava de controle para boss fight
+var current_balloon: Node2D
+
+var max_health := 100
+var current_health : int
+# --- Modificadores de sala ---
+var base_jump_force: float
+var base_soft_jump_multiplier: float
+var base_momentum_jump_multiplier := 0.4
+
+var on_ice: bool = false #plataforma conjelada
+
+# Gelo
+var status: PlayerState	#variável de status
+@export var input_dir := 0.0
+
+var JUMP_VELOCITY = -600.0
+var SPEED = 80.0
+#---------------------------------------------
+# Sinais
+#---------------------------------------------
+signal morreu
+signal health_changed
+
+
 #-----------funçoes do sistema e fisica------------------#
 func _ready() -> void:
+	Global.level_up.connect(_on_level_up) #conectando level up
+	current_health = Global.lives #sistema de vidas
+	emit_signal("health_changed") 
 	#criando bkp das mecanicas de pulo
 	base_jump_force = jump_force
 	base_soft_jump_multiplier = soft_jump_multiplier
 	base_momentum_jump_multiplier = 0.4
 	
-	#can_control = false # teste
 	go_to_idle_state()	#coloca o player em idle state
 	jump_ui.position = Vector2(9, -7)
-	#show_dialogue("Teste funcionando")
-	#show_dialogue("Teste de fala")
-#	if OS.has_feature("web") or OS.has_feature("mobile"):
-#		if dust_particles:
-#			dust_particles.queue_free()
+	update_stats_from_level()
    
 
 func _physics_process(delta: float) -> void:	#processo de fisica
@@ -108,6 +108,9 @@ func _physics_process(delta: float) -> void:	#processo de fisica
 		move_and_slide()
 		return
 	#-----
+	#jumpbuffer
+
+	
 	read_input()
 	#gravidade
 	if not is_on_floor():	#se o player nao está no chão
@@ -115,12 +118,14 @@ func _physics_process(delta: float) -> void:	#processo de fisica
 	
 	var _is_moving = abs(velocity.x) > 10
 	#var on_ground = is_on_floor()
-	
-	#dust_particles.emitting = is_moving and on_ground
-#	if dust_particles:
-#		dust_particles.emitting = is_moving and on_ground
-	#if is_on_floor(): #se estiver na plataforma
-	#	Global.last_safe_position = global_position
+
+	#coyoute timer
+	#if is_on_floor():
+	#	coyote_timer = coyote_time
+	#else:
+	#	coyote_timer -= delta
+	#jump buffer
+
 	
 	if is_on_floor(): #registrando a plataforma
 		var normal = get_floor_normal()
@@ -144,11 +149,7 @@ func _physics_process(delta: float) -> void:	#processo de fisica
 
 				if obj and obj.has_method("register_as_safe"):
 					obj.register_as_safe()
-		#else:
-			# Aqui evitamos registrar plataformas onde o player
-			# pousou na quina ou numa lateral
-		#print("Ignorado: pousou na quina / lateral.")
-	# Saiu do chão? NÃO pode continuar no gelo
+
 	
 	#detecta se o player esta no jelo
 	if not is_on_floor() and on_ice:
@@ -187,6 +188,32 @@ func show_dialogue(text: String) -> Node2D:
 
 	return current_balloon
 
+func _on_level_up():
+	update_stats_from_level()
+	
+	# pequena recompensa visual futura aqui
+	print("Player atualizado para level", Global.player_level)
+
+func get_damage() -> int:
+	return int(base_damage * Global.get_level_multiplier())
+#Quando atacar inimigos, use:
+#enemy.take_damage(get_damage())
+
+
+func update_stats_from_level():
+	var level_mult = Global.get_level_multiplier()
+
+	max_health = int(base_max_health * level_mult)
+
+	# aumenta limite
+	Global.lives_limit = max_health
+
+	# mantém proporção da vida atual
+	var ratio = float(Global.lives) / float(current_health if current_health > 0 else 1)
+	Global.lives = int(max_health * ratio)
+
+	current_health = Global.lives
+	emit_signal("health_changed")
 
 
 func clear_dialogue():
@@ -335,13 +362,18 @@ func update_direction():
 func apply_movement(delta):
 	var accel := acceleration * ice_accel_multiplier
 	var decel := deceleration * ice_decel_multiplier
-
-	# 🔒 REDUZ aceleração conforme momentum cresce
-	if not on_ice:
+	
+	# 🔒 REDUZ aceleração conforme momentum cresce (somente no chão e fora do gelo)
+	if not on_ice and is_on_floor():
 		var momentum_ratio: float = float(run_momentum) / float(max_momentum)
 		var accel_factor: float = lerp(1.0, min_accel_factor, momentum_ratio)
 		accel *= accel_factor
-
+	
+	# 🎮 CONTROLE NO AR
+	var control_multiplier := 1.0
+	if not is_on_floor():
+		control_multiplier = air_control_multiplier
+	
 	if input_dir != 0:
 		var speed_with_momentum = move_speed + (run_momentum * momentum_move_multiplier)
 		speed_with_momentum = min(speed_with_momentum, max_speed)
@@ -349,22 +381,24 @@ func apply_movement(delta):
 		velocity.x = move_toward(
 			velocity.x,
 			input_dir * speed_with_momentum,
-			accel * delta
+			accel * delta * control_multiplier
 		)
 	else:
 		velocity.x = move_toward(
 			velocity.x,
 			0,
-			decel * delta
+			decel * delta * control_multiplier
 		)
 
-	# trava final de segurança
+	# 🔒 trava final de segurança
 	velocity.x = clamp(velocity.x, -max_speed, max_speed)
 
+	# 🔁 Flip do sprite
 	if input_dir < 0:
 		anim.flip_h = true
 	elif input_dir > 0:
 		anim.flip_h = false
+
 
 
 
@@ -435,24 +469,23 @@ func update_jump_ui():
 # SISTEMA DE DANO + RESPAWN
 #---------------------------------------------
 func take_hit():
-	# evita reentrar
 	if status == PlayerState.hit or status == PlayerState.death:
 		return
 
-	# remove vida
-	ScoreManager.remove_life()
+	Global.lives -= 10
+	current_health = Global.lives
 
-	# sempre mostra feedback
+	emit_signal("health_changed")
+
 	go_to_hit_state()
 	velocity = Vector2.ZERO
 
-	# MORTE
 	if Global.lives <= 0:
 		call_deferred("_die")
 		return
 
-	# AINDA VIVO
 	call_deferred("_do_respawn")
+
 	
 	#elif Nglobal.lives == 0:
 	#	morrer()

@@ -1,10 +1,9 @@
-[gd_scene load_steps=33 format=3 uid="uid://dok8g2fmkc556"]
+[gd_scene load_steps=32 format=3 uid="uid://dok8g2fmkc556"]
 
 [ext_resource type="Script" uid="uid://tduvhue5m3a3" path="res://entities/player.gd" id="1_6nm46"]
 [ext_resource type="Texture2D" uid="uid://ny366n4xxy0e" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Falling (16 x 16).png" id="1_qsoyl"]
 [ext_resource type="Texture2D" uid="uid://b73oxmm3da3i7" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Idle (16 x 16).png" id="1_rfe5m"]
 [ext_resource type="Texture2D" uid="uid://d0tlk1vikcbsx" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Hurt (16 x 16).png" id="2_6nm46"]
-[ext_resource type="PackedScene" uid="uid://c1vn0akhyen1q" path="res://scenes/objects_system/dialogue_balloon.tscn" id="2_i623q"]
 [ext_resource type="Texture2D" uid="uid://cn8fh767eis5u" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Jump (16 x 16).png" id="2_qly61"]
 [ext_resource type="Texture2D" uid="uid://buqbi8a81mxes" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Belly_Sliding (16 x 16).png" id="3_qsoyl"]
 [ext_resource type="Texture2D" uid="uid://c4h7bdl4sldwk" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Waddling (16 x 16).png" id="4_6nm46"]
@@ -170,7 +169,6 @@ animations = [{
 collision_layer = 2
 collision_mask = 25
 script = ExtResource("1_6nm46")
-dialogue_balloon_scene = ExtResource("2_i623q")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_i623q")
@@ -219,3 +217,5 @@ stream = ExtResource("12_q0i8f")
 [node name="ASPDamage" type="AudioStreamPlayer2D" parent="Audio"]
 
 [node name="ASPTeleport" type="AudioStreamPlayer2D" parent="Audio"]
+
+[node name="ASPLevelUP" type="AudioStreamPlayer" parent="Audio"]

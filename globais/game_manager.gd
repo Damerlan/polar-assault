@@ -7,6 +7,7 @@ extends Node
 var tempo_partida: float = 0.0
 var contando: bool = false
 
+
 # ---- GAME STATE MACHINE ----
 enum GameState {
 	LOBBY,
@@ -69,7 +70,7 @@ func _process(delta):
 
 # ─────────── RUN / SCORE ───────────
 func reset_run():
-	Global.lives = 3
+	Global.lives = 100
 	ScoreManager.altura = 0
 	ScoreManager.tempo = 0.0
 	ScoreManager.itens = 0
@@ -80,6 +81,7 @@ func reset_run():
 func update_autura(player_y):
 	ScoreManager.altura = max(ScoreManager.altura, -player_y)
 	emit_signal("autura_changed", ScoreManager.altura)
+	#Global.add_xp(20)
 
 func update_coleta(item):
 	ScoreManager.itens += item
@@ -334,7 +336,7 @@ func _restart_from_game_over():
 	await get_tree().process_frame
 	world = get_tree().current_scene
 
-func _on_key_collected(boss_id):
+func _on_key_collected(_boss_id):
 	request_boss_entry(
 		BossRoomManager.pick_room_by_level(Global.player_level)
 	)

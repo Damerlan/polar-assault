@@ -297,6 +297,7 @@ func die():
 
 	print("☠️ Boss morreu de verdade")
 	emit_signal("boss_defeated")
+	Global.add_xp(300)
 	GameManager.handle_boss_victory()
 
 

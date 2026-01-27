@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://dg205x48yj3ul"]
+
+[ext_resource type="PackedScene" uid="uid://dok8g2fmkc556" path="res://entities/player.tscn" id="1_rmo34"]
+[ext_resource type="PackedScene" uid="uid://h88qr0cg8f4a" path="res://scenes/plataforms/plataforma_comum.tscn" id="2_72shk"]
+
+[node name="SalaTestes" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_rmo34")]
+position = Vector2(284, 174)
+
+[node name="PlataformaComum" parent="." instance=ExtResource("2_72shk")]
+position = Vector2(293, 216)

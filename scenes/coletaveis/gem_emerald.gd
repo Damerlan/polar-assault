@@ -1,5 +1,5 @@
 extends GemBase
 
 func _ready():
-	value = 5
+	value = 500
 	super._ready()

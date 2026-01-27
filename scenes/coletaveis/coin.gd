@@ -3,7 +3,7 @@ extends Area2D
 @onready var anim: AnimatedSprite2D = $Anim
 @onready var collision: CollisionShape2D = $CollisionShape2D
 
-@export var value: int = 1
+@export var value: int = 5
 
 var collected := false
 
