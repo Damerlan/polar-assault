@@ -8,10 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://chvnjodtnjawi" path="res://Assets/Assets_Externos/Seasonal Tilesets/1 - Grassland/Background parts/3 - Cloud_cover_1.png" id="3_24eh3"]
 [ext_resource type="PackedScene" uid="uid://bdb3kj5cgpwun" path="res://scenes/objects_system/kill_zone.tscn" id="4_a8g7p"]
 [ext_resource type="Texture2D" uid="uid://cb5fpff875ljw" path="res://Assets/Assets_Externos/Seasonal Tilesets/3 - Tropics/Background parts/4 - Floating_clouds.png" id="4_e4gfn"]
-[ext_resource type="PackedScene" uid="uid://dok8g2fmkc556" path="res://entities/player.tscn" id="5_2os71"]
 [ext_resource type="PackedScene" uid="uid://chjh36le28bb1" path="res://scenes/UI/pause_menu.tscn" id="7_a8g7p"]
 [ext_resource type="PackedScene" uid="uid://b6cx7clkyl4fp" path="res://scenes/UI/mobile/hud_mobile_control.tscn" id="8_xee0p"]
 [ext_resource type="AudioStream" uid="uid://bw5mxhlydl83r" path="res://Assets/Audio/Trilhas/ClementPanchout_ Life_is_full_of_Joy.mp3" id="9_uv3r5"]
+[ext_resource type="PackedScene" uid="uid://dakhs3r2c28e7" path="res://entities/player_new.tscn" id="10_ovqrn"]
 
 [node name="Sala01" type="Node2D"]
 script = ExtResource("1_22nbu")
@@ -49,19 +49,19 @@ texture = ExtResource("3_24eh3")
 [node name="CameraGamePlay" parent="." instance=ExtResource("1_oq01q")]
 
 [node name="PlataformSpawner" parent="." instance=ExtResource("2_2os71")]
-distance_between = Vector2(120, 80)
 
 [node name="YSort" type="Node" parent="."]
 
 [node name="PlataformaComum" parent="YSort" instance=ExtResource("3_22nbu")]
-position = Vector2(237, 256)
+visible = false
+position = Vector2(237, 309)
 
 [node name="KillZone" parent="." instance=ExtResource("4_a8g7p")]
 position = Vector2(490, 664)
 
-[node name="Player" parent="." instance=ExtResource("5_2os71")]
-position = Vector2(237, 230)
-scale = Vector2(1.5, 1.5)
+[node name="PlayerNew" parent="." groups=["Player"] instance=ExtResource("10_ovqrn")]
+position = Vector2(214, 238)
+scale = Vector2(1.3, 1.3)
 
 [node name="PauseMenuLayer" type="CanvasLayer" parent="."]
 process_mode = 3

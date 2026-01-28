@@ -1,0 +1,223 @@
+[gd_scene load_steps=32 format=3 uid="uid://dakhs3r2c28e7"]
+
+[ext_resource type="Texture2D" uid="uid://ny366n4xxy0e" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Falling (16 x 16).png" id="1_f2b27"]
+[ext_resource type="Script" uid="uid://jrdbluv4jtx5" path="res://entities/player_new.gd" id="1_i65ff"]
+[ext_resource type="Texture2D" uid="uid://d0tlk1vikcbsx" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Hurt (16 x 16).png" id="2_i65ff"]
+[ext_resource type="Texture2D" uid="uid://b73oxmm3da3i7" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Idle (16 x 16).png" id="3_s5e66"]
+[ext_resource type="Texture2D" uid="uid://cn8fh767eis5u" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Jump (16 x 16).png" id="4_pq7is"]
+[ext_resource type="Texture2D" uid="uid://buqbi8a81mxes" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Belly_Sliding (16 x 16).png" id="5_xfg3n"]
+[ext_resource type="Texture2D" uid="uid://c4h7bdl4sldwk" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Waddling (16 x 16).png" id="6_wodhx"]
+[ext_resource type="AudioStream" uid="uid://dyeo1w8anr0to" path="res://Assets/Audio/music/sfx/Jump 5 - Sound effects Pack 2.wav" id="7_s4pgu"]
+[ext_resource type="AudioStream" uid="uid://dk4cyqgr10m2s" path="res://Assets/Audio/music/sfx/Hit 8 - Sound effects Pack 2.wav" id="8_ttbd2"]
+[ext_resource type="AudioStream" uid="uid://gmxl1wjwd4e7" path="res://Assets/Audio/music/sfx/Teleport 2 - Sound effects Pack 2.wav" id="9_5661n"]
+[ext_resource type="AudioStream" uid="uid://ci2myssa1cerv" path="res://Assets/Audio/music/sfx/Jump 9 - Sound effects Pack 2.wav" id="10_rxkba"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g6msb"]
+radius = 6.0
+height = 16.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i623q"]
+atlas = ExtResource("1_f2b27")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fruft"]
+atlas = ExtResource("2_i65ff")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ef06p"]
+atlas = ExtResource("3_s5e66")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tjdhl"]
+atlas = ExtResource("3_s5e66")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x08pd"]
+atlas = ExtResource("3_s5e66")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dchgp"]
+atlas = ExtResource("3_s5e66")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kdgjc"]
+atlas = ExtResource("3_s5e66")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q0i8f"]
+atlas = ExtResource("4_pq7is")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0i614"]
+atlas = ExtResource("5_xfg3n")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oprnr"]
+atlas = ExtResource("5_xfg3n")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rie4"]
+atlas = ExtResource("5_xfg3n")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dp3pk"]
+atlas = ExtResource("6_wodhx")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cgp7q"]
+atlas = ExtResource("6_wodhx")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1n8aq"]
+atlas = ExtResource("6_wodhx")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_28s6d"]
+atlas = ExtResource("6_wodhx")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cicqb"]
+atlas = ExtResource("6_wodhx")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hj0ki"]
+atlas = ExtResource("6_wodhx")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cf4he"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i623q")
+}],
+"loop": false,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fruft")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ef06p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjdhl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x08pd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dchgp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kdgjc")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q0i8f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0i614")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oprnr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rie4")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dp3pk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cgp7q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1n8aq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_28s6d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cicqb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hj0ki")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pduck"]
+
+[node name="PlayerNew" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 25
+script = ExtResource("1_i65ff")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_g6msb")
+
+[node name="Skin" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_cf4he")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Particles" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_pduck")
+
+[node name="JumpPouwerUi" type="Node2D" parent="."]
+
+[node name="Background" type="ColorRect" parent="JumpPouwerUi"]
+offset_right = 1.0
+offset_bottom = 11.0
+color = Color(0.08468992, 0.08468992, 0.08468992, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Fill" type="ColorRect" parent="JumpPouwerUi"]
+offset_right = 1.0
+offset_bottom = 11.0
+color = Color(1, 0.060000002, 0.060000002, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="DigalogBallom" type="Marker2D" parent="."]
+position = Vector2(-36, -61)
+
+[node name="Souds" type="Node" parent="."]
+
+[node name="fx_jump" type="AudioStreamPlayer" parent="Souds"]
+stream = ExtResource("7_s4pgu")
+
+[node name="fx_damage" type="AudioStreamPlayer" parent="Souds"]
+stream = ExtResource("8_ttbd2")
+
+[node name="fx_teleport" type="AudioStreamPlayer" parent="Souds"]
+stream = ExtResource("9_5661n")
+
+[node name="ASPShortJump" type="AudioStreamPlayer" parent="Souds" groups=["Player"]]
+stream = ExtResource("10_rxkba")
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="ASPJump" type="AudioStreamPlayer2D" parent="Audio"]
+
+[node name="ASPDamage" type="AudioStreamPlayer2D" parent="Audio"]
+
+[node name="ASPTeleport" type="AudioStreamPlayer2D" parent="Audio"]
+
+[node name="ASPLevelUP" type="AudioStreamPlayer" parent="Audio"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dg205x48yj3ul"]
+[gd_scene load_steps=4 format=3 uid="uid://dp6jc3uljjli0"]
 
 [ext_resource type="PackedScene" uid="uid://dok8g2fmkc556" path="res://entities/player.tscn" id="1_rmo34"]
 [ext_resource type="PackedScene" uid="uid://h88qr0cg8f4a" path="res://scenes/plataforms/plataforma_comum.tscn" id="2_72shk"]
+[ext_resource type="PackedScene" uid="uid://dakhs3r2c28e7" path="res://entities/player_new.tscn" id="3_72shk"]
 
 [node name="SalaTestes" type="Node2D"]
 
@@ -9,4 +10,13 @@
 position = Vector2(284, 174)
 
 [node name="PlataformaComum" parent="." instance=ExtResource("2_72shk")]
-position = Vector2(293, 216)
+position = Vector2(293, 318)
+scale = Vector2(6, 6)
+
+[node name="PlataformaComum2" parent="." instance=ExtResource("2_72shk")]
+position = Vector2(309, 252)
+
+[node name="PlayerNew" parent="." instance=ExtResource("3_72shk")]
+position = Vector2(307, 177)
+collision_layer = 2
+collision_mask = 25
