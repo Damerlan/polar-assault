@@ -4,7 +4,7 @@ extends StaticBody2D
 @export var ice_accel_multiplier := 0.25
 @export var ice_decel_multiplier := 0.1
 
-var visibility = Global.visibility
+var visibility = Global.VISIBILITY
 
 var base_y := 0.0
 var player = null

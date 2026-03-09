@@ -14,6 +14,7 @@ enum State {
 @export var speed: float = 140.0
 @export var push_force: float = 260.0
 @export var gravity: float = 900.0
+@export var contact_damage := 24
 
 @export var stun_time: float = 0.8
 
@@ -58,6 +59,7 @@ var current_balloon: Node2D
 @export var body_hit_cooldown := 0.2
 
 var can_body_hit := true
+var hit_stop_active := false
 
 signal boss_defeated #sinal para quando o boss morre
 
@@ -85,6 +87,14 @@ func _physics_process(delta: float) -> void:
 	decision_timer -= delta
 	
 	if state == State.CHASE and player:
+		var life_ratio := float(life) / float(max(max_life, 1))
+		if life_ratio < 0.35:
+			speed = 190.0
+		elif life_ratio < 0.65:
+			speed = 165.0
+		else:
+			speed = 140.0
+
 		var player_above := player.global_position.y < global_position.y - 12
 		var player_falling := player.velocity.y > 0
 
@@ -133,6 +143,7 @@ func _physics_process(delta: float) -> void:
 					#print("💥 CHAMANDO SHAKE")
 					asp_drop_efect.play()
 					platform.shake()
+					_camera_impact_shake()
 
 func _apply_gravity(delta):
 	if not is_on_floor():
@@ -157,7 +168,7 @@ func _update_reposition(delta):
 		velocity.x = 0
 		state = State.CHASE
 		return
-	elif reposition_dir > 0 and not ray_right.is_colliding():
+	if reposition_dir > 0 and not ray_right.is_colliding():
 		velocity.x = 0
 		state = State.CHASE
 		return
@@ -203,7 +214,7 @@ func _chase_player(_delta):
 	if dir < 0 and not ray_left.is_colliding():
 		velocity.x = 0
 		return
-	elif dir > 0 and not ray_right.is_colliding():
+	if dir > 0 and not ray_right.is_colliding():
 		velocity.x = 0
 		return
 
@@ -232,6 +243,8 @@ func on_player_jump_on_head(player_hit: CharacterBody2D):
 		return
 	
 	# 🔴 CAUSA DANO
+	await _hit_stop_frames(player_hit, 3)
+	_camera_impact_shake(2.2, 0.10)
 	life -= head_hit_damage
 	_show_damage(head_hit_damage)
 	hit_efect.play()
@@ -255,6 +268,9 @@ func on_player_jump_on_head(player_hit: CharacterBody2D):
 	heavy_landing = true   # 💥 ISSO É ESSENCIAL
 	
 	# 💥 knockback no player
+	if player_hit.has_method("unlock_control"):
+		player_hit.unlock_control()
+
 	if player_hit.has_method("apply_knockback"):
 		player_hit.apply_knockback(-dir)
 	else:
@@ -331,9 +347,14 @@ func _apply_body_knockback(player_knockback: CharacterBody2D):
 	if dir == 0:
 		dir = -1 if randf() < 0.5 else 1
 
-	# 💥 knockback no player
-	player_knockback.velocity.x = dir * 520
-	player_knockback.velocity.y = -180
+	# 💥 contato machuca + knockback no player
+	if player_knockback.has_method("take_hit"):
+		player_knockback.take_hit(contact_damage, dir)
+	else:
+		player_knockback.velocity.x = dir * 520
+		player_knockback.velocity.y = -180
+
+	_camera_impact_shake(1.6, 0.08)
 
 	# animação de impacto
 	# if anim:
@@ -347,3 +368,36 @@ func _apply_body_knockback(player_knockback: CharacterBody2D):
 func apply_knockback():
 	velocity.y = -500
 	heavy_landing = true
+
+
+func _camera_impact_shake(intensity: float = 3.0, duration: float = 0.12) -> void:
+	var cam := get_viewport().get_camera_2d()
+	if cam == null:
+		return
+
+	var original_offset := cam.offset
+	cam.offset += Vector2(
+		randf_range(-intensity, intensity),
+		randf_range(-intensity * 0.7, intensity * 0.7)
+	)
+
+	var tween := create_tween()
+	tween.tween_property(cam, "offset", original_offset, duration)
+
+
+func _hit_stop_frames(player_hit: CharacterBody2D, frames: int) -> void:
+	if hit_stop_active:
+		return
+
+	hit_stop_active = true
+	velocity = Vector2.ZERO
+
+	if player_hit:
+		player_hit.velocity = Vector2.ZERO
+		if player_hit.has_method("lock_control"):
+			player_hit.lock_control()
+
+	for i in range(frames):
+		await get_tree().process_frame
+
+	hit_stop_active = false

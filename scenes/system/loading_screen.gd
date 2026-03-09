@@ -7,6 +7,7 @@ extends Control
 @onready var min_timer: Timer = $min_time
 
 var loading_finished := false
+var finishing_transition := false
 
 func _ready():
 	min_timer.wait_time = min_loading_time
@@ -28,9 +29,24 @@ func _process(_delta):
 		try_finish()
 
 func try_finish():
+	if finishing_transition:
+		return
+
 	if loading_finished and min_timer.time_left <= 0:
+		finishing_transition = true
+		var tree := get_tree()
+		if tree == null:
+			return
+
+		if GameManager.screen_fade:
+			GameManager.screen_fade.fade_in(0.45)
+			await GameManager.screen_fade.fade_finished
+
 		var packed = load(next_scene)
-		get_tree().change_scene_to_packed(packed)
+		tree.change_scene_to_packed(packed)
+
+		if GameManager.screen_fade:
+			GameManager.screen_fade.call_deferred("fade_out", 0.45)
 
 func get_heavy_resources() -> Array:
 	return [

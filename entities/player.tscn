@@ -1,9 +1,10 @@
-[gd_scene load_steps=32 format=3 uid="uid://dok8g2fmkc556"]
+[gd_scene format=3 uid="uid://dok8g2fmkc556"]
 
 [ext_resource type="Script" uid="uid://tduvhue5m3a3" path="res://entities/player.gd" id="1_6nm46"]
 [ext_resource type="Texture2D" uid="uid://ny366n4xxy0e" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Falling (16 x 16).png" id="1_qsoyl"]
 [ext_resource type="Texture2D" uid="uid://b73oxmm3da3i7" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Idle (16 x 16).png" id="1_rfe5m"]
 [ext_resource type="Texture2D" uid="uid://d0tlk1vikcbsx" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Hurt (16 x 16).png" id="2_6nm46"]
+[ext_resource type="PackedScene" uid="uid://c1vn0akhyen1q" path="res://scenes/objects_system/dialogue_balloon.tscn" id="2_dchgp"]
 [ext_resource type="Texture2D" uid="uid://cn8fh767eis5u" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Jump (16 x 16).png" id="2_qly61"]
 [ext_resource type="Texture2D" uid="uid://buqbi8a81mxes" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Belly_Sliding (16 x 16).png" id="3_qsoyl"]
 [ext_resource type="Texture2D" uid="uid://c4h7bdl4sldwk" path="res://Assets/Assets_Externos/Sprite Pack 6/1 - Penguin/Waddling (16 x 16).png" id="4_6nm46"]
@@ -165,57 +166,58 @@ animations = [{
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_slxql"]
 
-[node name="Player" type="CharacterBody2D" groups=["Player"]]
+[node name="Player" type="CharacterBody2D" unique_id=779827903 groups=["Player"]]
 collision_layer = 2
 collision_mask = 25
 script = ExtResource("1_6nm46")
+dialogue_balloon_scene = ExtResource("2_dchgp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1256801058]
 shape = SubResource("CapsuleShape2D_i623q")
 
-[node name="Skin" type="AnimatedSprite2D" parent="."]
+[node name="Skin" type="AnimatedSprite2D" parent="." unique_id=2049478679]
 sprite_frames = SubResource("SpriteFrames_fruft")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="Particles" type="AnimatedSprite2D" parent="."]
+[node name="Particles" type="AnimatedSprite2D" parent="." unique_id=375334603]
 sprite_frames = SubResource("SpriteFrames_slxql")
 
-[node name="JumpPouwerUi" type="Node2D" parent="."]
+[node name="JumpPouwerUi" type="Node2D" parent="." unique_id=704994291]
 
-[node name="Background" type="ColorRect" parent="JumpPouwerUi"]
+[node name="Background" type="ColorRect" parent="JumpPouwerUi" unique_id=1604864371]
 offset_right = 1.0
 offset_bottom = 11.0
 color = Color(0.08468992, 0.08468992, 0.08468992, 1)
 
-[node name="Fill" type="ColorRect" parent="JumpPouwerUi"]
+[node name="Fill" type="ColorRect" parent="JumpPouwerUi" unique_id=768115835]
 offset_right = 1.0
 offset_bottom = 11.0
 color = Color(1, 0.060000002, 0.060000002, 1)
 
-[node name="DigalogBallom" type="Marker2D" parent="."]
+[node name="DigalogBallom" type="Marker2D" parent="." unique_id=1981014197]
 position = Vector2(-36, -61)
 
-[node name="Souds" type="Node" parent="."]
+[node name="Souds" type="Node" parent="." unique_id=216075554]
 
-[node name="fx_jump" type="AudioStreamPlayer" parent="Souds"]
+[node name="fx_jump" type="AudioStreamPlayer" parent="Souds" unique_id=543610245]
 stream = ExtResource("9_ef06p")
 
-[node name="fx_damage" type="AudioStreamPlayer" parent="Souds"]
+[node name="fx_damage" type="AudioStreamPlayer" parent="Souds" unique_id=1180227836]
 stream = ExtResource("10_dchgp")
 
-[node name="fx_teleport" type="AudioStreamPlayer" parent="Souds"]
+[node name="fx_teleport" type="AudioStreamPlayer" parent="Souds" unique_id=2092362502]
 stream = ExtResource("11_kdgjc")
 
-[node name="ASPShortJump" type="AudioStreamPlayer" parent="Souds"]
+[node name="ASPShortJump" type="AudioStreamPlayer" parent="Souds" unique_id=1838902190]
 stream = ExtResource("12_q0i8f")
 
-[node name="Audio" type="Node" parent="."]
+[node name="Audio" type="Node" parent="." unique_id=137888202]
 
-[node name="ASPJump" type="AudioStreamPlayer2D" parent="Audio"]
+[node name="ASPJump" type="AudioStreamPlayer2D" parent="Audio" unique_id=763508024]
 
-[node name="ASPDamage" type="AudioStreamPlayer2D" parent="Audio"]
+[node name="ASPDamage" type="AudioStreamPlayer2D" parent="Audio" unique_id=285531217]
 
-[node name="ASPTeleport" type="AudioStreamPlayer2D" parent="Audio"]
+[node name="ASPTeleport" type="AudioStreamPlayer2D" parent="Audio" unique_id=1271125545]
 
-[node name="ASPLevelUP" type="AudioStreamPlayer" parent="Audio"]
+[node name="ASPLevelUP" type="AudioStreamPlayer" parent="Audio" unique_id=683453872]

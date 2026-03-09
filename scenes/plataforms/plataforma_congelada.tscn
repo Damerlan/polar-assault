@@ -38,3 +38,6 @@ position = Vector2(0, -22)
 [node name="Audio" type="Node" parent="."]
 
 [node name="ASPIceEfect" type="AudioStreamPlayer" parent="Audio"]
+
+[connection signal="body_entered" from="IceArea" to="." method="_on_ice_area_body_entered"]
+[connection signal="body_exited" from="IceArea" to="." method="_on_ice_area_body_exited"]

@@ -1,11 +1,14 @@
 extends Node2D
 
-@onready var player = $Player
+var player: Node = null
 @onready var killzone = $KillZone
 @onready var y_sort: Node = $YSort
+var game_over_triggered := false
 
 
 func _ready() -> void:
+	_bind_player_death_signal()
+
 	if Global.coming_from_boss:
 		GameManager.tempo_partida = Global.saved_run_time
 		GameManager.contando = true
@@ -20,15 +23,17 @@ func _ready() -> void:
 	#sistema da boss roms
 
 
+func _bind_player_death_signal() -> void:
+	player = get_tree().get_first_node_in_group("Player")
+	if player and player.has_signal("morreu") and not player.morreu.is_connected(_on_player_morreu):
+		player.morreu.connect(_on_player_morreu)
+
+
 
 	
 func _on_player_morreu():
-	GameManager.finalizar_partida()
-	#para o tempo
-	get_tree().paused = true
-	
-	#pequena espera
-	await get_tree().create_timer(0.8).timeout
-	
-	get_tree().paused = false
-	get_tree().change_scene_to_file("res://scenes/UI/game_over.tscn")
+	if game_over_triggered:
+		return
+
+	game_over_triggered = true
+	GameManager.on_player_morreu()

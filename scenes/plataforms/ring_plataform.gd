@@ -11,7 +11,7 @@ extends StaticBody2D
 var original_position: Vector2
 var shaking := false
 var player = null
-var visibility = Global.visibility
+var visibility = Global.VISIBILITY
 
 func _ready():
 	original_position = position

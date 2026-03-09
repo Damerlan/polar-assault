@@ -53,7 +53,6 @@ texture = ExtResource("3_24eh3")
 [node name="YSort" type="Node" parent="."]
 
 [node name="PlataformaComum" parent="YSort" instance=ExtResource("3_22nbu")]
-visible = false
 position = Vector2(237, 309)
 
 [node name="KillZone" parent="." instance=ExtResource("4_a8g7p")]

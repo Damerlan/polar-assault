@@ -8,11 +8,14 @@ extends Area2D
 
 
 var collected := false
+var life_applied := false
 
 func _ready():
 	# 🔗 Conecta os sinais corretamente
-	anim.animation_finished.connect(_on_anim_animation_finished)
-	body_entered.connect(_on_body_entered)
+	if not anim.animation_finished.is_connected(_on_anim_animation_finished):
+		anim.animation_finished.connect(_on_anim_animation_finished)
+	if not body_entered.is_connected(_on_body_entered):
+		body_entered.connect(_on_body_entered)
 
 func _on_body_entered(body: Node2D) -> void:
 	if collected:
@@ -22,6 +25,8 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 
 	collected = true
+	life_applied = true
+	ScoreManager.add_life()
 
 	# 🔒 Desliga colisão
 	collision.set_deferred("disabled", true)
@@ -30,6 +35,5 @@ func _on_body_entered(body: Node2D) -> void:
 	anim.play("colect")
 
 func _on_anim_animation_finished() -> void:
-	# 💚 adiciona vida
-	ScoreManager.add_life()
+	# vida já aplicada na coleta
 	queue_free()

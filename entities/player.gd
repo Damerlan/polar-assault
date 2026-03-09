@@ -5,12 +5,12 @@ extends CharacterBody2D
 # ENUM – Estados
 #---------------------------------------------
 enum PlayerState{
-	idle,
-	run,
-	jump,
-	hit,
-	fall,
-	death
+	IDLE,
+	RUN,
+	JUMP,
+	HIT,
+	FALL,
+	DEATH
 }
 #---------------------------------------------
 # Nodes
@@ -77,8 +77,8 @@ var on_ice: bool = false #plataforma conjelada
 var status: PlayerState	#variável de status
 @export var input_dir := 0.0
 
-var JUMP_VELOCITY = -600.0
-var SPEED = 80.0
+var jump_velocity_unused = -600.0
+var speed_unused = 80.0
 #---------------------------------------------
 # Sinais
 #---------------------------------------------
@@ -156,17 +156,17 @@ func _physics_process(delta: float) -> void:	#processo de fisica
 		exit_ice()
 	# --- State Machine ---
 	match status:
-		PlayerState.idle:
+		PlayerState.IDLE:
 			idle_state(delta)
-		PlayerState.run:
+		PlayerState.RUN:
 			run_state(delta)
-		PlayerState.jump:
+		PlayerState.JUMP:
 			jump_state(delta)
-		PlayerState.hit:
+		PlayerState.HIT:
 			hit_state(delta)
-		PlayerState.fall:
+		PlayerState.FALL:
 			fall_state(delta)
-		PlayerState.death:
+		PlayerState.DEATH:
 			death_state(delta)
 	#fim do Switch
 	update_jump_ui()#jump UI
@@ -235,30 +235,30 @@ func exit_ice():
 
 
 func go_to_idle_state():#entrada idle state
-	status = PlayerState.idle	 #define o estado
+	status = PlayerState.IDLE	 #define o estado
 	anim.play("idle")	#define a animação
 
 func go_to_run_state():#entrada run state (Caminhada)
-	status = PlayerState.run
+	status = PlayerState.RUN
 	anim.play("run")
 
 func go_to_jump_state():
-	status = PlayerState.jump
+	status = PlayerState.JUMP
 	fx_jump.play()
 	anim.play("jump")
 	#velocity.y = JUMP_VELOCITY	#aplica a ação do pulo
 
 func go_to_fall_state():
-	status = PlayerState.fall
+	status = PlayerState.FALL
 	anim.play("fall")
 
 func go_to_hit_state():
-	status = PlayerState.hit
+	status = PlayerState.HIT
 	anim.play("hit")
 	fx_damage.play()
 
 func go_to_death_state():
-	status = PlayerState.death
+	status = PlayerState.DEATH
 	#anim.play("death")
 	
 
@@ -299,7 +299,7 @@ func run_state(delta):
 	if Input.is_action_just_pressed("jump"):	#se o player apertou jump
 		jump()	#coloca o player no estado de jump
 		return
-	elif Input.is_action_just_pressed("jump_soft"):
+	if Input.is_action_just_pressed("jump_soft"):
 		soft_jump()
 		return
 
@@ -437,9 +437,6 @@ func soft_jump():#soft jump novo
 
 
 func apply_knockback(dir) -> void:
-	if not is_on_floor():
-		return
-	
 	velocity.x = dir * 180
 	velocity.y = -420
 #-----------------------------------------#
@@ -468,17 +465,22 @@ func update_jump_ui():
 #---------------------------------------------
 # SISTEMA DE DANO + RESPAWN
 #---------------------------------------------
-func take_hit():
-	if status == PlayerState.hit or status == PlayerState.death:
+func take_hit(damage: int = 20, knockback_dir: float = 0.0):
+	if status == PlayerState.HIT or status == PlayerState.DEATH:
 		return
 
-	Global.lives -= 10
+	Global.lives -= damage
+	Global.lives = clamp(Global.lives, 0, Global.lives_limit)
 	current_health = Global.lives
 
 	emit_signal("health_changed")
+	ScoreManager.emit_signal("lives_changed")
 
 	go_to_hit_state()
-	velocity = Vector2.ZERO
+	if is_zero_approx(knockback_dir):
+		velocity = Vector2.ZERO
+	else:
+		apply_knockback(knockback_dir)
 
 	if Global.lives <= 0:
 		call_deferred("_die")
@@ -525,7 +527,7 @@ func _do_respawn():
 	velocity = Vector2.ZERO
 
 	# Invulnerável por 0.2s
-	status = PlayerState.hit
+	status = PlayerState.HIT
 	await get_tree().create_timer(0.2).timeout
 	
 	go_to_idle_state()

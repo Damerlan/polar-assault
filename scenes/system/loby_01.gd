@@ -20,8 +20,9 @@ func _ready() -> void:
 
 func _on_btn_start_pressed() -> void:
 	ui_efx()
-	get_tree().change_scene_to_file("res://scenes/system/loading_screen.tscn")
-	#get_tree().change_scene_to_file("res://scenes/loading_screen.tscn")
+	var gm = get_tree().get_first_node_in_group("GameManager")
+	if gm:
+		gm.start_game()
 
 
 func _on_btn_ranking_pressed() -> void:

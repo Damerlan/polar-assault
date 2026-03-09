@@ -45,14 +45,23 @@ func add_coin(value: int):
 
 
 func add_life(): #add +1 vida
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree:
+		var player := tree.get_first_node_in_group("Player")
+		if player and player.has_method("heal"):
+			player.heal(20)
+			emit_signal("lives_changed")
+			return
+
 	if Global.lives < Global.lives_limit:
-		Global.lives += 20
-	#itens += Global.life_value #adiciona a pontuação de vida ao score
+		var cap: int = min(Global.lives_limit, Global.MAX_ACCUMULATED_LIVES)
+		Global.lives = clamp(Global.lives + 20, 0, cap)
+
 	emit_signal("lives_changed")
 
 
 func remove_life():
-	Global.lives -= 20
+	Global.lives = clamp(Global.lives - 20, 0, Global.lives_limit)
 	emit_signal("lives_changed")
 
 	if Global.lives <= 0:

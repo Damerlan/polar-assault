@@ -52,6 +52,8 @@ var buffered_jump_is_soft := false
 
 @export var jump_ui_height := 12.0
 @export var jump_ui_fade_speed := 20.0
+@export var ice_accel_multiplier := 0.55
+@export var ice_decel_multiplier := 0.12
 
 #save plataform
 var last_safe_position : Vector2 = Vector2.ZERO
@@ -75,6 +77,7 @@ signal morreu
 var input_dir := 0.0
 var momentum := 0.0
 var can_control := true
+var on_ice := false
 
 # =====================================================
 # READY
@@ -83,6 +86,7 @@ var can_control := true
 func _ready():
 	update_stats_from_level()
 	current_health = max_health
+	_sync_global_health(true)
 	emit_signal("health_changed")
 	change_state(State.IDLE)
 	#jump ui
@@ -105,6 +109,7 @@ func _physics_process(delta):
 	apply_horizontal_movement(delta)
 
 	move_and_slide()
+	GameManager.update_autura(global_position.y)
 
 	# 👇 AGORA a física está correta
 	update_coyote(delta)
@@ -154,7 +159,12 @@ func change_state(new_state: State):
 		State.HIT:
 			$Skin.play("hit")
 		State.DEATH:
-			$Skin.play("death")
+			if $Skin.sprite_frames and $Skin.sprite_frames.has_animation("death"):
+				$Skin.play("death")
+			elif $Skin.sprite_frames and $Skin.sprite_frames.has_animation("hit"):
+				$Skin.play("hit")
+			else:
+				$Skin.play("fall")
 
 #input unificado
 func read_input():
@@ -206,6 +216,11 @@ func apply_horizontal_movement(delta):
 	target_speed = clamp(target_speed, -max_speed, max_speed)
 
 	var accel = acceleration if input_dir != 0 else deceleration
+	if on_ice:
+		if input_dir != 0:
+			accel *= ice_accel_multiplier
+		else:
+			accel *= ice_decel_multiplier
 
 	if not is_on_floor():
 		accel *= air_control
@@ -318,21 +333,33 @@ func update_jump_ui():
 #Escalonamento por Level (melhorado)
 func update_stats_from_level():
 
+	var previous_max_health := max_health
 	var level_mult := Global.get_level_multiplier()
 
 	max_health = int(base_max_health * level_mult)
+	max_health = min(max_health, Global.MAX_ACCUMULATED_LIVES)
 
 	# mantém proporção atual
 	if current_health > 0:
-		var ratio := float(current_health) / float(max_health)
+		var health_base := previous_max_health if previous_max_health > 0 else max_health
+		var ratio := float(current_health) / float(health_base)
 		current_health = int(max_health * ratio)
 	else:
 		current_health = max_health
 
+	_sync_global_health()
 	emit_signal("health_changed")
 
+
+func _sync_global_health(force_emit_lives_changed: bool = false):
+	Global.lives_limit = max_health
+	Global.lives = clamp(current_health, 0, max_health)
+
+	if force_emit_lives_changed:
+		ScoreManager.emit_signal("lives_changed")
+
 #sistema de dano
-func take_hit(damage: int, knockback_dir: float):
+func take_hit(damage: int = 20, knockback_dir: float = 0.0):
 
 	if state == State.HIT or state == State.DEATH:
 		return
@@ -340,7 +367,11 @@ func take_hit(damage: int, knockback_dir: float):
 	current_health -= damage
 	current_health = clamp(current_health, 0, max_health)
 
+	_sync_global_health(true)
 	emit_signal("health_changed")
+
+	if is_zero_approx(knockback_dir):
+		knockback_dir = -1.0 if $Skin.flip_h else 1.0
 
 	apply_knockback(knockback_dir)
 
@@ -374,6 +405,18 @@ func lock_control():
 
 func unlock_control():
 	can_control = true
+
+
+func enter_ice(accel_mult: float, decel_mult: float):
+	on_ice = true
+	ice_accel_multiplier = accel_mult
+	ice_decel_multiplier = decel_mult
+
+
+func exit_ice():
+	on_ice = false
+	ice_accel_multiplier = 0.55
+	ice_decel_multiplier = 0.12
 
 #registrando safe position
 func register_safe_position():
@@ -435,6 +478,7 @@ func take_fall_damage(damage: int):
 	current_health -= damage
 	current_health = clamp(current_health, 0, max_health)
 
+	_sync_global_health(true)
 	emit_signal("health_changed")
 
 	if current_health <= 0:
@@ -442,3 +486,15 @@ func take_fall_damage(damage: int):
 		return
 
 	respawn()
+
+
+func heal(amount: int):
+	if state == State.DEATH:
+		return
+
+	if amount <= 0:
+		return
+
+	current_health = clamp(current_health + amount, 0, max_health)
+	_sync_global_health(true)
+	emit_signal("health_changed")

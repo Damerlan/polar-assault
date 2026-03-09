@@ -32,7 +32,7 @@ signal xp_changed
 var unlocked_seals: Dictionary = {}
 
 # ─────────── Configurações das Plataformas ───────────
-const visibility = 400
+const VISIBILITY = 400
 
 # ─────────── Configurações dos Spawns ───────────
 # -------- COINS --------
@@ -50,6 +50,22 @@ const visibility = 400
 
 # Global.gd
 var coming_from_boss := false
+var boss_key_spawned_this_run := false
+
+enum BalancePreset {
+	EASY,
+	MEDIUM,
+	HARD
+}
+
+var balance_preset: BalancePreset = BalancePreset.EASY
+
+const MIN_HEIGHT_FOR_BOSS_KEY: float = 900.0
+const MIN_LEVEL_FOR_BOSS_KEY: int = 2
+const KEY_WEIGHT_SCALE: float = 0.22
+const MIN_HEIGHT_BETWEEN_BOSS_KEYS: float = 1100.0
+const MAX_ACCUMULATED_LIVES: int = 120
+var last_boss_entry_height: float = 0.0
 
 signal level_up
 
@@ -153,7 +169,7 @@ func pick_variant(variants: Array[Dictionary]) -> Dictionary:
 
 #----SISTEMA de XP
 
-func add_xpOld(value: int):
+func add_xp_old(value: int):
 	player_xp += value
 	print("XP atual:", player_xp)
 	

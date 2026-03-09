@@ -8,6 +8,10 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Polar Assault: Pirate crew"
@@ -25,7 +29,7 @@ Projeto em estágio ALFA.
 Bugs e sugestões são bem-vindos.
 "
 run/main_scene="uid://bttppxqbhp52t"
-config/features=PackedStringArray("4.5", "Mobile")
+config/features=PackedStringArray("4.6", "Mobile")
 boot_splash/image="uid://dnuwhugyenevi"
 config/icon="uid://dwxreg7w3tq2b"
 config/windows_native_icon="uid://dwxreg7w3tq2b"

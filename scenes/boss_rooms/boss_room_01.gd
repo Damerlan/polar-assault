@@ -30,6 +30,9 @@ var auto_timer: SceneTreeTimer
 
 @export var camera_follow_speed := 4.0
 @export var camera_soft_limit := 0.08
+@export var drop_damage_easy := 12
+@export var drop_damage_medium := 18
+@export var drop_damage_hard := 28
 
 
 # ─────────── CONTROLE DE ESTADO ───────────
@@ -224,7 +227,10 @@ func _on_drop_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		#chama o metodo hit
 		if body.has_method("take_hit"):
-			body.take_hit()
+			var dir: int = sign(body.global_position.x - global_position.x)
+			if dir == 0:
+				dir = -1
+			body.take_hit(_get_drop_damage(), dir)
 			print("Player tomo um dano")
 	elif  body.is_in_group("Boss"):
 		if body.has_method("die"):
@@ -238,3 +244,13 @@ func _on_drop_area_body_entered(body: Node2D) -> void:
 func _on_player_morreu():
 	print("☠ Player morreu na sala especial")
 	GameManager.fail_special_room()
+
+
+func _get_drop_damage() -> int:
+	match Global.balance_preset:
+		Global.BalancePreset.EASY:
+			return drop_damage_easy
+		Global.BalancePreset.HARD:
+			return drop_damage_hard
+		_:
+			return drop_damage_medium

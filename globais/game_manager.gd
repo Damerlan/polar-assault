@@ -27,6 +27,7 @@ var emergency_platform: Node = null
 
 # ---- WORLD / SCENE ----
 var world: Node
+var tracked_player: Node = null
 
 # ---- FADE ----
 const SCREEN_FADE := preload("res://scenes/system/screen_fade.tscn")
@@ -35,6 +36,8 @@ var screen_fade: CanvasLayer
 # ---- SALAS ESPECIAIS / BOSS ----
 var current_room_data := {}
 var return_position := Vector2.ZERO
+var boss_entry_score := 0
+var boss_entry_lives := 0
 
 # ─────────── SINAIS ───────────
 signal tempo_atualizado(tempo: float)
@@ -51,16 +54,22 @@ func _ready():
 
 	screen_fade = SCREEN_FADE.instantiate()
 	get_tree().root.call_deferred("add_child", screen_fade)
-	
+	await get_tree().process_frame
+
 	if screen_fade:
-		screen_fade.fade_in(0.8)
-		await screen_fade.fade_finished
+		var fade_rect := screen_fade.get_node_or_null("FadeRect")
+		if fade_rect:
+			fade_rect.modulate.a = 0.0
+		screen_fade.hide()
 
 
 	world = get_tree().current_scene
+	_ensure_player_death_connection()
 	print("GameManager ativo, estado:", state)
 
 func _process(delta):
+	_ensure_player_death_connection()
+
 	if contando:
 		tempo_partida += delta
 		emit_signal("tempo_atualizado", tempo_partida)
@@ -70,7 +79,8 @@ func _process(delta):
 
 # ─────────── RUN / SCORE ───────────
 func reset_run():
-	Global.lives = 100
+	Global.lives = Global.lives_limit
+	Global.boss_key_spawned_this_run = false
 	ScoreManager.altura = 0
 	ScoreManager.tempo = 0.0
 	ScoreManager.itens = 0
@@ -88,15 +98,23 @@ func update_coleta(item):
 
 # ─────────── GAME OVER ───────────
 func _on_player_morreu():
+	if state == GameState.GAME_OVER:
+		return
+
 	finalizar_partida()
 	state = GameState.GAME_OVER
-	game_over()
+	await game_over()
 
 func game_over():
-	get_tree().call_deferred(
-		"change_scene_to_file",
-		"res://scenes/UI/game_over.tscn"
-	)
+	if screen_fade:
+		screen_fade.fade_in(0.6)
+		await screen_fade.fade_finished
+
+	get_tree().change_scene_to_file("res://scenes/UI/game_over.tscn")
+	await get_tree().process_frame
+
+	if screen_fade:
+		screen_fade.fade_out(0.6)
 
 func iniciar_partida():
 	if Global.coming_from_boss:
@@ -118,8 +136,17 @@ func start_game():
 func _start_game_flow():
 	reset_run()
 	state = GameState.PLAYING
+
+	if screen_fade:
+		screen_fade.fade_in(0.5)
+		await screen_fade.fade_finished
+
 	get_tree().change_scene_to_file("res://scenes/system/loading_screen.tscn")
 	await get_tree().process_frame
+
+	if screen_fade:
+		screen_fade.fade_out(0.5)
+
 	world = get_tree().current_scene
 
 # ─────────── SAFE PLATFORM ───────────
@@ -148,6 +175,9 @@ func request_boss_entry(room_data: Dictionary) -> void:
 	current_room_data = room_data
 	return_position = last_safe_position
 	contando = false
+	boss_entry_score = ScoreManager.itens
+	boss_entry_lives = Global.lives
+	Global.last_boss_entry_height = float(ScoreManager.altura)
 
 	Global.saved_run_time = tempo_partida
 	Global.coming_from_boss = true
@@ -178,6 +208,9 @@ func handle_boss_victory():
 		player.can_control = false
 
 	await _teleport_player_to_safe_platform(player)
+	if player and "can_control" in player:
+		player.can_control = true
+	await _apply_boss_rewards()
 	await _play_victory_sequence(player)
 	await _return_from_special_room()
 
@@ -185,6 +218,7 @@ func handle_boss_victory():
 func _return_from_special_room() -> void:
 
 	Global.coming_from_boss = true
+	Global.boss_key_spawned_this_run = false
 
 	await get_tree().create_timer(2.0).timeout
 
@@ -212,7 +246,9 @@ func _teleport_player_to_safe_platform(player):
 		spawn_emergency_platform(return_position)
 		await get_tree().process_frame
 
-	player.global_position = last_safe_platform.global_position + Vector2(0, -64)
+	player.global_position = last_safe_platform.global_position + Vector2(0, -22)
+	if "velocity" in player:
+		player.velocity = Vector2.ZERO
 	await get_tree().process_frame
 
 func _play_victory_sequence(player):
@@ -269,9 +305,36 @@ func toggle_fullscreen():
 
 func formatar_tempo(segundos: float) -> String:
 	var total := int(segundos)
-	var min := total / 60
+	var minutes := int(total / 60.0)
 	var sec := total % 60
-	return "%02d:%02d" % [min, sec]
+	return "%02d:%02d" % [minutes, sec]
+
+
+func on_player_morreu() -> void:
+	_on_player_morreu()
+
+
+func _ensure_player_death_connection() -> void:
+	var player := get_tree().get_first_node_in_group("Player")
+	if player == null:
+		return
+
+	if tracked_player == player:
+		return
+
+	if tracked_player and is_instance_valid(tracked_player):
+		if tracked_player.has_signal("morreu"):
+			if tracked_player.morreu.is_connected(_on_player_morreu):
+				tracked_player.morreu.disconnect(_on_player_morreu)
+
+	tracked_player = player
+	if tracked_player.has_signal("morreu"):
+		if not tracked_player.morreu.is_connected(_on_player_morreu):
+			tracked_player.morreu.connect(_on_player_morreu)
+
+
+func restart_from_game_over() -> void:
+	_restart_from_game_over()
 
 
 
@@ -311,7 +374,32 @@ func fail_special_room() -> void:
 	print("❌ Falha na sala especial")
 
 	contando = false
+
+	# Se havia vida de reserva antes da sala, retorna para a run
+	var can_return_to_run := boss_entry_lives > 20
+	if can_return_to_run:
+		ScoreManager.itens = boss_entry_score
+		Global.lives = max(boss_entry_lives - 20, 20)
+		Global.coming_from_boss = true
+		Global.boss_key_spawned_this_run = false
+
+		if screen_fade:
+			screen_fade.fade_in(0.8)
+			await screen_fade.fade_finished
+
+		get_tree().change_scene_to_file("res://scenes/rooms/sala_01.tscn")
+		await get_tree().process_frame
+		await get_tree().process_frame
+
+		if screen_fade:
+			screen_fade.fade_out(0.8)
+
+		state = GameState.PLAYING
+		contando = true
+		return
+
 	state = GameState.GAME_OVER
+	Global.boss_key_spawned_this_run = false
 
 	# Fade IN (fecha a tela)
 	if screen_fade:

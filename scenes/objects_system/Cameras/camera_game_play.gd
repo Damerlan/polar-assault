@@ -39,7 +39,7 @@ func _update_zoom():
 	var scale_x = screen_size.x / base_resolution.x
 	var scale_y = screen_size.y / base_resolution.y
 
-	var scale := floori(min(scale_x, scale_y))
-	scale = max(scale, 1)
+	var zoom_scale := floori(min(scale_x, scale_y))
+	zoom_scale = max(zoom_scale, 1)
 
-	zoom = Vector2(1.0 / scale, 1.0 / scale)
+	zoom = Vector2(1.0 / zoom_scale, 1.0 / zoom_scale)

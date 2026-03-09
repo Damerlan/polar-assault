@@ -161,7 +161,7 @@ func _on_button_salvar_pressed() -> void:
 # BOTÕES
 # ─────────────────────────────
 func _on_button_novo_game_pressed() -> void:
-	GameManager._restart_from_game_over()
+	GameManager.restart_from_game_over()
 
 
 func _on_button_sair_pressed() -> void:
@@ -190,9 +190,9 @@ func _on_line_edit_nome_gui_input(event):
 # ─────────────────────────────
 func _formatar_tempo(tempo: float) -> String:
 	var t := int(tempo)
-	var min := t / 60
+	var minutes := int(t / 60.0)
 	var sec := t % 60
-	return "Tempo: %02d:%02d" % [min, sec]
+	return "Tempo: %02d:%02d" % [minutes, sec]
 
 
 func get_feedback(altura: int, tempo: float, itens: int) -> String:

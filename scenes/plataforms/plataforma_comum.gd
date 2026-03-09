@@ -3,7 +3,7 @@
 # Plataforma_comum.gd
 extends StaticBody2D
 
-var visibility := Global.visibility
+var visibility: int = Global.VISIBILITY
 var player: Node = null
 
 @onready var loot_spawner: LootSpawner = $LootSpawner
